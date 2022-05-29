@@ -1,0 +1,244 @@
+{
+	"tables": {
+		"9518f827-f23c-4266-be1e-f1075dac35e3": {
+			"id": "9518f827-f23c-4266-be1e-f1075dac35e3",
+			"visible": true,
+			"name": "master_list",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "467f4733-0ee4-46ed-abc6-1ea7565e1523",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": ""
+				},
+				{
+					"id": "1336b367-944c-44a7-b3c9-901b044801c7",
+					"name": "ticker",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "42fafa90-9afb-443c-af93-5ef81cad7ac8",
+					"name": "name",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "912cae62-59c4-404b-9cfc-5b16d3883aa7",
+					"name": "cik",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "3afde362-83b7-48e0-8ef7-e555acc6b58a",
+					"name": "figi",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "44b45aae-7cd0-49e4-a9d3-f45eb68b55d4",
+					"name": "sector",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "f56d6544-5e35-4884-a64b-eaa61c8c0b0b",
+					"name": "industry",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "af26b34e-8433-4338-8171-22a79fc8d859",
+					"name": "lock_version",
+					"datatype": "int",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "b34e820c-7ced-4136-a2fe-ea72594204b6",
+					"name": "created_at",
+					"datatype": "date",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "acd4994f-6607-4e2c-a539-2a9ce4f2e5ce",
+					"name": "updated_at",
+					"datatype": "date",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "9363fdf7-dc76-4147-81cc-df89d9425c0a",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "274df85d-7c55-459f-be9b-45bcfba180b2",
+							"colid": "467f4733-0ee4-46ed-abc6-1ea7565e1523"
+						}
+					]
+				}
+			],
+			"indexes": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		}
+	},
+	"relations": {},
+	"notes": {},
+	"lines": {},
+	"model": {
+		"name": "Good Fundamentals",
+		"id": "3f8b0a1d-e7e6-43bf-9689-edacffe7db6b",
+		"activeDiagram": "c3f2ea1e-baa8-46ef-9039-624bf031695b",
+		"desc": "",
+		"path": "",
+		"type": "MONGODB",
+		"version": 1,
+		"parentTableInFkCols": true,
+		"caseConvention": "under",
+		"replaceSpace": "_",
+		"color": "transparent",
+		"sideSelections": true,
+		"isDirty": true,
+		"storedin": {
+			"major": 4,
+			"minor": 6,
+			"extra": 0
+		},
+		"embeddedInParentsIsDisplayed": true,
+		"schemaContainerIsDisplayed": false,
+		"cardinalityIsDisplayed": false,
+		"estimatedSizeIsDisplayed": false,
+		"stickyParentIsDisplayed": false,
+		"def_coltopk": true,
+		"def_validationLevel": "na",
+		"def_validationAction": "na",
+		"def_collation": "",
+		"def_others": "",
+		"lastSaved": "Fri May 27 2022 10:01:20 GMT+0200 (Central European Summer Time)",
+		"writeFileParam": false
+	},
+	"otherObjects": {},
+	"diagrams": {
+		"c3f2ea1e-baa8-46ef-9039-624bf031695b": {
+			"name": "Main Diagram",
+			"description": "",
+			"id": "c3f2ea1e-baa8-46ef-9039-624bf031695b",
+			"keysgraphics": false,
+			"linegraphics": "detailed",
+			"zoom": 1,
+			"background": "transparent",
+			"lineColor": "transparent",
+			"isOpen": true,
+			"main": true,
+			"diagramItems": {
+				"9518f827-f23c-4266-be1e-f1075dac35e3": {
+					"referencedItemId": "9518f827-f23c-4266-be1e-f1075dac35e3",
+					"x": 86,
+					"y": 46,
+					"gHeight": 207,
+					"gWidth": 191,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				}
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"type": "erd"
+		}
+	},
+	"order": []
+}
