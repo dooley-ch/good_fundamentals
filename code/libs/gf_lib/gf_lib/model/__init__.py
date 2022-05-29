@@ -15,6 +15,8 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['MasterList', 'Company', 'PeriodEnds', 'AccountingItem', 'AccountingStatement']
+__all__ = ['PeriodType', 'Months', 'DocumentMetaData', 'Master', 'Company', 'PeriodEnds', 'AccountingItem',
+           'AccountingStatement', 'IncomeStatement', 'CashFlow', 'BalanceSheet', 'EarningsStatement',
+           'GicsClassification']
 
 from ._database import *
