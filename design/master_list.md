@@ -1,7 +1,7 @@
 # Master List
 
-While there are approximately 4,000 publicly listed companies in the US, the general public are generally interesed in 
-an investment quality subset of this list.  This application attempts to limit it's support to this subset by define 
+While there are approximately 4,000 publicly listed companies in the US but the public are generally interesed in 
+an investment quality subset of this list.  This application attempts to limit its support to this subset by define 
 a list companies it will provide information and analysis on.  This list is called the master list.  This list is based 
 on the components of the S&P 600, S&P 400 and the S&P 500 indices.
 
@@ -10,28 +10,19 @@ on the components of the S&P 600, S&P 400 and the S&P 500 indices.
 The entry for each member of the list contains the following attributes:
 
 ```mermaid
-erDiagram
-    sector ||--o{ industry : has
-    industry ||--o{ company : classifies
-    
+erDiagram    
     company {
         Object_ID id PK
-        string symbol 
+        string ticker 
         string name
         string cik
         string figi
+        string sector
+        string industry
+        integer lock_version
         date created_at
+        date updated_at
     }
-        
-    industry {
-        Object_ID id PK
-        string name
-    }
-    
-    sector {
-        Object_ID id PK
-        string name
-    }    
 ```
 
 ## Data Sources
