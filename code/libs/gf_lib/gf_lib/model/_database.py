@@ -92,8 +92,10 @@ class Master:
 
 @attrs.define
 class GicsClassification:
-    sector: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('[A-Za-z]{5,80}$')])
-    industries: list[str] = attrs.Factory(list)
+    sector: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('[A-Za-z .]{5,80}$')])
+    industry: list[str] = attrs.Factory(list)
+    metadata: DocumentMetaData = attrs.field(factory=DocumentMetaData,
+                                             validator=[validators.instance_of(DocumentMetaData)])
 
 
 @attrs.define

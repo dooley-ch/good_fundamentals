@@ -1,5 +1,5 @@
 # *******************************************************************************************
-#  File:  _masterlist_datastore.py
+#  File:  _gics_classification.py
 #
 #  Created: 30-05-2022
 #
@@ -15,52 +15,46 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['MasterListDatastore']
+__all__ = ['GicsClassificationDatastore']
 
 from attrs import asdict
 from pymongo.collection import Collection
 from pymongo.database import Database
 from pymongo.results import InsertManyResult
 from pymongo.errors import DuplicateKeyError
-from gf_lib.model import Master, DocumentMetaData
+from gf_lib.model import GicsClassification, DocumentMetaData
 from gf_lib.errors import DuplicateRecordError
 
 
-class MasterListDatastore:
+class GicsClassificationDatastore:
     _collection: Collection
 
     def __init__(self, database: Database) -> None:
-        self._collection = database['master_list']
+        self._collection = database['gics_classifications']
 
-    def _to_master_record(self, value: dict) -> Master:
+    def _to_gics_classification_record(self, value: dict) -> GicsClassification:
         value['metadata'] = DocumentMetaData(**value['metadata'])
-        return Master(**value)
+        return GicsClassification(**value)
 
-    def insert(self, value: Master) -> bool:
+    def insert(self, value: GicsClassification) -> bool:
         try:
             results: InsertManyResult = self._collection.insert_one(asdict(value))
         except DuplicateKeyError:
-            raise DuplicateRecordError(value.ticker)
+            raise DuplicateRecordError(value.sector)
         else:
             return results.acknowledged
 
-    def get(self, ticker: str) -> Master | None:
-        raw_data = self._collection.find_one({'ticker': ticker}, {'_id': 0})
+    def get(self, sector: str) -> GicsClassification | None:
+        raw_data = self._collection.find_one({'sector': sector}, {'_id': 0})
 
         if raw_data:
-            return self._to_master_record(raw_data)
+            return self._to_gics_classification_record(raw_data)
 
-    def find_by_sector(self, sector: str) -> list[Master] | None:
-        raw_data = self._collection.find({'sector': sector}, {'_id': 0})
-
-        if raw_data:
-            return [self._to_master_record(row) for row in raw_data]
-
-    def find_by_industry(self, sector: str, industry: str) -> list[Master] | None:
-        raw_data = self._collection.find({'sector': sector, 'industry': industry}, {'_id': 0})
+    def get_all(self) -> list[GicsClassification] | None:
+        raw_data = self._collection.find({}, {'_id': 0})
 
         if raw_data:
-            return [self._to_master_record(row) for row in raw_data]
+            return [self._to_gics_classification_record(row) for row in raw_data]
 
     def clear(self) -> None:
         self._collection.delete_many({})

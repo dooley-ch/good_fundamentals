@@ -15,6 +15,7 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['MasterListDatastore']
+__all__ = ['MasterListDatastore', 'GicsClassificationDatastore']
 
 from ._masterlist_datastore import *
+from ._gics_classification import *

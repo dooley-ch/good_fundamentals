@@ -20,9 +20,83 @@ import pytest
 from pymongo import MongoClient
 from pymongo.database import Database
 from pymongo.collection import Collection
-from gf_lib.datastore import MasterListDatastore
-from gf_lib.model import Master
+from gf_lib.datastore import MasterListDatastore, GicsClassificationDatastore
+from gf_lib.model import Master, GicsClassification
 from gf_lib.errors import DuplicateRecordError
+
+
+class TestGicsClassificationDatastore:
+    @pytest.fixture
+    def clear_collection(self, mongodb_connection) -> None:
+        db: Database = mongodb_connection['good_fundamentals_test']
+        col: Collection = db['gics_classifications']
+        col.delete_many({})
+
+    def test_insert(self, clear_collection, mongodb_connection: MongoClient) -> None:
+        db: Database = mongodb_connection['good_fundamentals_test']
+        store = GicsClassificationDatastore(db)
+
+        record = GicsClassification('Materials')
+        record.industry.append('Chemicals')
+        record.industry.append('Construction Materials')
+        record.industry.append('Containers & Packaging')
+        record.industry.append('Metals & Mining')
+        record.industry.append('Paper & Forest Products')
+
+        assert store.insert(record)
+
+    def test_insert_duplicate(self, clear_collection, mongodb_connection: MongoClient) -> None:
+        db: Database = mongodb_connection['good_fundamentals_test']
+        store = GicsClassificationDatastore(db)
+
+        record = GicsClassification('Materials')
+        record.industry.append('Chemicals')
+        record.industry.append('Construction Materials')
+        record.industry.append('Containers & Packaging')
+        record.industry.append('Metals & Mining')
+        record.industry.append('Paper & Forest Products')
+
+        assert store.insert(record)
+        with pytest.raises(DuplicateRecordError):
+            store.insert(record)
+
+    def test_get(self, clear_collection, mongodb_connection: MongoClient) -> None:
+        db: Database = mongodb_connection['good_fundamentals_test']
+        store = GicsClassificationDatastore(db)
+
+        record = GicsClassification('Materials')
+        record.industry.append('Chemicals')
+        record.industry.append('Construction Materials')
+        record.industry.append('Containers & Packaging')
+        record.industry.append('Metals & Mining')
+        record.industry.append('Paper & Forest Products')
+        assert store.insert(record)
+
+        record = store.get('Materials')
+        assert record.sector == record.sector
+
+    def test_get_all(self, clear_collection, mongodb_connection: MongoClient) -> None:
+        db: Database = mongodb_connection['good_fundamentals_test']
+        store = GicsClassificationDatastore(db)
+
+        record = GicsClassification('Materials')
+        record.industry.append('Chemicals')
+        record.industry.append('Construction Materials')
+        record.industry.append('Containers & Packaging')
+        record.industry.append('Metals & Mining')
+        record.industry.append('Paper & Forest Products')
+        assert store.insert(record)
+
+        record = GicsClassification('Transportation')
+        record.industry.append('Air Freight & Logistics')
+        record.industry.append('Airlines')
+        record.industry.append('Marine')
+        record.industry.append('Road & Rail')
+        record.industry.append('Transportation Infrastructure')
+        assert store.insert(record)
+
+        record = store.get_all()
+        assert len(record) == 2
 
 
 class TestMasterListDatastore:

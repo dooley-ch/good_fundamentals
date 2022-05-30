@@ -145,13 +145,84 @@
 					]
 				}
 			],
-			"indexes": [],
+			"indexes": [
+				{
+					"id": "e7ca1a59-19f9-452c-ad9d-bf5b76ffb506",
+					"name": "master_list_ix_ticker",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"master_list_ix_1\",\nunique: true\n}",
+						"fields": "{\n\"ticker\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "c559428d-febe-4010-806e-924d121f467c",
+					"name": "master_list_ix_cik",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"master_list_ix_2\"\n}",
+						"fields": "{\n\"cik\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "c50c48ca-2811-41e1-b0e9-927410060fe2",
+					"name": "master_list_ix_figi",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"master_list_ix_3\"\n}",
+						"fields": "{\n\"figi\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "70eff71a-ed07-4e49-a453-aa81b3650d7c",
+					"name": "master_list_ix_sector",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"master_list_ix_4\"\n}",
+						"fields": "{\n\"sector\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "f2ef7425-eaf6-4936-9511-d935cd00d8f9",
+					"name": "master_list_ix_industry",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"master_list_ix_5\"\n}",
+						"fields": "{\n\"sector\": 1,\n\"industry\": 1\n}"
+					},
+					"cols": []
+				}
+			],
 			"embeddable": false,
 			"generate": true,
 			"generateCustomCode": true,
 			"internalColumnIdRef": "",
-			"validationLevel": "na",
-			"validationAction": "na",
+			"validationLevel": "strict",
+			"validationAction": "error",
 			"collation": "",
 			"others": ""
 		},
@@ -230,15 +301,42 @@
 							"colid": "e6fe23e6-c2d2-49a5-a476-e7da32b31cf3"
 						}
 					]
+				},
+				{
+					"id": "a826ac9f-1497-4c85-a14e-c2e63e923e00",
+					"isPk": false,
+					"using": "na",
+					"name": "gics_classifications_ak_sector",
+					"cols": [
+						{
+							"id": "38527370-e452-4669-b463-004202ed301c",
+							"colid": "103bb10c-d687-461d-a544-24fabe304af8"
+						}
+					]
 				}
 			],
-			"indexes": [],
+			"indexes": [
+				{
+					"id": "5fcbd1c8-4fe3-43ca-b287-0e97f2e5d6ec",
+					"name": "gics_classifications_ix_sector",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"gics_classifications_ix_1\",\nunique: true\n}",
+						"fields": "{\n\"sector\": 1\n}"
+					},
+					"cols": []
+				}
+			],
 			"embeddable": false,
 			"generate": true,
 			"generateCustomCode": true,
 			"internalColumnIdRef": "",
-			"validationLevel": "na",
-			"validationAction": "na",
+			"validationLevel": "strict",
+			"validationAction": "error",
 			"collation": "",
 			"others": ""
 		},
@@ -1288,7 +1386,7 @@
 		"def_validationAction": "na",
 		"def_collation": "",
 		"def_others": "",
-		"lastSaved": "Sun May 29 2022 22:47:48 GMT+0200 (Central European Summer Time)",
+		"lastSaved": "Mon May 30 2022 12:29:02 GMT+0200 (Central European Summer Time)",
 		"writeFileParam": false
 	},
 	"otherObjects": {},
@@ -1308,7 +1406,7 @@
 				"9518f827-f23c-4266-be1e-f1075dac35e3": {
 					"referencedItemId": "9518f827-f23c-4266-be1e-f1075dac35e3",
 					"x": 45,
-					"y": 450,
+					"y": 449,
 					"gHeight": 225,
 					"gWidth": 276,
 					"color": "#ffffff",
