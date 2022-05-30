@@ -131,6 +131,18 @@
 							"colid": "467f4733-0ee4-46ed-abc6-1ea7565e1523"
 						}
 					]
+				},
+				{
+					"id": "d0ab1858-dd99-4d19-a665-881f41ac652c",
+					"isPk": false,
+					"using": "na",
+					"name": "master_list_ak_ticker",
+					"cols": [
+						{
+							"id": "0c4ff883-9ea6-4bdc-83ac-6ad7808fde8f",
+							"colid": "1336b367-944c-44a7-b3c9-901b044801c7"
+						}
+					]
 				}
 			],
 			"indexes": [],
@@ -1276,7 +1288,7 @@
 		"def_validationAction": "na",
 		"def_collation": "",
 		"def_others": "",
-		"lastSaved": "Sun May 29 2022 18:35:56 GMT+0200 (Central European Summer Time)",
+		"lastSaved": "Sun May 29 2022 22:47:48 GMT+0200 (Central European Summer Time)",
 		"writeFileParam": false
 	},
 	"otherObjects": {},
@@ -1372,7 +1384,7 @@
 				},
 				"b3d09849-9387-4392-80e7-dfaa854951ac": {
 					"referencedItemId": "b3d09849-9387-4392-80e7-dfaa854951ac",
-					"x": 1378,
+					"x": 1377,
 					"y": 37,
 					"gHeight": 117,
 					"gWidth": 176,

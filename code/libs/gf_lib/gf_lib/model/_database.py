@@ -27,6 +27,11 @@ import attrs
 import attrs.validators as validators
 
 
+def string_to_date(value: str | datetime) -> datetime:
+    if isinstance(value, datetime):
+        return value
+    return pendulum.parse(value, strict=False)
+
 class PeriodType(str, Enum):
     """
     Differentiates annual from quarterly financial statements
@@ -76,11 +81,11 @@ class DocumentMetaData:
 class Master:
     ticker: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z]{1,5}$')],
                               converter=lambda value: value.upper())
-    name: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('[A-Za-z ]{5,120}$')])
+    name: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('[A-Za-z .]{5,120}$')])
     cik: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[0-9]{10,10}$')])
     figi: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[0-9]{12,12}$')])
-    sector: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('[A-Za-z]{5,80}$')])
-    industry: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('[A-Za-z]{5,80}$')])
+    sector: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('[A-Za-z ]{5,80}$')])
+    industry: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('[A-Za-z ]{5,80}$')])
     metadata: DocumentMetaData = attrs.field(factory=DocumentMetaData,
                                              validator=[validators.instance_of(DocumentMetaData)])
 
@@ -96,7 +101,7 @@ class Company:
     ticker: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z]{1,5}$')],
                               converter=lambda value: value.upper())
     name: str = attrs.field(eq=False,
-                            validator=[validators.instance_of(str), validators.matches_re('[A-Za-z ]{5,120}$')])
+                            validator=[validators.instance_of(str), validators.matches_re('[A-Za-z .]{5,120}$')])
     description: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
     cik: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('^[0-9]{10,10}$')])
     figi: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('^[0-9]{12,12}$')])

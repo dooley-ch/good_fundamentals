@@ -17,7 +17,6 @@ __maintainer__ = "James Dooley"
 __status__ = "Production"
 
 import attrs
-import pendulum
 import pytest
 import gf_lib.model as model
 
