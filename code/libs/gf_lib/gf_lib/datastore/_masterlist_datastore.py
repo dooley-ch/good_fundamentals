@@ -22,7 +22,7 @@ from pymongo.collection import Collection
 from pymongo.database import Database
 from pymongo.results import InsertManyResult
 from pymongo.errors import DuplicateKeyError
-from gf_lib.model import Master, DocumentMetaData
+from gf_lib.model import Master
 from gf_lib.errors import DuplicateRecordError
 
 
@@ -31,10 +31,6 @@ class MasterListDatastore:
 
     def __init__(self, database: Database) -> None:
         self._collection = database['master_list']
-
-    def _to_master_record(self, value: dict) -> Master:
-        value['metadata'] = DocumentMetaData(**value['metadata'])
-        return Master(**value)
 
     def insert(self, value: Master) -> bool:
         try:
@@ -48,19 +44,19 @@ class MasterListDatastore:
         raw_data = self._collection.find_one({'ticker': ticker}, {'_id': 0})
 
         if raw_data:
-            return self._to_master_record(raw_data)
+            return Master(**raw_data)
 
     def find_by_sector(self, sector: str) -> list[Master] | None:
         raw_data = self._collection.find({'sector': sector}, {'_id': 0})
 
         if raw_data:
-            return [self._to_master_record(row) for row in raw_data]
+            return [Master(**row) for row in raw_data]
 
     def find_by_industry(self, sector: str, industry: str) -> list[Master] | None:
         raw_data = self._collection.find({'sector': sector, 'industry': industry}, {'_id': 0})
 
         if raw_data:
-            return [self._to_master_record(row) for row in raw_data]
+            return [Master(**row) for row in raw_data]
 
     def clear(self) -> None:
         self._collection.delete_many({})

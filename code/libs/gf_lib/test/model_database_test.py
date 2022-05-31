@@ -52,11 +52,8 @@ class TestMaster:
         assert record.ticker == 'IBM'
 
     def test_cik_wrong_length(self) -> None:
-        with pytest.raises(ValueError) as e:
-            model.Master('XXXXX', 'IBM Corporation', '01234567', '012345678912', 'Sector', 'Industry')
-
-        msg: str = e.value.args[0]
-        assert msg.startswith("'cik' must match regex")
+        record = model.Master('XXXXX', 'IBM Corporation', '01234567', '012345678912', 'Sector', 'Industry')
+        assert record.cik == '0001234567'
 
     def test_cik_invalid_chars(self) -> None:
         with pytest.raises(ValueError) as e:
@@ -70,11 +67,8 @@ class TestMaster:
         assert record.cik == '0123456789'
 
     def test_figi_wrong_length(self) -> None:
-        with pytest.raises(ValueError) as e:
-            model.Master('XXXXX', 'IBM Corporation', '0123456789', '0123456789', 'Sector', 'Industry')
-
-        msg: str = e.value.args[0]
-        assert msg.startswith("'figi' must match regex")
+        record = model.Master('XXXXX', 'IBM Corporation', '0123456789', '0123456789', 'Sector', 'Industry')
+        assert record.figi == '000123456789'
 
     def test_figi_invalid_chars(self) -> None:
         with pytest.raises(ValueError) as e:
@@ -87,6 +81,15 @@ class TestMaster:
         record = model.Master('XXXXX', 'IBM Corporation', '0123456789', '012345678912', 'Sector', 'Industry')
         assert record.figi == '012345678912'
 
+    def test_equal(self) -> None:
+        record_1 = model.Master('IBM', 'IBM Corporation', '0123456789', '012345678912', 'Sector', 'Industry')
+        record_2 = model.Master('IBM', 'IBM Corporation', '0123456789', '012345678912', 'Sector', 'Industry')
+        assert record_1 == record_2
+
+    def test_not_equal(self) -> None:
+        record_1 = model.Master('IBM', 'IBM Corporation', '0123456789', '012345678912', 'Sector', 'Industry')
+        record_2 = model.Master('AAPL', 'IBM Corporation', '0123456789', '012345678912', 'Sector', 'Industry')
+        assert record_1 != record_2
 
 class TestCompany:
     def test_ticker_wrong_type(self) -> None:

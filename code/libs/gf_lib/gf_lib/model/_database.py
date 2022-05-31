@@ -16,10 +16,8 @@ __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
 __all__ = ['PeriodType', 'Months', 'DocumentMetaData', 'Master', 'Company', 'PeriodEnds', 'AccountingItem',
-           'AccountingStatement', 'IncomeStatement', 'CashFlow', 'BalanceSheet', 'EarningsStatement',
-           'GicsClassification']
+           'AccountingStatement', 'GicsClassification']
 
-from typing import NewType
 from enum import Enum
 from datetime import datetime, date
 import pendulum
@@ -40,6 +38,13 @@ class PeriodType(str, Enum):
     Quarter = 'Quarter'
 
 
+def to_period_type(value: str | PeriodType) -> PeriodType:
+    if isinstance(value, PeriodType):
+        return value
+
+    return PeriodType(value)
+
+
 class Months(str, Enum):
     """
     Defines the months of the year
@@ -56,6 +61,13 @@ class Months(str, Enum):
     October = 'October'
     November = 'November'
     December = 'December'
+
+
+def to_months(value: str | Months) -> Months:
+    if isinstance(value, Months):
+        return value
+
+    return Months(value)
 
 
 @attrs.define
@@ -77,17 +89,33 @@ class DocumentMetaData:
         self.updated_at = self.created_at
 
 
+def to_document_metadata(value: dict | DocumentMetaData) -> DocumentMetaData:
+    """
+    This function converts the metadata dict to an instance of the class
+    """
+    if isinstance(value, DocumentMetaData):
+        return value
+
+    return DocumentMetaData(**value)
+
+
 @attrs.frozen
 class Master:
+    """
+    This is the record for an entry in the master list of financial instruments used by the application
+    """
     ticker: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z]{1,5}$')],
                               converter=lambda value: value.upper())
-    name: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('[A-Za-z .]{5,120}$')])
-    cik: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[0-9]{10,10}$')])
-    figi: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[0-9]{12,12}$')])
-    sector: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('[A-Za-z ]{5,80}$')])
-    industry: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('[A-Za-z ]{5,80}$')])
-    metadata: DocumentMetaData = attrs.field(factory=DocumentMetaData,
-                                             validator=[validators.instance_of(DocumentMetaData)])
+    name: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('[A-Za-z .]{5,120}$')])
+    cik: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('^[0-9]{10,10}$')],
+                           converter=lambda value: value.zfill(10))
+    figi: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('^[0-9]{12,12}$')],
+                            converter=lambda value: value.zfill(12))
+    sector: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('[A-Za-z ]{5,80}$')])
+    industry: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('[A-Za-z ]{5,80}$')])
+    metadata: DocumentMetaData = attrs.field(eq=False, factory=DocumentMetaData,
+                                             validator=[validators.instance_of(DocumentMetaData)],
+                                             converter=to_document_metadata)
 
 
 @attrs.define
@@ -95,7 +123,8 @@ class GicsClassification:
     sector: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('[A-Za-z .]{5,80}$')])
     industry: list[str] = attrs.Factory(list)
     metadata: DocumentMetaData = attrs.field(factory=DocumentMetaData,
-                                             validator=[validators.instance_of(DocumentMetaData)])
+                                             validator=[validators.instance_of(DocumentMetaData)],
+                                             converter=to_document_metadata)
 
 
 @attrs.define
@@ -113,20 +142,22 @@ class Company:
     country: str = attrs.field(eq=False,
                                validator=[validators.instance_of(str), validators.matches_re('[A-Za-z ]{1,80}$')])
     sector: str = attrs.field(eq=False,
-                              validator=[validators.instance_of(str), validators.matches_re('[A-Za-z]{5,80}$')])
+                              validator=[validators.instance_of(str), validators.matches_re('[A-Za-z .]{5,80}$')])
     industry: str = attrs.field(eq=False,
-                                validator=[validators.instance_of(str), validators.matches_re('[A-Za-z]{5,80}$')])
+                                validator=[validators.instance_of(str), validators.matches_re('[A-Za-z .]{5,80}$')])
     address: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
-    fiscal_year_end: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.in_(Months)])
+    fiscal_year_end: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.in_(Months)],
+                                       converter=to_months)
     last_quarter: datetime = attrs.field(eq=False, factory=datetime.now, validator=[validators.instance_of(datetime)],
-                                         converter=lambda value: pendulum.parse(value, strict=False))
+                                         converter=string_to_date)
     dividend_date: datetime = attrs.field(eq=False, factory=datetime.now, validator=[validators.instance_of(datetime)],
-                                          converter=lambda value: pendulum.parse(value, strict=False))
+                                          converter=string_to_date)
     ex_dividend_date: datetime = attrs.field(eq=False, factory=datetime.now,
                                              validator=[validators.instance_of(datetime)],
-                                             converter=lambda value: pendulum.parse(value, strict=False))
+                                             converter=string_to_date)
     metadata: DocumentMetaData = attrs.field(eq=False, factory=DocumentMetaData,
-                                             validator=[validators.instance_of(DocumentMetaData)])
+                                             validator=[validators.instance_of(DocumentMetaData)],
+                                             converter=to_document_metadata)
 
 
 @attrs.define
@@ -160,13 +191,7 @@ class AccountingStatement:
     Holds the details of an accounting statement
     """
     ticker: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z]{1,5}$')])
-    period_type: PeriodType = attrs.field(validator=[validators.instance_of(PeriodType)])
+    period_type: PeriodType = attrs.field(validator=[validators.instance_of(PeriodType)], converter=to_period_type)
     period_ends: PeriodEnds = attrs.field(eq=False, factory=PeriodEnds)
     items: list[AccountingItem] = attrs.field(eq=False, factory=list)
     metadata: DocumentMetaData = attrs.field(eq=False, factory=DocumentMetaData)
-
-
-IncomeStatement = NewType('IncomeStatement', AccountingStatement)
-CashFlow = NewType('CashFlow', AccountingStatement)
-BalanceSheet = NewType('BalanceSheet', AccountingStatement)
-EarningsStatement = NewType('EarningsStatement', AccountingStatement)
