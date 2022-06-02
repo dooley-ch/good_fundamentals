@@ -90,7 +90,7 @@
 				},
 				{
 					"id": "f56d6544-5e35-4884-a64b-eaa61c8c0b0b",
-					"name": "industry",
+					"name": "sub_industry",
 					"datatype": "string",
 					"param": "",
 					"pk": false,
@@ -99,6 +99,20 @@
 					"defaultvalue": "",
 					"data": "",
 					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "55357bdc-c7aa-47c6-9900-05163f4a3305",
+					"name": "indexes",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": true,
 					"enum": "",
 					"validate": ""
 				},
@@ -129,18 +143,6 @@
 						{
 							"id": "274df85d-7c55-459f-be9b-45bcfba180b2",
 							"colid": "467f4733-0ee4-46ed-abc6-1ea7565e1523"
-						}
-					]
-				},
-				{
-					"id": "d0ab1858-dd99-4d19-a665-881f41ac652c",
-					"isPk": false,
-					"using": "na",
-					"name": "master_list_ak_ticker",
-					"cols": [
-						{
-							"id": "0c4ff883-9ea6-4bdc-83ac-6ad7808fde8f",
-							"colid": "1336b367-944c-44a7-b3c9-901b044801c7"
 						}
 					]
 				}
@@ -224,7 +226,8 @@
 			"validationLevel": "strict",
 			"validationAction": "error",
 			"collation": "",
-			"others": ""
+			"others": "",
+			"capped": false
 		},
 		"9eb211e2-44e9-4050-b9a2-34776d8fcee8": {
 			"id": "9eb211e2-44e9-4050-b9a2-34776d8fcee8",
@@ -1486,7 +1489,7 @@
 		"def_validationAction": "na",
 		"def_collation": "",
 		"def_others": "",
-		"lastSaved": "Tue May 31 2022 18:55:02 GMT+0200 (Central European Summer Time)",
+		"lastSaved": "Thu Jun 02 2022 12:43:50 GMT+0200 (Central European Summer Time)",
 		"writeFileParam": false
 	},
 	"otherObjects": {},
@@ -1507,7 +1510,7 @@
 					"referencedItemId": "9518f827-f23c-4266-be1e-f1075dac35e3",
 					"x": 45,
 					"y": 449,
-					"gHeight": 225,
+					"gHeight": 243,
 					"gWidth": 276,
 					"color": "#ffffff",
 					"background": "#3f51b5",
@@ -1549,8 +1552,8 @@
 				},
 				"b3d09849-9387-4392-80e7-dfaa854951ac": {
 					"referencedItemId": "b3d09849-9387-4392-80e7-dfaa854951ac",
-					"x": 47,
-					"y": 701,
+					"x": 45,
+					"y": 742,
 					"gHeight": 117,
 					"gWidth": 176,
 					"color": "#ffffff",
@@ -1560,8 +1563,8 @@
 				},
 				"82d1502c-e98b-43ce-8381-81882b323363": {
 					"referencedItemId": "82d1502c-e98b-43ce-8381-81882b323363",
-					"x": 261,
-					"y": 705,
+					"x": 253,
+					"y": 747,
 					"gHeight": 135,
 					"gWidth": 167,
 					"color": "#ffffff",
@@ -1571,8 +1574,8 @@
 				},
 				"563f8d73-be6c-4f9c-ba83-5ec131f51913": {
 					"referencedItemId": "563f8d73-be6c-4f9c-ba83-5ec131f51913",
-					"x": 471,
-					"y": 709,
+					"x": 462,
+					"y": 752,
 					"gHeight": 81,
 					"gWidth": 191,
 					"color": "#ffffff",

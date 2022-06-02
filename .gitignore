@@ -128,3 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 code/libs/gf_lib/.idea
+code/apps/gf_loader/.idea

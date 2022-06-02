@@ -99,12 +99,12 @@ def to_document_metadata(value: dict | DocumentMetaData) -> DocumentMetaData:
     return DocumentMetaData(**value)
 
 
-@attrs.frozen
+@attrs.frozen(kw_only=True)
 class Master:
     """
     This is the record for an entry in the master list of financial instruments used by the application
     """
-    ticker: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z]{1,5}$')],
+    ticker: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z.-]{1,5}$')],
                               converter=lambda value: value.upper())
     name: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('[A-Za-z .]{5,120}$')])
     cik: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('^[0-9]{10,10}$')],
@@ -112,7 +112,8 @@ class Master:
     figi: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('^[0-9]{12,12}$')],
                             converter=lambda value: value.zfill(12))
     sector: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('[A-Za-z ]{5,80}$')])
-    industry: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('[A-Za-z ]{5,80}$')])
+    sub_industry: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('[A-Za-z ]{5,80}$')])
+    indexes: list[str] = attrs.Factory(list)
     metadata: DocumentMetaData = attrs.field(eq=False, factory=DocumentMetaData,
                                              validator=[validators.instance_of(DocumentMetaData)],
                                              converter=to_document_metadata)

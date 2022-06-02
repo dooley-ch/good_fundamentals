@@ -15,7 +15,7 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['ApplicationError', 'DuplicateRecordError']
+__all__ = ['ApplicationError', 'DuplicateRecordError', 'RequestFailed']
 
 
 class ApplicationError(Exception):
@@ -25,3 +25,8 @@ class ApplicationError(Exception):
 class DuplicateRecordError(ApplicationError):
     def __init__(self, key: str):
         super().__init__(f"A record with the key: {key}, already exists in the collection")
+
+
+class RequestFailed(ApplicationError):
+    def __init__(self, url: str, status_code: int):
+        super().__init__(f"Failed to download url: {url}, status: {status_code}")

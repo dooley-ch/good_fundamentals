@@ -1,0 +1,13 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+gf-lib = {editable = true, file = "file:///Volumes/LaCie/Dev/Good_Fundamentals/code/libs/gf_lib"}
+loguru = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"

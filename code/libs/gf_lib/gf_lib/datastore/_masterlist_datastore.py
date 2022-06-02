@@ -53,7 +53,7 @@ class MasterListDatastore:
             return [Master(**row) for row in raw_data]
 
     def find_by_industry(self, sector: str, industry: str) -> list[Master] | None:
-        raw_data = self._collection.find({'sector': sector, 'industry': industry}, {'_id': 0})
+        raw_data = self._collection.find({'sector': sector, 'sub_industry': industry}, {'_id': 0})
 
         if raw_data:
             return [Master(**row) for row in raw_data]
