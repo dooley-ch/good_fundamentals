@@ -6,8 +6,14 @@ name = "pypi"
 [packages]
 gf-lib = {editable = true, file = "file:///Volumes/LaCie/Dev/Good_Fundamentals/code/libs/gf_lib"}
 loguru = "*"
+typer = "*"
+luigi = "*"
+python-dotenv = "*"
+dnspython = "*"
+pymongo = "*"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.10"
