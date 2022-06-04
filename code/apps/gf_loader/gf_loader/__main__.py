@@ -34,8 +34,15 @@ def build_database():
 
 
 @app.command('populate', help='Populate the database with a new master list')
-def populate_database():
-    typer.echo('Populate Database')
+def populate():
+    log_activity('Populating master list...')
+
+    if luigi.build([tasks.BuildMasterListTask()], local_scheduler=True):
+        typer.echo('Master list built.', color=True)
+        log_activity('Master list built successfully.')
+    else:
+        typer.echo('Failed to build master list, see log files for details.', err=True, color=True)
+        log_activity('Failed to build master list.')
 
 
 @app.command('reset', help='Deletes expired company records')

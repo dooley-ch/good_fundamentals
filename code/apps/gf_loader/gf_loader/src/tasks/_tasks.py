@@ -15,7 +15,7 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['PopulateMasterListTask', 'ResetTask']
+__all__ = ['PopulateMasterListTask', 'ResetTask', 'LoadCikCodesTask', 'LoadFigiCodesTask', 'BuildMasterListTask']
 
 import gf_lib.datastore as ds
 import gf_lib.model as model
@@ -28,7 +28,7 @@ from pymongo import MongoClient
 from pymongo.collection import Collection
 from pymongo.database import Database
 
-from ._targets import CollectionPopulatedTarget, FigiLoadTaskCompletedTarget
+from ._targets import CollectionPopulatedTarget, FigiLoadTaskCompletedTarget, CikLoadTaskCompletedTarget
 
 
 class ResetTask(luigi.Task):
@@ -77,9 +77,6 @@ class PopulateMasterListTask(luigi.Task):
         client: MongoClient = MongoClient(self.url)
         database: Database = client[self.database]
         store = ds.MasterListDatastore(database)
-
-        # Clear the collection
-        store.clear()
 
         records: dict[str, model.Master] = dict()
 
@@ -172,20 +169,93 @@ class PopulateMasterListTask(luigi.Task):
         return CollectionPopulatedTarget(self.url, self.database, self.collection)
 
 
-# class LoadCikCodesTask(luigi.Task):
-#     """
-#     This task updates the master records with the CIK code supplied by
-#     the SEC
-#     """
-#     url = luigi.Parameter()
-#     database = luigi.Parameter()
-#     collection = luigi.Parameter()
-#
-#     def requires(self):
-#         return [PopulateMasterListTask()]
-#
-#     def run(self):
-#         pass
-#
-#     def output(self):
-#         return FigiLoadTaskCompletedTarget()
+class LoadFigiCodesTask(luigi.Task):
+    """
+    This task updates the master records with the CIK code supplied by
+    the SEC
+    """
+    url = luigi.Parameter()
+    database = luigi.Parameter()
+    collection = luigi.Parameter()
+    open_figi_url = luigi.Parameter()
+    open_figi_key = luigi.Parameter()
+
+    def requires(self):
+        return [PopulateMasterListTask()]
+
+    @logger.catch(reraise=True)
+    def run(self):
+        client: MongoClient = MongoClient(self.url)
+        database: Database = client[self.database]
+        store = ds.MasterListDatastore(database)
+        ctrl_store = ds.TaskControlDatastore(database)
+
+        tickers = store.get_tickers()
+
+        rec_count = 0
+        err_count = 0
+        for ticker in tickers:
+            try:
+                code = svc.get_openfigi_code(self.open_figi_url, self.open_figi_key, ticker)
+                store.update_figi(ticker, code)
+                rec_count += 1
+            except Exception as e:
+                logger.error(f"Failed to update FIGI for ticker: {ticker} - {e}")
+                err_count += 1
+
+        if rec_count > 0:
+            ctrl_store.update_figi_flag(True)
+
+        log_activity(f"Updated Master List FIGI values: records {rec_count}, errors {err_count}")
+
+    def output(self):
+        return FigiLoadTaskCompletedTarget(self.url, self.database)
+
+
+class LoadCikCodesTask(luigi.Task):
+    """
+    This task updates the master records with the CIK code supplied by
+    the SEC
+    """
+    url = luigi.Parameter()
+    database = luigi.Parameter()
+    collection = luigi.Parameter()
+    sec_url = luigi.Parameter()
+
+    def requires(self):
+        return [PopulateMasterListTask()]
+
+    @logger.catch(reraise=True)
+    def run(self):
+        client: MongoClient = MongoClient(self.url)
+        database: Database = client[self.database]
+        store = ds.MasterListDatastore(database)
+        ctrl_store = ds.TaskControlDatastore(database)
+
+        tickers = store.get_tickers()
+        map = svc.get_sec_map(self.sec_url)
+
+        rec_count = 0
+        err_count = 0
+        for item in map:
+            if item.ticker in tickers:
+                try:
+                    store.update_cik(item.ticker, item.cik_str)
+                    rec_count += 1
+                except Exception as e:
+                    logger.error(f"Failed to update CIK for ticker: {item.ticker} - {e}")
+                    err_count += 1
+
+        if rec_count > 0:
+            ctrl_store.update_cik_flag(True)
+
+        log_activity(f"Updated Master List CIKs values: records {rec_count}, errors {err_count}")
+
+
+    def output(self):
+        return CikLoadTaskCompletedTarget(self.url, self.database)
+
+
+class BuildMasterListTask(luigi.WrapperTask):
+    def requires(self):
+        return [LoadCikCodesTask(), LoadFigiCodesTask()]

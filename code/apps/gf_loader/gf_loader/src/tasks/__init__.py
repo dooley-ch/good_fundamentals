@@ -15,8 +15,7 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['ResetTask', 'ConfigDatabase', 'CollectionPopulatedTarget', 'PopulateMasterListTask']
+__all__ = ['ResetTask', 'CollectionPopulatedTarget', 'PopulateMasterListTask', 'BuildMasterListTask']
 
-from ._config import *
 from ._targets import *
 from ._tasks import *
