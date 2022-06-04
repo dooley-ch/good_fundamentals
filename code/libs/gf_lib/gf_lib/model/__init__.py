@@ -16,7 +16,6 @@ __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
 __all__ = ['PeriodType', 'Months', 'DocumentMetaData', 'Master', 'Company', 'PeriodEnds', 'AccountingItem',
-           'AccountingStatement', 'IncomeStatement', 'CashFlow', 'BalanceSheet', 'EarningsStatement',
-           'GicsClassification']
+           'AccountingStatement', 'GicsClassification', 'TaskControl']
 
 from ._database import *

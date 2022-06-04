@@ -304,18 +304,6 @@
 							"colid": "e6fe23e6-c2d2-49a5-a476-e7da32b31cf3"
 						}
 					]
-				},
-				{
-					"id": "a826ac9f-1497-4c85-a14e-c2e63e923e00",
-					"isPk": false,
-					"using": "na",
-					"name": "gics_classifications_ak_sector",
-					"cols": [
-						{
-							"id": "38527370-e452-4669-b463-004202ed301c",
-							"colid": "103bb10c-d687-461d-a544-24fabe304af8"
-						}
-					]
 				}
 			],
 			"indexes": [
@@ -598,18 +586,6 @@
 						{
 							"id": "fe096c52-2a23-4c7a-933b-9f466713debc",
 							"colid": "8fd77901-4d91-4bf3-b777-dcd7cd476379"
-						}
-					]
-				},
-				{
-					"id": "d0edba91-ee22-4492-a1c7-69c98b67df9b",
-					"isPk": false,
-					"using": "na",
-					"name": "companies_ak_ticker",
-					"cols": [
-						{
-							"id": "812d119a-4052-4fc4-9561-ae0563500f46",
-							"colid": "adb28a59-264c-4da5-91d0-b23178aff0b0"
 						}
 					]
 				}
@@ -1455,6 +1431,79 @@
 			"validationAction": "error",
 			"collation": "",
 			"others": ""
+		},
+		"c257ec5b-eb03-4b14-bdac-b19aafc91b5b": {
+			"id": "c257ec5b-eb03-4b14-bdac-b19aafc91b5b",
+			"visible": true,
+			"name": "task_control",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "a5544908-32bb-42ca-a03c-28e9367378c3",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": ""
+				},
+				{
+					"id": "12897082-4db0-4d22-aa21-d4661cc89814",
+					"name": "cik_loaded",
+					"datatype": "bool",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "6ccdaff5-d1a3-4df8-86f8-3e567a3be9cf",
+					"name": "figi_loaded",
+					"datatype": "bool",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "faae89b1-850b-4ed9-9e3a-c2cea4d8fb7f",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "053879f5-a728-4000-8904-fd7edf9b697b",
+							"colid": "a5544908-32bb-42ca-a03c-28e9367378c3"
+						}
+					]
+				}
+			],
+			"indexes": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
 		}
 	},
 	"relations": {},
@@ -1489,7 +1538,7 @@
 		"def_validationAction": "na",
 		"def_collation": "",
 		"def_others": "",
-		"lastSaved": "Thu Jun 02 2022 12:43:50 GMT+0200 (Central European Summer Time)",
+		"lastSaved": "Fri Jun 03 2022 15:49:57 GMT+0200 (Central European Summer Time)",
 		"writeFileParam": false
 	},
 	"otherObjects": {},
@@ -1530,7 +1579,7 @@
 				},
 				"b0f8a8aa-7ce3-4e80-bb69-8e4435a8ebd3": {
 					"referencedItemId": "b0f8a8aa-7ce3-4e80-bb69-8e4435a8ebd3",
-					"x": 707,
+					"x": 706,
 					"y": 455,
 					"gHeight": 387,
 					"gWidth": 276,
@@ -1614,6 +1663,17 @@
 					"color": "#ffffff",
 					"background": "#3f51b5",
 					"resized": true,
+					"autoExpand": true
+				},
+				"c257ec5b-eb03-4b14-bdac-b19aafc91b5b": {
+					"referencedItemId": "c257ec5b-eb03-4b14-bdac-b19aafc91b5b",
+					"x": 1031,
+					"y": 461,
+					"gHeight": 81,
+					"gWidth": 188,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
 					"autoExpand": true
 				}
 			},

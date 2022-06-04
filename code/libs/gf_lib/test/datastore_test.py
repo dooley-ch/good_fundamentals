@@ -18,12 +18,57 @@ __status__ = "Production"
 
 import pytest
 from pymongo import MongoClient
-from pymongo.database import Database
 from pymongo.collection import Collection
+from pymongo.database import Database
 from gf_lib.datastore import MasterListDatastore, GicsClassificationDatastore, CompanyDatastore, \
-    AccountingStatemetDatastore
-from gf_lib.model import Master, GicsClassification, Company, PeriodType, AccountingStatement
+    AccountingStatemetDatastore, TaskControlDatastore
 from gf_lib.errors import DuplicateRecordError
+from gf_lib.model import Master, GicsClassification, Company, PeriodType, AccountingStatement, TaskControl
+
+
+class TestTaskControl:
+    COLLECTION_NAME = 'task_control'
+
+    @pytest.fixture
+    def clear_collection(self, mongodb_connection) -> None:
+        db: Database = mongodb_connection['good_fundamentals_test']
+        col: Collection = db[TestTaskControl.COLLECTION_NAME]
+        col.delete_many({})
+
+    def test_insert(self, clear_collection, mongodb_connection: MongoClient) -> None:
+        db: Database = mongodb_connection['good_fundamentals_test']
+        store = TaskControlDatastore(db)
+
+        record = TaskControl()
+        assert store.insert(record)
+
+    def test_update_cik(self, clear_collection, mongodb_connection: MongoClient) -> None:
+        db: Database = mongodb_connection['good_fundamentals_test']
+        store = TaskControlDatastore(db)
+
+        record = TaskControl()
+        assert store.insert(record)
+
+        assert store.update_cik_flag(True)
+
+    def test_update_figi(self, clear_collection, mongodb_connection: MongoClient) -> None:
+        db: Database = mongodb_connection['good_fundamentals_test']
+        store = TaskControlDatastore(db)
+
+        record = TaskControl()
+        assert store.insert(record)
+
+        assert store.update_figi_flag(True)
+
+    def test_get(self, clear_collection, mongodb_connection: MongoClient) -> None:
+        db: Database = mongodb_connection['good_fundamentals_test']
+        store = TaskControlDatastore(db)
+
+        record = TaskControl()
+        assert store.insert(record)
+
+        record = store.get()
+        assert record
 
 
 class TestEarningsStatement:
@@ -520,3 +565,60 @@ class TestMasterListDatastore:
 
         records = store.find_by_industry('Technology', 'Software')
         assert len(records) == 0
+
+    def test_get_tickers(self, clear_collection, mongodb_connection: MongoClient) -> None:
+        db: Database = mongodb_connection['good_fundamentals_test']
+        store = MasterListDatastore(db)
+
+        record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
+                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
+        assert store.insert(record)
+
+        record = Master(ticker='AAPL', name='Apple Inc.', cik='0123456789',
+                        figi='012345678912', sector='Technology', sub_industry='Consumer Electronics')
+        assert store.insert(record)
+
+        record = Master(ticker='DOW', name='Dow Inc.', cik='0123456789',
+                        figi='012345678912', sector='Basic Materials', sub_industry='Chemicals')
+        assert store.insert(record)
+
+        record = Master(ticker='DD', name='DuPont de Nemours Inc.', cik='0123456789',
+                        figi='012345678912', sector='Basic Materials', sub_industry='Specialty Chemicals')
+        assert store.insert(record)
+
+        data = store.get_tickers()
+        assert len(data) == 4
+
+    def test_update_figi(self, clear_collection, mongodb_connection: MongoClient) -> None:
+        db: Database = mongodb_connection['good_fundamentals_test']
+        store = MasterListDatastore(db)
+
+        record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
+                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
+        assert store.insert(record)
+
+        record = store.get('IBM')
+        assert record.figi == '012345678912'
+
+        store.update_figi('IBM', 'BBG000BLNNH6')
+        record = store.get('IBM')
+
+        assert record.figi == 'BBG000BLNNH6'
+        assert record.metadata.lock_version == 2
+
+    def test_update_cik(self, clear_collection, mongodb_connection: MongoClient) -> None:
+        db: Database = mongodb_connection['good_fundamentals_test']
+        store = MasterListDatastore(db)
+
+        record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
+                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
+        assert store.insert(record)
+
+        record = store.get('IBM')
+        assert record.cik == '0123456789'
+
+        store.update_cik('IBM', '9876543210')
+        record = store.get('IBM')
+
+        assert record.cik == '9876543210'
+        assert record.metadata.lock_version == 2

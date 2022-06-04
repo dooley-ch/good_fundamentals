@@ -17,6 +17,7 @@ __maintainer__ = "James Dooley"
 __status__ = "Production"
 __all__ = ['CollectionPopulatedTarget']
 
+from loguru import logger
 import luigi
 from pymongo import MongoClient
 from pymongo.database import Database
@@ -38,6 +39,7 @@ class CollectionPopulatedTarget(luigi.Target):
         self._database = database
         self._collection = collection
 
+    @logger.catch(reraise=True)
     def exists(self):
         client: MongoClient = MongoClient(self._url)
 

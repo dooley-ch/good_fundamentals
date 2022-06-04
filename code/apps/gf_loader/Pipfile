@@ -11,6 +11,9 @@ luigi = "*"
 python-dotenv = "*"
 dnspython = "*"
 pymongo = "*"
+pendulum = "*"
+beautifulsoup4 = "*"
+orjson = "*"
 
 [dev-packages]
 pytest = "*"

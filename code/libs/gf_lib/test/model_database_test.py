@@ -81,7 +81,7 @@ class TestMaster:
 
     def test_figi_invalid_chars(self) -> None:
         with pytest.raises(ValueError) as e:
-            model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='0123456789AB',
+            model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='0123456789ab',
                          sector='Sector', sub_industry='Industry')
 
         msg: str = e.value.args[0]

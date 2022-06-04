@@ -16,7 +16,7 @@ __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
 __all__ = ['PeriodType', 'Months', 'DocumentMetaData', 'Master', 'Company', 'PeriodEnds', 'AccountingItem',
-           'AccountingStatement', 'GicsClassification']
+           'AccountingStatement', 'GicsClassification', 'TaskControl']
 
 from enum import Enum
 from datetime import datetime, date
@@ -70,6 +70,12 @@ def to_months(value: str | Months) -> Months:
     return Months(value)
 
 
+@attrs.frozen
+class TaskControl:
+    cik_loaded: bool = attrs.field(default=False, validator=[validators.instance_of(bool)])
+    figi_loaded: bool  = attrs.field(default=False, validator=[validators.instance_of(bool)])
+
+
 @attrs.define
 class DocumentMetaData:
     """
@@ -106,13 +112,13 @@ class Master:
     """
     ticker: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z.-]{1,5}$')],
                               converter=lambda value: value.upper())
-    name: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('[A-Za-z .]{5,120}$')])
+    name: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
     cik: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('^[0-9]{10,10}$')],
                            converter=lambda value: value.zfill(10))
-    figi: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('^[0-9]{12,12}$')],
+    figi: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('^[0-9A-Z]{12,12}$')],
                             converter=lambda value: value.zfill(12))
-    sector: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('[A-Za-z ]{5,80}$')])
-    sub_industry: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('[A-Za-z ]{5,80}$')])
+    sector: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
+    sub_industry: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
     indexes: list[str] = attrs.Factory(list)
     metadata: DocumentMetaData = attrs.field(eq=False, factory=DocumentMetaData,
                                              validator=[validators.instance_of(DocumentMetaData)],

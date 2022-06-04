@@ -10,11 +10,11 @@ dnspython = "*"
 requests = "*"
 beautifulsoup4 = "*"
 orjson = "*"
-pytest = "*"
 pymongo = "*"
 loguru = "*"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.10"

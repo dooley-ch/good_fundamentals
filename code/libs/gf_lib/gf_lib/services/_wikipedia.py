@@ -21,7 +21,7 @@ import attrs
 import attrs.validators as validators
 import requests
 from bs4 import BeautifulSoup
-from gf_lib.errors import RequestFailed
+from gf_lib.errors import RequestFailedError
 
 
 @attrs.frozen
@@ -31,7 +31,7 @@ class SpEntry:
     name: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
     cik: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
     sector: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
-    industry: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
+    sub_industry: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
 
 
 def _get_page(url: str) -> str:
@@ -42,7 +42,7 @@ def _get_page(url: str) -> str:
     if response.status_code == 200:
         return response.text
 
-    raise RequestFailed(url, response.status_code)
+    raise RequestFailedError(url, response.status_code)
 
 
 def get_sp600(url: str) -> list[SpEntry] | None:

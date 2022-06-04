@@ -1,5 +1,5 @@
 # *******************************************************************************************
-#  File:  __init__.py
+#  File:  conftest.py
 #
 #  Created: 30-05-2022
 #
@@ -15,11 +15,20 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['MasterListDatastore', 'GicsClassificationDatastore', 'CompanyDatastore', 'AccountingStatemetDatastore',
-           'TaskControlDatastore']
 
-from ._masterlist import *
-from ._gics_classification import *
-from ._company import *
-from ._statement import *
-from ._task_control import *
+import pytest
+from pymongo import MongoClient
+
+@pytest.fixture(scope="module")
+def mongodb_connection() -> MongoClient:
+    return MongoClient('mongodb://localhost:27017')
+
+
+@pytest.fixture(scope="module")
+def mongodb_url() -> str:
+    return 'mongodb://localhost:27017'
+
+
+@pytest.fixture(scope="module")
+def mongodb_database() -> str:
+    return 'good_fundamentals_test'

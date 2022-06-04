@@ -19,9 +19,11 @@ __status__ = "Production"
 from pathlib import Path
 import atexit
 import os
+import luigi
 import typer
 from dotenv import load_dotenv
 from gf_lib.utils import configure_logging, log_start, log_end
+import src.tasks as tasks
 
 app = typer.Typer(help='This application handles the ETL process needed to build the gf database')
 
@@ -43,7 +45,6 @@ def reset_companies():
 
 def exit_routine() -> None:
     log_end()
-    print(f"LUIGI_CONFIG_PATH: {os.environ.get('LUIGI_CONFIG_PATH')}")
 
 
 def main() -> None:
@@ -61,8 +62,13 @@ def main() -> None:
     configure_logging('gf_loader', __file__)
     log_start()
 
-    # Process commands
-    app()
+    # # Process commands
+    # app()
+
+    if luigi.build([tasks.PopulateMasterListTask()], local_scheduler=True):
+        typer.echo('Done.', color=True)
+    else:
+        typer.echo('Failed', err=True, color=True)
 
 
 if __name__ == '__main__':

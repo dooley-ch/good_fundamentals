@@ -21,8 +21,8 @@ import attrs
 import attrs.validators as validators
 import orjson
 import requests
-import orjson as json
-from gf_lib.errors import RequestFailed
+from gf_lib.errors import RequestFailedError
+
 
 def _get_page(url: str) -> str:
     """
@@ -32,7 +32,7 @@ def _get_page(url: str) -> str:
     if response.status_code == 200:
         return response.text
 
-    raise RequestFailed(url, response.status_code)
+    raise RequestFailedError(url, response.status_code)
 
 
 @attrs.frozen
@@ -48,7 +48,7 @@ def get_sec_map(url: str) -> list[SecMap] | None:
     contents = _get_page(url)
 
     if contents:
-        data = json.loads(contents)
+        data = orjson.loads(contents)
 
         records: list[SecMap] = list()
 
