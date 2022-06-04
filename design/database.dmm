@@ -1538,7 +1538,7 @@
 		"def_validationAction": "na",
 		"def_collation": "",
 		"def_others": "",
-		"lastSaved": "Fri Jun 03 2022 15:49:57 GMT+0200 (Central European Summer Time)",
+		"lastSaved": "Sat Jun 04 2022 15:25:30 GMT+0200 (Central European Summer Time)",
 		"writeFileParam": false
 	},
 	"otherObjects": {},
@@ -1672,7 +1672,7 @@
 					"gHeight": 81,
 					"gWidth": 188,
 					"color": "#ffffff",
-					"background": "#03a9f4",
+					"background": "#3f51b5",
 					"resized": false,
 					"autoExpand": true
 				}

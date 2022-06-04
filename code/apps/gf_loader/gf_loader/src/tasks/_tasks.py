@@ -15,18 +15,45 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['PopulateMasterListTask']
+__all__ = ['PopulateMasterListTask', 'ResetTask']
 
-from pymongo import MongoClient
-from pymongo.database import Database
+import gf_lib.datastore as ds
+import gf_lib.model as model
+import gf_lib.services as svc
 import luigi
 from attrs import asdict
-from loguru import logger
-import gf_lib.datastore as ds
-import gf_lib.services as svc
-import gf_lib.model as model
 from gf_lib.utils import log_activity
-from ._targets import CollectionPopulatedTarget
+from loguru import logger
+from pymongo import MongoClient
+from pymongo.collection import Collection
+from pymongo.database import Database
+
+from ._targets import CollectionPopulatedTarget, FigiLoadTaskCompletedTarget
+
+
+class ResetTask(luigi.Task):
+    url = luigi.Parameter()
+    database = luigi.Parameter()
+
+    def requires(self):
+        pass
+
+    def run(self):
+        client: MongoClient = MongoClient(self.url)
+        database: Database = client[self.database]
+
+        # Task Control
+        coll: Collection = database['task_control']
+        coll.delete_many({})
+        record = model.TaskControl()
+        coll.insert_one(asdict(record))
+
+        # Master List
+        coll: Collection = database['master_list']
+        coll.delete_many({})
+
+    def output(self):
+        pass
 
 
 class PopulateMasterListTask(luigi.Task):
@@ -143,3 +170,22 @@ class PopulateMasterListTask(luigi.Task):
 
     def output(self):
         return CollectionPopulatedTarget(self.url, self.database, self.collection)
+
+
+# class LoadCikCodesTask(luigi.Task):
+#     """
+#     This task updates the master records with the CIK code supplied by
+#     the SEC
+#     """
+#     url = luigi.Parameter()
+#     database = luigi.Parameter()
+#     collection = luigi.Parameter()
+#
+#     def requires(self):
+#         return [PopulateMasterListTask()]
+#
+#     def run(self):
+#         pass
+#
+#     def output(self):
+#         return FigiLoadTaskCompletedTarget()

@@ -22,7 +22,7 @@ import os
 import luigi
 import typer
 from dotenv import load_dotenv
-from gf_lib.utils import configure_logging, log_start, log_end
+from gf_lib.utils import configure_logging, log_start, log_end, log_activity
 import src.tasks as tasks
 
 app = typer.Typer(help='This application handles the ETL process needed to build the gf database')
@@ -39,8 +39,15 @@ def populate_database():
 
 
 @app.command('reset', help='Deletes expired company records')
-def reset_companies():
-    typer.echo('Reset Companies')
+def reset():
+    log_activity('Resetting system...')
+
+    if luigi.build([tasks.ResetTask()], local_scheduler=True):
+        typer.echo('System has been reset.', color=True)
+        log_activity('System reset completed successfully.')
+    else:
+        typer.echo('System reset failed, see log files for details.', err=True, color=True)
+        log_activity('System reset failed.')
 
 
 def exit_routine() -> None:
@@ -62,13 +69,8 @@ def main() -> None:
     configure_logging('gf_loader', __file__)
     log_start()
 
-    # # Process commands
-    # app()
-
-    if luigi.build([tasks.PopulateMasterListTask()], local_scheduler=True):
-        typer.echo('Done.', color=True)
-    else:
-        typer.echo('Failed', err=True, color=True)
+    # Process commands
+    app()
 
 
 if __name__ == '__main__':

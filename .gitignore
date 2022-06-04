@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 code/libs/gf_lib/.idea
 code/apps/gf_loader/.idea
+*.log.*
