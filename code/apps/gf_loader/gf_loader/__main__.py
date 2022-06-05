@@ -30,14 +30,21 @@ app = typer.Typer(help='This application handles the ETL process needed to build
 
 @app.command('build', help='Builds the MangoDb database')
 def build_database():
-    typer.echo('Build database')
+    log_activity('Building database...')
+
+    if luigi.build([tasks.BuildDatabase()], local_scheduler=False):
+        typer.echo('Database built.', color=True)
+        log_activity('Database built successfully.')
+    else:
+        typer.echo('Failed to build database, see log files for details.', err=True, color=True)
+        log_activity('Failed to build database.')
 
 
 @app.command('populate', help='Populate the database with a new master list')
 def populate():
     log_activity('Populating master list...')
 
-    if luigi.build([tasks.BuildMasterListTask()], local_scheduler=True):
+    if luigi.build([tasks.BuildMasterListTask()], local_scheduler=False):
         typer.echo('Master list built.', color=True)
         log_activity('Master list built successfully.')
     else:
@@ -49,7 +56,7 @@ def populate():
 def reset():
     log_activity('Resetting system...')
 
-    if luigi.build([tasks.ResetTask()], local_scheduler=True):
+    if luigi.build([tasks.ResetTask()], local_scheduler=False):
         typer.echo('System has been reset.', color=True)
         log_activity('System reset completed successfully.')
     else:

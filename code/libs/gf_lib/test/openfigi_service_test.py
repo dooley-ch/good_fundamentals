@@ -20,12 +20,16 @@ import gf_lib.services as svc
 
 
 class TestOpenFigi:
-    def test_valid_value(self) -> None:
-        code: str | None = svc.get_openfigi_code('https://api.openfigi.com/v1/mapping',
-                                                 'fe11251c-d169-441b-bcf9-2afbc914d806', 'IBM')
-        assert code == 'BBG000BLNNH6'
+    def test_valid_values(self) -> None:
+        codes: list[str] | None = svc.get_openfigi_codes('https://api.openfigi.com/v1/mapping',
+                                                 'fe11251c-d169-441b-bcf9-2afbc914d806', ['IBM', 'JNJ', 'AAPL'])
+        assert len(codes) == 3
 
     def test_missing_value(self) -> None:
-        code: str | None = svc.get_openfigi_code('https://api.openfigi.com/v1/mapping',
-                                                 'fe11251c-d169-441b-bcf9-2afbc914d806', 'IBMABC')
-        assert code is None
+        codes: list[svc.FigiCode] | None = svc.get_openfigi_codes('https://api.openfigi.com/v1/mapping',
+                                                 'fe11251c-d169-441b-bcf9-2afbc914d806', ['IBM', 'JNJ', 'AAPL', 'XX45'])
+        assert len(codes) == 4
+
+        entry = codes[3]
+        assert entry.ticker == 'XX45' and entry.figi is None
+

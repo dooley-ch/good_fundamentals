@@ -30,6 +30,7 @@ def string_to_date(value: str | datetime) -> datetime:
         return value
     return pendulum.parse(value, strict=False)
 
+
 class PeriodType(str, Enum):
     """
     Differentiates annual from quarterly financial statements
@@ -73,7 +74,7 @@ def to_months(value: str | Months) -> Months:
 @attrs.frozen
 class TaskControl:
     cik_loaded: bool = attrs.field(default=False, validator=[validators.instance_of(bool)])
-    figi_loaded: bool  = attrs.field(default=False, validator=[validators.instance_of(bool)])
+    figi_loaded: bool = attrs.field(default=False, validator=[validators.instance_of(bool)])
 
 
 @attrs.define
@@ -105,6 +106,15 @@ def to_document_metadata(value: dict | DocumentMetaData) -> DocumentMetaData:
     return DocumentMetaData(**value)
 
 
+@attrs.frozen
+class TaskControl:
+    cik_loaded: bool = attrs.field(default=False, validator=[validators.instance_of(bool)])
+    figi_loaded: bool = attrs.field(default=False, validator=[validators.instance_of(bool)])
+    metadata: DocumentMetaData = attrs.field(eq=False, factory=DocumentMetaData,
+                                             validator=[validators.instance_of(DocumentMetaData)],
+                                             converter=to_document_metadata)
+
+
 @attrs.frozen(kw_only=True)
 class Master:
     """
@@ -115,9 +125,9 @@ class Master:
     name: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
     cik: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('^[0-9]{10,10}$')],
                            converter=lambda value: value.zfill(10))
-    figi: str = attrs.field(eq=False, validator=[validators.instance_of(str), validators.matches_re('^[0-9A-Z]{12,12}$')],
+    figi: str = attrs.field(eq=False,
+                            validator=[validators.instance_of(str), validators.matches_re('^[0-9A-Z]{12,12}$')],
                             converter=lambda value: value.zfill(12))
-    sector: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
     sub_industry: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
     indexes: list[str] = attrs.Factory(list)
     metadata: DocumentMetaData = attrs.field(eq=False, factory=DocumentMetaData,

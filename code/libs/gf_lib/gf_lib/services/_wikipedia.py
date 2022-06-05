@@ -30,7 +30,6 @@ class SpEntry:
                               converter=lambda value: value.upper())
     name: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
     cik: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
-    sector: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
     sub_industry: str = attrs.field(eq=False, validator=[validators.instance_of(str)])
 
 
@@ -61,14 +60,13 @@ def get_sp600(url: str) -> list[SpEntry] | None:
                     for row in rows:
                         name = str(row.contents[1].text).strip()
                         ticker = str(row.contents[3].text).strip()
-                        sector = str(row.contents[5].text).strip()
                         sub_industry = str(row.contents[7].text).strip()
                         cik = str(row.contents[11].text).strip()
 
                         if name == 'Company':
                             continue
 
-                        constituuents.append(SpEntry(ticker, name, cik, sector, sub_industry))
+                        constituuents.append(SpEntry(ticker, name, cik, sub_industry))
         return constituuents
 
 
@@ -88,13 +86,12 @@ def get_sp400(url: str) -> list[SpEntry] | None:
                     for row in rows:
                         name = str(row.contents[1].text).strip()
                         ticker = str(row.contents[3].text).strip()
-                        sector = str(row.contents[5].text).strip()
                         sub_industry = str(row.contents[7].text).strip()
 
                         if name == 'Security':
                             continue
 
-                        constituuents.append(SpEntry(ticker, name, '0000000000', sector, sub_industry))
+                        constituuents.append(SpEntry(ticker, name, '0000000000', sub_industry))
         return constituuents
 
 
@@ -114,14 +111,13 @@ def get_sp500(url: str) -> list[SpEntry] | None:
                     for row in rows:
                         name = str(row.contents[3].text).strip()
                         ticker = str(row.contents[1].text).strip()
-                        sector = str(row.contents[7].text).strip()
                         sub_industry = str(row.contents[9].text).strip()
                         cik = str(row.contents[15].text).strip()
 
                         if name == 'Security':
                             continue
 
-                        constituuents.append(SpEntry(ticker, name, cik, sector, sub_industry))
+                        constituuents.append(SpEntry(ticker, name, cik, sub_industry))
         return constituuents
 
 
