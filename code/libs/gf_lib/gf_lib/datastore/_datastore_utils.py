@@ -16,13 +16,58 @@ __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
 __all__ = ['database_exists', 'create_database', 'drop_database', 'collection_exists', 'drop_collection',
-           'get_master_list_validator', 'get_task_control_validator', 'create_master_list', 'create_task_control']
+           'get_master_list_validator', 'get_task_control_validator', 'create_master_list', 'create_task_control',
+           'create_gics']
 
 from collections import OrderedDict
 
 import pymongo
 from pymongo import MongoClient
 from pymongo.database import Database
+
+_gcis = {'$jsonSchema':
+             {'bsonType': 'object',
+              'title': 'gics',
+              'required': ['id', 'name', 'industry_groups'],
+              'properties': {
+                  'id': {'bsonType': 'int'},
+                  'name': {'bsonType': 'string'},
+                  'industry_groups': {
+                      'bsonType': 'array',
+                      'items': {
+                          'title': 'industry_group',
+                          'required': ['id', 'name', 'industries'],
+                          'properties': {
+                              'id': {'bsonType': 'int'},
+                              'name': {'bsonType': 'string'},
+                              'industries': {
+                                  'bsonType': 'array',
+                                  'items': {
+                                      'title': 'Industry',
+                                      'required': ['id', 'name', 'sub_industries'],
+                                      'properties': {
+                                          'id': {'bsonType': 'int'},
+                                          'name': {'bsonType': 'string'},
+                                          'sub_industries': {
+                                              'bsonType': 'array',
+                                              'items': {
+                                                  'title': 'item',
+                                                  'required': ['id', 'name'],
+                                                  'properties': {
+                                                      'id': {'bsonType': 'int'},
+                                                      'name': {'bsonType': 'string'}
+                                                  }
+                                              }
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+              }
+         }
 
 _metadata: dict[str, dict] = {
     "lock_version": {"bsonType": 'int', "required": True},
@@ -176,7 +221,7 @@ def create_master_list(db: Database) -> None:
                        ("figi", pymongo.ASCENDING), ("sub_industry", pymongo.ASCENDING)],
                       name=f"{collection_name}_cik")
     coll.create_index([("figi", pymongo.ASCENDING), ("ticker", pymongo.ASCENDING), ("name", pymongo.ASCENDING),
-                       ("cik", pymongo.ASCENDING),  ("sub_industry", pymongo.ASCENDING)],
+                       ("cik", pymongo.ASCENDING), ("sub_industry", pymongo.ASCENDING)],
                       name=f"{collection_name}_figi")
     coll.create_index([("sub_industry", pymongo.ASCENDING), ("ticker", pymongo.ASCENDING), ("name", pymongo.ASCENDING),
                        ("cik", pymongo.ASCENDING), ("figi", pymongo.ASCENDING)], name=f"{collection_name}_sub_industry")
@@ -188,6 +233,19 @@ def create_task_control(db: Database) -> None:
         drop_collection(db, collection_name)
 
     validator = get_task_control_validator()
+
+    db.create_collection(collection_name)
+
+    query = [('collMod', collection_name), ('validator', validator)]
+    db.command(OrderedDict(query))
+
+
+def create_gics(db: Database) -> None:
+    collection_name: str = 'gics'
+    if collection_exists(db, collection_name):
+        drop_collection(db, collection_name)
+
+    validator = _gcis
 
     db.create_collection(collection_name)
 

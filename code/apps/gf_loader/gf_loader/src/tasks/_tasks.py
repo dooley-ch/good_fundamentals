@@ -53,6 +53,7 @@ class BuildDatabase(luigi.Task):
         db: Database = client[self.database]
         ds.create_master_list(db)
         ds.create_task_control(db)
+        ds.create_gics(db)
 
         record = model.TaskControl()
         coll = db.get_collection('task_control')
@@ -257,7 +258,6 @@ class LoadFigiCodesTask(luigi.Task):
             processed_count += len(batch)
             self.set_status_message("Processing FIGI codes...")
             self.set_progress_percentage(min(math.floor(100 * (processed_count / total_count)), 100))
-
 
         if rec_count > 0:
             ctrl_store.update_figi_flag(True)

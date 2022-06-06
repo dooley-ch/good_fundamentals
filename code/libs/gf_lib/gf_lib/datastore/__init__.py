@@ -18,7 +18,7 @@ __status__ = "Production"
 __all__ = ['MasterListDatastore', 'GicsClassificationDatastore', 'CompanyDatastore', 'AccountingStatemetDatastore',
            'TaskControlDatastore', 'database_exists', 'create_database', 'drop_database', 'collection_exists',
            'drop_collection', 'get_master_list_validator', 'get_task_control_validator', 'create_master_list',
-           'create_task_control']
+           'create_task_control', 'create_gics']
 
 from ._masterlist import *
 from ._gics_classification import *
