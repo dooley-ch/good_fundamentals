@@ -75,20 +75,6 @@
 					"validate": ""
 				},
 				{
-					"id": "44b45aae-7cd0-49e4-a9d3-f45eb68b55d4",
-					"name": "sector",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
 					"id": "f56d6544-5e35-4884-a64b-eaa61c8c0b0b",
 					"name": "sub_industry",
 					"datatype": "string",
@@ -187,20 +173,6 @@
 					"mongodb": {
 						"options": "{\nname: \"master_list_ix_3\"\n}",
 						"fields": "{\n\"figi\": 1\n}"
-					},
-					"cols": []
-				},
-				{
-					"id": "70eff71a-ed07-4e49-a453-aa81b3650d7c",
-					"name": "master_list_ix_sector",
-					"unique": false,
-					"fulltext": false,
-					"using": "na",
-					"algorithm": "na",
-					"lockoption": "na",
-					"mongodb": {
-						"options": "{\nname: \"master_list_ix_4\"\n}",
-						"fields": "{\n\"sector\": 1\n}"
 					},
 					"cols": []
 				},
@@ -1722,7 +1694,7 @@
 		"def_validationAction": "na",
 		"def_collation": "",
 		"def_others": "",
-		"lastSaved": "Sun Jun 05 2022 18:08:41 GMT+0200 (Central European Summer Time)",
+		"lastSaved": "Mon Jun 06 2022 18:40:27 GMT+0200 (Central European Summer Time)",
 		"writeFileParam": false
 	},
 	"otherObjects": {},
@@ -1743,7 +1715,7 @@
 					"referencedItemId": "9518f827-f23c-4266-be1e-f1075dac35e3",
 					"x": 45,
 					"y": 449,
-					"gHeight": 243,
+					"gHeight": 225,
 					"gWidth": 276,
 					"color": "#ffffff",
 					"background": "#3f51b5",

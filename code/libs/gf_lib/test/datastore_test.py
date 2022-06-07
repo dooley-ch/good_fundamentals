@@ -404,7 +404,7 @@ class TestMasterListDatastore:
         db: Database = mongodb_connection['good_fundamentals_test']
         store = MasterListDatastore(db)
         record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
+                        figi='012345678912', sub_industry='Information Technology Services')
 
         record.indexes.append('SP500')
         record.indexes.append('SP100')
@@ -416,7 +416,7 @@ class TestMasterListDatastore:
         store = MasterListDatastore(db)
 
         record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
+                        figi='012345678912', sub_industry='Information Technology Services')
 
         assert store.insert(record)
         with pytest.raises(DuplicateRecordError):
@@ -427,11 +427,11 @@ class TestMasterListDatastore:
         store = MasterListDatastore(db)
 
         record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
+                        figi='012345678912', sub_industry='Information Technology Services')
         assert store.insert(record)
 
         record = Master(ticker='AAPL', name='Apple Inc.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
+                        figi='012345678912', sub_industry='Information Technology Services')
         record.indexes.append('SP500')
         record.indexes.append('SP100')
 
@@ -443,7 +443,6 @@ class TestMasterListDatastore:
         assert record.name == result.name
         assert record.cik == result.cik
         assert record.figi == result.figi
-        assert record.sector == result.sector
         assert record.sub_industry == result.sub_industry
 
     def test_get_none(self, clear_collection, mongodb_connection: MongoClient) -> None:
@@ -451,139 +450,32 @@ class TestMasterListDatastore:
         store = MasterListDatastore(db)
 
         record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
+                        figi='012345678912', sub_industry='Information Technology Services')
         assert store.insert(record)
 
         result = store.get('AAPL')
 
         assert result is None
 
-    def test_get_by_sector(self, clear_collection, mongodb_connection: MongoClient) -> None:
-        db: Database = mongodb_connection['good_fundamentals_test']
-        store = MasterListDatastore(db)
-
-        record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
-        assert store.insert(record)
-
-        record = Master(ticker='AAPL', name='Apple Inc.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Consumer Electronics')
-
-        assert store.insert(record)
-
-        record = Master(ticker='DOW', name='Dow Inc.', cik='0123456789',
-                        figi='012345678912', sector='Basic Materials', sub_industry='Chemicals')
-        assert store.insert(record)
-
-        records = store.find_by_sector('Technology')
-        assert len(records) == 2
-
-    def test_get_by_sector_one_row(self, clear_collection, mongodb_connection: MongoClient) -> None:
-        db: Database = mongodb_connection['good_fundamentals_test']
-        store = MasterListDatastore(db)
-
-        record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
-        assert store.insert(record)
-
-        record = Master(ticker='AAPL', name='Apple Inc.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Consumer Electronics')
-
-        assert store.insert(record)
-
-        record = Master(ticker='DOW', name='Dow Inc.', cik='0123456789',
-                        figi='012345678912', sector='Basic Materials', sub_industry='Chemicals')
-        assert store.insert(record)
-
-        records = store.find_by_sector('Basic Materials')
-        assert len(records) == 1
-
-    def test_get_by_sector_no_row(self, clear_collection, mongodb_connection: MongoClient) -> None:
-        db: Database = mongodb_connection['good_fundamentals_test']
-        store = MasterListDatastore(db)
-
-        record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
-        assert store.insert(record)
-
-        record = Master(ticker='AAPL', name='Apple Inc.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Consumer Electronics')
-
-        assert store.insert(record)
-
-        record = Master(ticker='DOW', name='Dow Inc.', cik='0123456789',
-                        figi='012345678912', sector='Basic Materials', sub_industry='Chemicals')
-        assert store.insert(record)
-
-        records = store.find_by_sector('Finance')
-        assert len(records) == 0
-
-    def test_get_by_sector_and_sub_industry(self, clear_collection, mongodb_connection: MongoClient) -> None:
-        db: Database = mongodb_connection['good_fundamentals_test']
-        store = MasterListDatastore(db)
-
-        record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
-        assert store.insert(record)
-
-        record = Master(ticker='AAPL', name='Apple Inc.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Consumer Electronics')
-
-        assert store.insert(record)
-
-        record = Master(ticker='DOW', name='Dow Inc.', cik='0123456789',
-                        figi='012345678912', sector='Basic Materials', sub_industry='Chemicals')
-        assert store.insert(record)
-
-        record = Master(ticker='DD', name='DuPont de Nemours Inc.', cik='0123456789',
-                        figi='012345678912', sector='Basic Materials', sub_industry='Specialty Chemicals')
-        assert store.insert(record)
-
-        records = store.find_by_industry('Basic Materials', 'Specialty Chemicals')
-        assert len(records) == 1
-
-    def test_get_by_sector_and_industry_no_row(self, clear_collection, mongodb_connection: MongoClient) -> None:
-        db: Database = mongodb_connection['good_fundamentals_test']
-        store = MasterListDatastore(db)
-
-        record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
-        assert store.insert(record)
-
-        record = Master(ticker='AAPL', name='Apple Inc.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Consumer Electronics')
-
-        assert store.insert(record)
-
-        record = Master(ticker='DOW', name='Dow Inc.', cik='0123456789',
-                        figi='012345678912', sector='Basic Materials', sub_industry='Chemicals')
-        assert store.insert(record)
-
-        record = Master(ticker='DD', name='DuPont de Nemours Inc.', cik='0123456789',
-                        figi='012345678912', sector='Basic Materials', sub_industry='Specialty Chemicals')
-        assert store.insert(record)
-
-        records = store.find_by_industry('Technology', 'Software')
-        assert len(records) == 0
 
     def test_get_tickers(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
         store = MasterListDatastore(db)
 
         record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
+                        figi='012345678912', sub_industry='Information Technology Services')
         assert store.insert(record)
 
         record = Master(ticker='AAPL', name='Apple Inc.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Consumer Electronics')
+                        figi='012345678912', sub_industry='Consumer Electronics')
         assert store.insert(record)
 
         record = Master(ticker='DOW', name='Dow Inc.', cik='0123456789',
-                        figi='012345678912', sector='Basic Materials', sub_industry='Chemicals')
+                        figi='012345678912', sub_industry='Chemicals')
         assert store.insert(record)
 
         record = Master(ticker='DD', name='DuPont de Nemours Inc.', cik='0123456789',
-                        figi='012345678912', sector='Basic Materials', sub_industry='Specialty Chemicals')
+                        figi='012345678912', sub_industry='Specialty Chemicals')
         assert store.insert(record)
 
         data = store.get_tickers()
@@ -594,7 +486,7 @@ class TestMasterListDatastore:
         store = MasterListDatastore(db)
 
         record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
+                        figi='012345678912', sub_industry='Information Technology Services')
         assert store.insert(record)
 
         record = store.get('IBM')
@@ -611,7 +503,7 @@ class TestMasterListDatastore:
         store = MasterListDatastore(db)
 
         record = Master(ticker='IBM', name='International Business Machines Corp.', cik='0123456789',
-                        figi='012345678912', sector='Technology', sub_industry='Information Technology Services')
+                        figi='012345678912', sub_industry='Information Technology Services')
         assert store.insert(record)
 
         record = store.get('IBM')

@@ -25,7 +25,7 @@ class TestMaster:
     def test_ticker_wrong_type(self) -> None:
         with pytest.raises(AttributeError) as e:
             model.Master(ticker=12, name='IBM Corporation', cik='0123456789', figi='012345678912',
-                         sector='Sector', sub_industry='Industry')
+                         sub_industry='Industry')
 
         msg: str = e.value.args[0]
         assert msg.startswith("'int' object has no attribute")
@@ -33,7 +33,7 @@ class TestMaster:
     def test_ticker_wrong_length(self) -> None:
         with pytest.raises(ValueError) as e:
             model.Master(ticker='XXXXXX', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                         sector='Sector', sub_industry='Industry')
+                         sub_industry='Industry')
 
         msg: str = e.value.args[0]
         assert msg.startswith("'ticker' must match regex")
@@ -41,69 +41,69 @@ class TestMaster:
     def test_ticker_empty(self) -> None:
         with pytest.raises(ValueError) as e:
             model.Master(ticker='', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                         sector='Sector', sub_industry='Industry')
+                         sub_industry='Industry')
 
         msg: str = e.value.args[0]
         assert msg.startswith("'ticker' must match regex")
 
     def test_ticker_convert_to_upper_case(self) -> None:
         record = model.Master(ticker='xxxxx', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                         sector='Sector', sub_industry='Industry')
+                         sub_industry='Industry')
         assert record.ticker == 'XXXXX'
 
     def test_ticker_with_valid_value(self) -> None:
         record = model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                              sector='Sector', sub_industry='Industry')
+                              sub_industry='Industry')
         assert record.ticker == 'IBM'
 
     def test_cik_wrong_length(self) -> None:
         record = model.Master(ticker='IBM', name='IBM Corporation', cik='01234567', figi='012345678912',
-                              sector='Sector', sub_industry='Industry')
+                              sub_industry='Industry')
         assert record.cik == '0001234567'
 
     def test_cik_invalid_chars(self) -> None:
         with pytest.raises(ValueError) as e:
             model.Master(ticker='IBM', name='IBM Corporation', cik='01234567AB', figi='012345678912',
-                         sector='Sector', sub_industry='Industry')
+                         sub_industry='Industry')
 
         msg: str = e.value.args[0]
         assert msg.startswith("'cik' must match regex")
 
     def test_cik_with_valid_value(self) -> None:
         record = model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                     sector='Sector', sub_industry='Industry')
+                     sub_industry='Industry')
         assert record.cik == '0123456789'
 
     def test_figi_wrong_length(self) -> None:
         record = model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='0123456789',
-                     sector='Sector', sub_industry='Industry')
+                     sub_industry='Industry')
         assert record.figi == '000123456789'
 
     def test_figi_invalid_chars(self) -> None:
         with pytest.raises(ValueError) as e:
             model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='0123456789ab',
-                         sector='Sector', sub_industry='Industry')
+                         sub_industry='Industry')
 
         msg: str = e.value.args[0]
         assert msg.startswith("'figi' must match regex")
 
     def test_figi_with_valid_value(self) -> None:
         record = model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                     sector='Sector', sub_industry='Industry')
+                     sub_industry='Industry')
         assert record.figi == '012345678912'
 
     def test_equal(self) -> None:
         record_1 = model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                              sector='Sector', sub_industry='Industry')
+                              sub_industry='Industry')
         record_2 = model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='012345678943',
-                              sector='Sector', sub_industry='Industry')
+                              sub_industry='Industry')
         assert record_1 == record_2
 
     def test_not_equal(self) -> None:
         record_1 = model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                              sector='Sector', sub_industry='Industry')
+                              sub_industry='Industry')
         record_2 = model.Master(ticker='AAPL', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                              sector='Sector', sub_industry='Industry')
+                              sub_industry='Industry')
         assert record_1 != record_2
 
 

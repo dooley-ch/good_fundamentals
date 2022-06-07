@@ -53,18 +53,6 @@ class MasterListDatastore:
         if cursor:
             return [row['ticker'] for row in cursor]
 
-    def find_by_sector(self, sector: str) -> list[Master] | None:
-        raw_data = self._collection.find({'sector': sector}, {'_id': 0})
-
-        if raw_data:
-            return [Master(**row) for row in raw_data]
-
-    def find_by_industry(self, sector: str, industry: str) -> list[Master] | None:
-        raw_data = self._collection.find({'sector': sector, 'sub_industry': industry}, {'_id': 0})
-
-        if raw_data:
-            return [Master(**row) for row in raw_data]
-
     def update_cik(self, ticker: str, value: str) -> bool:
         record = self.get(ticker)
 
