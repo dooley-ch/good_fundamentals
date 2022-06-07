@@ -15,7 +15,7 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['parse_financial_statements']
+__all__ = ['parse_financial_statements', 'parse_company']
 
 import attrs
 import orjson
@@ -35,6 +35,33 @@ class FinancialItem:
 class FinancialStatements:
     ticker: str
     items: dict[str, FinancialItem] = attrs.Factory(dict)
+
+
+@attrs.define
+class Company:
+    ticker: str
+    name: str
+    description: str
+    exchange: str
+    currency: str
+    country: str
+    address: str
+
+
+def parse_company(value: str) -> Company:
+    data = orjson.loads(value)
+
+    ticker = data['Symbol']
+    name = data['Name']
+    description = data['Description']
+    exchange = data['Exchange']
+    currency = data['Currency']
+    country = data['Country']
+    address = data['Address']
+
+    company = Company(ticker, name, description, exchange, currency, country, address)
+
+    return company
 
 
 def parse_financial_statements(value: str, annual_tag: str = 'annualReports', quarter_tag: str = 'quarterlyReports'):
