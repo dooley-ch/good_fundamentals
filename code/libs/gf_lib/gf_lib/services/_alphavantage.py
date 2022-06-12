@@ -15,40 +15,15 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['parse_financial_statements', 'parse_company']
+__all__ = ['get_company_data', 'parse_financial_statements', 'parse_company']
 
-import attrs
+import requests
 import orjson
+import gf_lib.model as model
+from gf_lib.errors import RequestFailedError
 
 
-@attrs.define
-class FinancialItem:
-    tag: str
-    column_1: str | None = attrs.field(default=None)
-    column_2: str | None = attrs.field(default=None)
-    column_3: str | None = attrs.field(default=None)
-    column_4: str | None = attrs.field(default=None)
-    column_5: str | None = attrs.field(default=None)
-
-
-@attrs.frozen
-class FinancialStatements:
-    ticker: str
-    items: dict[str, FinancialItem] = attrs.Factory(dict)
-
-
-@attrs.define
-class Company:
-    ticker: str
-    name: str
-    description: str
-    exchange: str
-    currency: str
-    country: str
-    address: str
-
-
-def parse_company(value: str) -> Company:
+def parse_company(value: str) -> model.CompanyAlphavantage:
     data = orjson.loads(value)
 
     ticker = data['Symbol']
@@ -58,18 +33,23 @@ def parse_company(value: str) -> Company:
     currency = data['Currency']
     country = data['Country']
     address = data['Address']
+    fiscal_year_end = data['FiscalYearEnd']
+    last_quarter = data['LatestQuarter']
 
-    company = Company(ticker, name, description, exchange, currency, country, address)
+    company = model.CompanyAlphavantage(ticker, name, description, exchange, currency, country, address,
+                                        fiscal_year_end, last_quarter)
 
     return company
 
 
-def parse_financial_statements(value: str, annual_tag: str = 'annualReports', quarter_tag: str = 'quarterlyReports'):
+def parse_financial_statements(value: str,
+        annual_tag: str = 'annualReports', quarter_tag: str = 'quarterlyReports') -> (model.FinancialItemAlphavantage,
+                                                                                      model.FinancialItemAlphavantage):
     data = orjson.loads(value)
 
     ticker = data['symbol']
-    annual_statements = FinancialStatements(ticker)
-    quarter_statements = FinancialStatements(ticker)
+    annual_statements = model.FinancialStatementsAlphavantage(ticker)
+    quarter_statements = model.FinancialStatementsAlphavantage(ticker)
 
     annuals = data[annual_tag]
     quarters = data[quarter_tag]
@@ -80,14 +60,19 @@ def parse_financial_statements(value: str, annual_tag: str = 'annualReports', qu
 
         for key, value in statement.items():
             if key not in annual_statements.items:
-                annual_statements.items[key] = FinancialItem(key)
+                annual_statements.items[key] = model.FinancialItemAlphavantage(key)
 
             match index:
-                case 0: annual_statements.items[key].column_1 = value
-                case 1: annual_statements.items[key].column_2 = value
-                case 2: annual_statements.items[key].column_3 = value
-                case 3: annual_statements.items[key].column_4 = value
-                case 4: annual_statements.items[key].column_5 = value
+                case 0:
+                    annual_statements.items[key].column_1 = value
+                case 1:
+                    annual_statements.items[key].column_2 = value
+                case 2:
+                    annual_statements.items[key].column_3 = value
+                case 3:
+                    annual_statements.items[key].column_4 = value
+                case 4:
+                    annual_statements.items[key].column_5 = value
 
     for index, statement in enumerate(quarters):
         if index > 2:
@@ -95,11 +80,46 @@ def parse_financial_statements(value: str, annual_tag: str = 'annualReports', qu
 
         for key, value in statement.items():
             if key not in quarter_statements.items:
-                quarter_statements.items[key] = FinancialItem(key)
+                quarter_statements.items[key] = model.FinancialItemAlphavantage(key)
 
             match index:
-                case 0: quarter_statements.items[key].column_1 = value
-                case 1: quarter_statements.items[key].column_2 = value
-                case 2: quarter_statements.items[key].column_3 = value
+                case 0:
+                    quarter_statements.items[key].column_1 = value
+                case 1:
+                    quarter_statements.items[key].column_2 = value
+                case 2:
+                    quarter_statements.items[key].column_3 = value
 
     return annual_statements, quarter_statements
+
+
+def _get_alphavantage_data(function: str, ticker: str, key: str) -> str:
+    url = f"https://www.alphavantage.co/query?function={function}&symbol={ticker}&apikey={key}"
+
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        raise RequestFailedError(url, response.status_code)
+
+    return response.text
+
+
+def get_company_data(ticker: str, key: str) -> model.AlphavantageData:
+    data = _get_alphavantage_data('OVERVIEW', ticker, key)
+    cpy = parse_company(data)
+
+    data = _get_alphavantage_data('INCOME_STATEMENT', ticker, key)
+    inc_stmts_a, inc_stmts_q  = parse_financial_statements(data)
+
+    data = _get_alphavantage_data('BALANCE_SHEET', ticker, key)
+    bs_stmts_a, bs_stmts_b = parse_financial_statements(data)
+
+    data = _get_alphavantage_data('CASH_FLOW', ticker, key)
+    cf_stmts_a, cf_stmts_q = parse_financial_statements(data)
+
+    data = _get_alphavantage_data('EARNINGS', ticker, key)
+    earnings_a, earnings_b = parse_financial_statements(data, annual_tag = 'annualEarnings',
+                                                        quarter_tag = 'quarterlyEarnings')
+
+    return model.AlphavantageData(cpy, inc_stmts_a, inc_stmts_q, bs_stmts_a, bs_stmts_b, cf_stmts_a,
+                                  cf_stmts_q, earnings_a, earnings_b)

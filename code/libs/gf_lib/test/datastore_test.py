@@ -270,7 +270,7 @@ class TestCompanyDatastore:
         db: Database = mongodb_connection['good_fundamentals_test']
         store = CompanyDatastore(db)
 
-        record = Company('IBM', 'International Business Machines Corp.', 'Company description', '0123456789',
+        record = Company('IBM', 'International Business Machines Corp.', 'CompanyAlphavantage description', '0123456789',
                          '012345678912', 'NYSE', 'USD', 'USA', 'Technology', 'Information Technology Services',
                          'Main St. City, State', 'March', '2022-03-31', '2022-03-31', '2022-03-31')
 
@@ -280,7 +280,7 @@ class TestCompanyDatastore:
         db: Database = mongodb_connection['good_fundamentals_test']
         store = CompanyDatastore(db)
 
-        record = Company('IBM', 'International Business Machines Corp.', 'Company description', '0123456789',
+        record = Company('IBM', 'International Business Machines Corp.', 'CompanyAlphavantage description', '0123456789',
                          '012345678912', 'NYSE', 'USD', 'USA', 'Technology', 'Information Technology Services',
                          'Main St. City, State', 'March', '2022-03-31', '2022-03-31', '2022-03-31')
 
@@ -293,7 +293,7 @@ class TestCompanyDatastore:
         db: Database = mongodb_connection['good_fundamentals_test']
         store = CompanyDatastore(db)
 
-        record = Company('IBM', 'International Business Machines Corp.', 'Company description', '0123456789',
+        record = Company('IBM', 'International Business Machines Corp.', 'CompanyAlphavantage description', '0123456789',
                          '012345678912', 'NYSE', 'USD', 'USA', 'Technology', 'Information Technology Services',
                          'Main St. City, State', 'March', '2022-03-31', '2022-03-31', '2022-03-31')
 
@@ -308,7 +308,7 @@ class TestCompanyDatastore:
         db: Database = mongodb_connection['good_fundamentals_test']
         store = CompanyDatastore(db)
 
-        record = Company('IBM', 'International Business Machines Corp.', 'Company description', '0123456789',
+        record = Company('IBM', 'International Business Machines Corp.', 'CompanyAlphavantage description', '0123456789',
                          '012345678912', 'NYSE', 'USD', 'USA', 'Technology', 'Information Technology Services',
                          'Main St. City, State', 'March', '2022-03-31', '2022-03-31', '2022-03-31')
 
