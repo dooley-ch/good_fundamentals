@@ -15,7 +15,8 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['FinancialItemAlphavantage', 'FinancialStatementsAlphavantage', 'CompanyAlphavantage', 'AlphavantageData']
+__all__ = ['FinancialItemAlphavantage', 'FinancialStatementsAlphavantage', 'CompanyAlphavantage', 'AlphavantageData',
+           'EarningsAlphavantage']
 
 import attrs
 
@@ -47,6 +48,16 @@ class CompanyAlphavantage:
     address: str
     fiscal_year_end: str
     last_quarter: str
+
+
+@attrs.frozen
+class EarningsAlphavantage:
+    ticker: str
+    name: str
+    report_date: str
+    fiscal_year: str
+    estimate: str
+    currency: str
 
 
 @attrs.frozen

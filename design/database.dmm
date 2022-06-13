@@ -1,855 +1,14 @@
 {
 	"tables": {
-		"9518f827-f23c-4266-be1e-f1075dac35e3": {
-			"id": "9518f827-f23c-4266-be1e-f1075dac35e3",
+		"2818d593-9428-48ab-9df9-360bc6faeb59": {
+			"id": "2818d593-9428-48ab-9df9-360bc6faeb59",
 			"visible": true,
-			"name": "master_list",
+			"name": "metadata",
 			"desc": "",
 			"estimatedSize": "",
 			"cols": [
 				{
-					"id": "467f4733-0ee4-46ed-abc6-1ea7565e1523",
-					"name": "_id",
-					"datatype": "objectId",
-					"param": "",
-					"pk": true,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": ""
-				},
-				{
-					"id": "1336b367-944c-44a7-b3c9-901b044801c7",
-					"name": "ticker",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "42fafa90-9afb-443c-af93-5ef81cad7ac8",
-					"name": "name",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "912cae62-59c4-404b-9cfc-5b16d3883aa7",
-					"name": "cik",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "3afde362-83b7-48e0-8ef7-e555acc6b58a",
-					"name": "figi",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "f56d6544-5e35-4884-a64b-eaa61c8c0b0b",
-					"name": "sub_industry",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "55357bdc-c7aa-47c6-9900-05163f4a3305",
-					"name": "indexes",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": true,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "74d713b4-9204-4e21-95ac-be0f56809ec8",
-					"name": "metadata",
-					"datatype": "563f8d73-be6c-4f9c-ba83-5ec131f51913",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				}
-			],
-			"relations": [],
-			"lines": [],
-			"keys": [
-				{
-					"id": "9363fdf7-dc76-4147-81cc-df89d9425c0a",
-					"name": "Primary key",
-					"isPk": true,
-					"using": "na",
-					"cols": [
-						{
-							"id": "274df85d-7c55-459f-be9b-45bcfba180b2",
-							"colid": "467f4733-0ee4-46ed-abc6-1ea7565e1523"
-						}
-					]
-				}
-			],
-			"indexes": [
-				{
-					"id": "e7ca1a59-19f9-452c-ad9d-bf5b76ffb506",
-					"name": "master_list_ix_ticker",
-					"unique": false,
-					"fulltext": false,
-					"using": "na",
-					"algorithm": "na",
-					"lockoption": "na",
-					"mongodb": {
-						"options": "{\nname: \"master_list_ix_1\",\nunique: true\n}",
-						"fields": "{\n\"ticker\": 1\n}"
-					},
-					"cols": []
-				},
-				{
-					"id": "c559428d-febe-4010-806e-924d121f467c",
-					"name": "master_list_ix_cik",
-					"unique": false,
-					"fulltext": false,
-					"using": "na",
-					"algorithm": "na",
-					"lockoption": "na",
-					"mongodb": {
-						"options": "{\nname: \"master_list_ix_2\"\n}",
-						"fields": "{\n\"cik\": 1\n}"
-					},
-					"cols": []
-				},
-				{
-					"id": "c50c48ca-2811-41e1-b0e9-927410060fe2",
-					"name": "master_list_ix_figi",
-					"unique": false,
-					"fulltext": false,
-					"using": "na",
-					"algorithm": "na",
-					"lockoption": "na",
-					"mongodb": {
-						"options": "{\nname: \"master_list_ix_3\"\n}",
-						"fields": "{\n\"figi\": 1\n}"
-					},
-					"cols": []
-				},
-				{
-					"id": "f2ef7425-eaf6-4936-9511-d935cd00d8f9",
-					"name": "master_list_ix_industry",
-					"unique": false,
-					"fulltext": false,
-					"using": "na",
-					"algorithm": "na",
-					"lockoption": "na",
-					"mongodb": {
-						"options": "{\nname: \"master_list_ix_5\"\n}",
-						"fields": "{\n\"sector\": 1,\n\"industry\": 1\n}"
-					},
-					"cols": []
-				}
-			],
-			"embeddable": false,
-			"generate": true,
-			"generateCustomCode": true,
-			"internalColumnIdRef": "",
-			"validationLevel": "strict",
-			"validationAction": "error",
-			"collation": "",
-			"others": "",
-			"capped": false
-		},
-		"b0f8a8aa-7ce3-4e80-bb69-8e4435a8ebd3": {
-			"id": "b0f8a8aa-7ce3-4e80-bb69-8e4435a8ebd3",
-			"visible": true,
-			"name": "companies",
-			"desc": "",
-			"estimatedSize": "",
-			"cols": [
-				{
-					"id": "8fd77901-4d91-4bf3-b777-dcd7cd476379",
-					"name": "_id",
-					"datatype": "objectId",
-					"param": "",
-					"pk": true,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": ""
-				},
-				{
-					"id": "adb28a59-264c-4da5-91d0-b23178aff0b0",
-					"name": "ticker",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "53546c6c-baf1-4ab7-b9f4-99b99bee91fe",
-					"name": "name",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "d739d71c-c0f7-47dc-9d1c-20e301571745",
-					"name": "address",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "ef852dad-7b7a-4c17-9879-24e0fecd5951",
-					"name": "description",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "31270a65-85bf-4d75-805e-087b74c0cc41",
-					"name": "cik",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "e6978c78-2fe6-4611-8e2b-18978a65bfbb",
-					"name": "figi",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "34c04526-f904-47b4-be00-e2fca87319ea",
-					"name": "sector",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "cf206332-8b8c-4339-bfed-c582c326cba0",
-					"name": "industry",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "2ce03708-6484-49c9-a669-544e981e7914",
-					"name": "exchange",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "c24625aa-806f-4cbd-ab5f-7b1df4585ab0",
-					"name": "currency",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "932f6905-93c0-4db3-94fb-809584c6cb96",
-					"name": "country",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "d60b1878-9f91-4944-8da4-0381477b7167",
-					"name": "fiscal_year_end",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "0255d0af-5676-4799-8a43-4a97bb51392b",
-					"name": "last_quarter",
-					"datatype": "date",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "28914cfb-324c-4530-bf77-0d010f2210e0",
-					"name": "dividend_date",
-					"datatype": "date",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "278a4437-b860-4485-a3da-6b049f11eab7",
-					"name": "ex_dividend_date",
-					"datatype": "date",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "9687e7fc-6135-460a-bc48-4d6d231031cd",
-					"name": "metadata",
-					"datatype": "563f8d73-be6c-4f9c-ba83-5ec131f51913",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				}
-			],
-			"relations": [],
-			"lines": [],
-			"keys": [
-				{
-					"id": "c056212a-e22d-48c6-b9a4-f558dc0f885b",
-					"name": "Primary key",
-					"isPk": true,
-					"using": "na",
-					"cols": [
-						{
-							"id": "fe096c52-2a23-4c7a-933b-9f466713debc",
-							"colid": "8fd77901-4d91-4bf3-b777-dcd7cd476379"
-						}
-					]
-				}
-			],
-			"indexes": [
-				{
-					"id": "f68646e4-8648-470e-8793-ef25b006d0c0",
-					"name": "companies_ix_ticker",
-					"unique": false,
-					"fulltext": false,
-					"using": "na",
-					"algorithm": "na",
-					"lockoption": "na",
-					"mongodb": {
-						"options": "{\nname: \"companies_ix_ticker\",\nunique: true\n}",
-						"fields": "{\n\"ticker\": 1\n}"
-					},
-					"cols": []
-				},
-				{
-					"id": "95bbe777-59ba-4385-9426-457129269d8b",
-					"name": "companies_ix_name",
-					"unique": false,
-					"fulltext": false,
-					"using": "na",
-					"algorithm": "na",
-					"lockoption": "na",
-					"mongodb": {
-						"options": "{\nname: \"companies_ix_name\"\n}",
-						"fields": "{\n\"name\": 1\n}"
-					},
-					"cols": []
-				}
-			],
-			"embeddable": false,
-			"generate": true,
-			"generateCustomCode": true,
-			"internalColumnIdRef": "",
-			"validationLevel": "na",
-			"validationAction": "na",
-			"collation": "",
-			"others": ""
-		},
-		"b8617490-af74-4676-bb6e-cc5b1c8c2cd1": {
-			"id": "b8617490-af74-4676-bb6e-cc5b1c8c2cd1",
-			"visible": true,
-			"name": "income_statements",
-			"desc": "",
-			"estimatedSize": "",
-			"cols": [
-				{
-					"id": "ba4d9eca-ee71-4885-bf98-bb6934034d03",
-					"name": "_id",
-					"datatype": "objectId",
-					"param": "",
-					"pk": true,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": ""
-				},
-				{
-					"id": "3b60dc92-bbf2-4af2-ac4b-08919bdcd322",
-					"name": "ticker",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "9704800a-1f95-4a4e-9ed4-0363ac1a7cea",
-					"name": "period_type",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "d1248eae-f01d-4d9b-a940-e946ed6a36fe",
-					"name": "period_ends",
-					"datatype": "b3d09849-9387-4392-80e7-dfaa854951ac",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "494624d5-079e-43bc-9d61-7ad449025271",
-					"name": "items",
-					"datatype": "82d1502c-e98b-43ce-8381-81882b323363",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": true,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "ccccc484-f57b-4790-af18-d51b541c2e2c",
-					"name": "metadata",
-					"datatype": "563f8d73-be6c-4f9c-ba83-5ec131f51913",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				}
-			],
-			"relations": [],
-			"lines": [],
-			"keys": [
-				{
-					"id": "bee782fc-ef9e-4086-8fcd-93f2fd137446",
-					"name": "Primary key",
-					"isPk": true,
-					"using": "na",
-					"cols": [
-						{
-							"id": "eba7f261-1348-4eac-be78-489317ab1823",
-							"colid": "ba4d9eca-ee71-4885-bf98-bb6934034d03"
-						}
-					]
-				}
-			],
-			"indexes": [
-				{
-					"id": "f85f1dc9-6416-4329-aebd-b75d4b7971cd",
-					"name": "income_statements_ix_unique_statement",
-					"unique": false,
-					"fulltext": false,
-					"using": "na",
-					"algorithm": "na",
-					"lockoption": "na",
-					"mongodb": {
-						"options": "{\nname: \"income_statements_ix_1\",\nunique: true\n}",
-						"fields": "{\n\"ticker\": 1,\n\"period_type\": 1\n}"
-					},
-					"cols": []
-				}
-			],
-			"embeddable": false,
-			"generate": true,
-			"generateCustomCode": true,
-			"internalColumnIdRef": "",
-			"validationLevel": "strict",
-			"validationAction": "error",
-			"collation": "",
-			"others": ""
-		},
-		"b3d09849-9387-4392-80e7-dfaa854951ac": {
-			"id": "b3d09849-9387-4392-80e7-dfaa854951ac",
-			"visible": true,
-			"name": "period_ends",
-			"desc": "",
-			"estimatedSize": "",
-			"cols": [
-				{
-					"id": "bcc9d19d-818c-40bd-bd4e-103387cbf68f",
-					"name": "period_1",
-					"datatype": "date",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "db78b317-650c-44f9-80a3-7ae083ed8cf7",
-					"name": "period_2",
-					"datatype": "date",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "977e14f0-1fed-4f2c-a269-127caf881fda",
-					"name": "period_3",
-					"datatype": "date",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "5edd6bb7-c46f-4eda-9ff5-0623eb905fd9",
-					"name": "period_4",
-					"datatype": "date",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "5b64b049-106e-4337-8b1b-216fb7471f97",
-					"name": "period_5",
-					"datatype": "date",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				}
-			],
-			"relations": [],
-			"lines": [],
-			"keys": [
-				{
-					"id": "bcdbf663-1d66-4f97-88c9-be7c442a4d00",
-					"name": "Primary key",
-					"isPk": true,
-					"using": "na",
-					"cols": []
-				}
-			],
-			"indexes": [],
-			"embeddable": true,
-			"generate": true,
-			"generateCustomCode": true,
-			"internalColumnIdRef": "",
-			"validationLevel": "na",
-			"validationAction": "na",
-			"collation": "",
-			"others": ""
-		},
-		"82d1502c-e98b-43ce-8381-81882b323363": {
-			"id": "82d1502c-e98b-43ce-8381-81882b323363",
-			"visible": true,
-			"name": "accounting_item",
-			"desc": "",
-			"estimatedSize": "",
-			"cols": [
-				{
-					"id": "c47b8c86-907d-4195-8eb7-c1a04e5e9377",
-					"name": "tag",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "ae7137fb-53ea-4599-bc20-ffdacd8a480a",
-					"name": "period_1",
-					"datatype": "int",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "91bb89d8-c0c5-40db-aa1b-337bcefc5bf0",
-					"name": "period_2",
-					"datatype": "int",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "7d4a6e41-3ad3-49cf-bfe1-0085c636012b",
-					"name": "period_3",
-					"datatype": "int",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "fa0fcfec-d9ef-4557-9cba-f52d706312c1",
-					"name": "period_4",
-					"datatype": "int",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "a62c913b-7b46-4858-8e28-060ecbede8e2",
-					"name": "period_5",
-					"datatype": "int",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				}
-			],
-			"relations": [],
-			"lines": [],
-			"keys": [
-				{
-					"id": "6408546e-b7f9-48e3-aa75-d297f070ade7",
-					"name": "Primary key",
-					"isPk": true,
-					"using": "na",
-					"cols": []
-				}
-			],
-			"indexes": [],
-			"embeddable": true,
-			"generate": true,
-			"generateCustomCode": true,
-			"internalColumnIdRef": "",
-			"validationLevel": "na",
-			"validationAction": "na",
-			"collation": "",
-			"others": ""
-		},
-		"563f8d73-be6c-4f9c-ba83-5ec131f51913": {
-			"id": "563f8d73-be6c-4f9c-ba83-5ec131f51913",
-			"visible": true,
-			"name": "document_metadata",
-			"desc": "",
-			"estimatedSize": "",
-			"cols": [
-				{
-					"id": "8327dbb7-594d-47cc-a80e-86519e4882e6",
+					"id": "2d8f1360-9830-4088-bb12-42c491e82f64",
 					"name": "lock_version",
 					"datatype": "int",
 					"param": "",
@@ -863,7 +22,7 @@
 					"validate": ""
 				},
 				{
-					"id": "48c69086-d357-4c60-930b-00cd4ea03a01",
+					"id": "85d83ae6-6b13-444a-a0dd-8ea778328f8a",
 					"name": "created_at",
 					"datatype": "date",
 					"param": "",
@@ -877,7 +36,7 @@
 					"validate": ""
 				},
 				{
-					"id": "23e83c4f-d7a7-4be2-b005-bfd0f532a2a3",
+					"id": "4becdfde-e7d5-4feb-a9ab-338306bf095a",
 					"name": "updated_at",
 					"datatype": "date",
 					"param": "",
@@ -895,7 +54,7 @@
 			"lines": [],
 			"keys": [
 				{
-					"id": "2f135000-3ddd-4f4c-9bc5-3c8e8e98432a",
+					"id": "66f083c0-ca0b-4f20-995a-a61a95c69467",
 					"name": "Primary key",
 					"isPk": true,
 					"using": "na",
@@ -912,15 +71,15 @@
 			"collation": "",
 			"others": ""
 		},
-		"a62b5474-ae69-49ab-8fca-cca1d8ab3a88": {
-			"id": "a62b5474-ae69-49ab-8fca-cca1d8ab3a88",
+		"bd1b5270-309f-43a3-9860-a36d6b4cfdde": {
+			"id": "bd1b5270-309f-43a3-9860-a36d6b4cfdde",
 			"visible": true,
-			"name": "balance_sheets",
+			"name": "company",
 			"desc": "",
 			"estimatedSize": "",
 			"cols": [
 				{
-					"id": "ba4d9eca-ee71-4885-bf98-bb6934034d03",
+					"id": "2610bff7-118a-4b81-a429-3b4dab18f24e",
 					"name": "_id",
 					"datatype": "objectId",
 					"param": "",
@@ -931,7 +90,7 @@
 					"data": ""
 				},
 				{
-					"id": "3b60dc92-bbf2-4af2-ac4b-08919bdcd322",
+					"id": "9f8e98a1-87b8-4af7-a59d-498f938d0ad2",
 					"name": "ticker",
 					"datatype": "string",
 					"param": "",
@@ -945,8 +104,8 @@
 					"validate": ""
 				},
 				{
-					"id": "9704800a-1f95-4a4e-9ed4-0363ac1a7cea",
-					"name": "period_type",
+					"id": "01e7dfe9-f30f-4036-b831-108fe56ed440",
+					"name": "name",
 					"datatype": "string",
 					"param": "",
 					"pk": false,
@@ -959,9 +118,9 @@
 					"validate": ""
 				},
 				{
-					"id": "d1248eae-f01d-4d9b-a940-e946ed6a36fe",
-					"name": "period_ends",
-					"datatype": "b3d09849-9387-4392-80e7-dfaa854951ac",
+					"id": "97884145-a15e-4e85-b4be-4e28d7a1a509",
+					"name": "description",
+					"datatype": "string",
 					"param": "",
 					"pk": false,
 					"nn": true,
@@ -973,23 +132,121 @@
 					"validate": ""
 				},
 				{
-					"id": "494624d5-079e-43bc-9d61-7ad449025271",
-					"name": "items",
-					"datatype": "82d1502c-e98b-43ce-8381-81882b323363",
+					"id": "077c1d36-d67a-4455-b3c3-84b3b4c02d80",
+					"name": "cik",
+					"datatype": "string",
 					"param": "",
 					"pk": false,
 					"nn": true,
 					"comment": "",
 					"defaultvalue": "",
 					"data": "",
-					"list": true,
+					"list": false,
 					"enum": "",
 					"validate": ""
 				},
 				{
-					"id": "ccccc484-f57b-4790-af18-d51b541c2e2c",
+					"id": "111b3b14-fe33-4d4b-8b73-92ab48f776fa",
+					"name": "figi",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "7a3425a8-a1ed-49c2-a347-37dff94ee355",
+					"name": "exchange",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "b0d646e9-a97c-4ac2-9e58-42ce66dd6081",
+					"name": "currency",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "16db1028-a919-4757-b10b-eab8ebc42ad9",
+					"name": "country",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "93b5c4f9-36af-4396-9af2-24cd25d5c581",
+					"name": "sub_industry",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "bcc40b9b-d62b-4ed4-8134-4697a58addda",
+					"name": "fiscal_year_end",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "9f8c7b27-f29a-4a75-99ca-a25012e6f1d1",
+					"name": "last_quarter",
+					"datatype": "date",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "4ad997db-8dc6-45ca-8283-b4d6ab5c5e9f",
 					"name": "metadata",
-					"datatype": "563f8d73-be6c-4f9c-ba83-5ec131f51913",
+					"datatype": "2818d593-9428-48ab-9df9-360bc6faeb59",
 					"param": "",
 					"pk": false,
 					"nn": true,
@@ -1005,30 +262,58 @@
 			"lines": [],
 			"keys": [
 				{
-					"id": "04625c31-690f-40da-b0d8-51ac152ac4c7",
+					"id": "4df12abf-1b3b-4585-a3d2-9cbddfe7420a",
 					"name": "Primary key",
 					"isPk": true,
 					"using": "na",
 					"cols": [
 						{
-							"id": "eba7f261-1348-4eac-be78-489317ab1823",
-							"colid": "ba4d9eca-ee71-4885-bf98-bb6934034d03"
+							"id": "b72d1697-3591-4481-b352-b8628d742ec4",
+							"colid": "2610bff7-118a-4b81-a429-3b4dab18f24e"
 						}
 					]
 				}
 			],
 			"indexes": [
 				{
-					"id": "f85f1dc9-6416-4329-aebd-b75d4b7971cd",
-					"name": "income_statements_ix_unique_statement",
+					"id": "910d5ac3-630b-45a5-9e0d-4323229f89eb",
+					"name": "company_ix_ticker",
 					"unique": false,
 					"fulltext": false,
 					"using": "na",
 					"algorithm": "na",
 					"lockoption": "na",
 					"mongodb": {
-						"options": "{\nname: \"income_statements_ix_1\",\nunique: true\n}",
-						"fields": "{\n\"ticker\": 1,\n\"period_type\": 1\n}"
+						"options": "{\nname: \"company_ix_ticker\",\nunique: true\n}",
+						"fields": "{\n\"ticker\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "89e7e6c6-520f-42d5-adb5-04907754f9be",
+					"name": "company_ix_cik",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"company_ix_cik\",\nunique: true\n}",
+						"fields": "{\n\"cik\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "61f6d924-b12c-473c-8f82-df58d268b6b0",
+					"name": "company_ix_figi",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"company_ix_figi\",\nunique: true\n}",
+						"fields": "{\n\"figi\": 1\n}"
 					},
 					"cols": []
 				}
@@ -1037,20 +322,20 @@
 			"generate": true,
 			"generateCustomCode": true,
 			"internalColumnIdRef": "",
-			"validationLevel": "strict",
-			"validationAction": "error",
+			"validationLevel": "na",
+			"validationAction": "na",
 			"collation": "",
 			"others": ""
 		},
-		"50563f24-507a-49f8-b426-1bc61f25d041": {
-			"id": "50563f24-507a-49f8-b426-1bc61f25d041",
+		"efc9c44c-53d1-4a91-9bb7-c35aeb81d528": {
+			"id": "efc9c44c-53d1-4a91-9bb7-c35aeb81d528",
 			"visible": true,
-			"name": "cashflow_statements",
+			"name": "master",
 			"desc": "",
 			"estimatedSize": "",
 			"cols": [
 				{
-					"id": "ba4d9eca-ee71-4885-bf98-bb6934034d03",
+					"id": "2610bff7-118a-4b81-a429-3b4dab18f24e",
 					"name": "_id",
 					"datatype": "objectId",
 					"param": "",
@@ -1061,7 +346,7 @@
 					"data": ""
 				},
 				{
-					"id": "3b60dc92-bbf2-4af2-ac4b-08919bdcd322",
+					"id": "9f8e98a1-87b8-4af7-a59d-498f938d0ad2",
 					"name": "ticker",
 					"datatype": "string",
 					"param": "",
@@ -1075,8 +360,8 @@
 					"validate": ""
 				},
 				{
-					"id": "9704800a-1f95-4a4e-9ed4-0363ac1a7cea",
-					"name": "period_type",
+					"id": "01e7dfe9-f30f-4036-b831-108fe56ed440",
+					"name": "name",
 					"datatype": "string",
 					"param": "",
 					"pk": false,
@@ -1089,9 +374,9 @@
 					"validate": ""
 				},
 				{
-					"id": "d1248eae-f01d-4d9b-a940-e946ed6a36fe",
-					"name": "period_ends",
-					"datatype": "b3d09849-9387-4392-80e7-dfaa854951ac",
+					"id": "077c1d36-d67a-4455-b3c3-84b3b4c02d80",
+					"name": "cik",
+					"datatype": "string",
 					"param": "",
 					"pk": false,
 					"nn": true,
@@ -1103,23 +388,37 @@
 					"validate": ""
 				},
 				{
-					"id": "494624d5-079e-43bc-9d61-7ad449025271",
-					"name": "items",
-					"datatype": "82d1502c-e98b-43ce-8381-81882b323363",
+					"id": "111b3b14-fe33-4d4b-8b73-92ab48f776fa",
+					"name": "figi",
+					"datatype": "string",
 					"param": "",
 					"pk": false,
 					"nn": true,
 					"comment": "",
 					"defaultvalue": "",
 					"data": "",
-					"list": true,
+					"list": false,
 					"enum": "",
 					"validate": ""
 				},
 				{
-					"id": "ccccc484-f57b-4790-af18-d51b541c2e2c",
+					"id": "93b5c4f9-36af-4396-9af2-24cd25d5c581",
+					"name": "sub_industry",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "4ad997db-8dc6-45ca-8283-b4d6ab5c5e9f",
 					"name": "metadata",
-					"datatype": "563f8d73-be6c-4f9c-ba83-5ec131f51913",
+					"datatype": "2818d593-9428-48ab-9df9-360bc6faeb59",
 					"param": "",
 					"pk": false,
 					"nn": true,
@@ -1135,30 +434,86 @@
 			"lines": [],
 			"keys": [
 				{
-					"id": "dcafd6e4-20c4-4309-80ed-9eccb629ffc6",
+					"id": "8ad501b9-c9b3-4933-8862-b2276171297f",
 					"name": "Primary key",
 					"isPk": true,
 					"using": "na",
 					"cols": [
 						{
-							"id": "eba7f261-1348-4eac-be78-489317ab1823",
-							"colid": "ba4d9eca-ee71-4885-bf98-bb6934034d03"
+							"id": "b72d1697-3591-4481-b352-b8628d742ec4",
+							"colid": "2610bff7-118a-4b81-a429-3b4dab18f24e"
 						}
 					]
 				}
 			],
 			"indexes": [
 				{
-					"id": "f85f1dc9-6416-4329-aebd-b75d4b7971cd",
-					"name": "cashflow_statements_ix_unique_statement",
+					"id": "910d5ac3-630b-45a5-9e0d-4323229f89eb",
+					"name": "master_ix_ticker",
 					"unique": false,
 					"fulltext": false,
 					"using": "na",
 					"algorithm": "na",
 					"lockoption": "na",
 					"mongodb": {
-						"options": "{\nname: \"income_statements_ix_1\",\nunique: true\n}",
-						"fields": "{\n\"ticker\": 1,\n\"period_type\": 1\n}"
+						"options": "{\nname: \"company_ix_ticker\",\nunique: true\n}",
+						"fields": "{\n\"ticker\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "89e7e6c6-520f-42d5-adb5-04907754f9be",
+					"name": "master_ix_cik",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"company_ix_cik\",\nunique: true\n}",
+						"fields": "{\n\"cik\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "61f6d924-b12c-473c-8f82-df58d268b6b0",
+					"name": "master_ix_figi",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"company_ix_figi\",\nunique: true\n}",
+						"fields": "{\n\"figi\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "88b88545-1e69-47c0-a43e-506180cbe753",
+					"name": "master_ix_ticker_search",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"master_ix_ticker_search\"\n}",
+						"fields": "{\n\"ticker\": 1,\n\"name\": 1,\n\"cik\": 1,\n\"figi\": 1,\n\"sub_industry\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "441d546b-ce71-4c0e-93d5-20e4a1d94198",
+					"name": "master_ix_name_search",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"master_ix_name_search\"\n}",
+						"fields": "{\n\"name\": 1,\n\"ticker\": 1,\n\"cik\": 1,\n\"figi\": 1,\n\"sub_industry\": 1\n}"
 					},
 					"cols": []
 				}
@@ -1167,20 +522,20 @@
 			"generate": true,
 			"generateCustomCode": true,
 			"internalColumnIdRef": "",
-			"validationLevel": "strict",
-			"validationAction": "error",
+			"validationLevel": "na",
+			"validationAction": "na",
 			"collation": "",
 			"others": ""
 		},
-		"f2bec59d-6a32-4cc4-8af0-52258e11c151": {
-			"id": "f2bec59d-6a32-4cc4-8af0-52258e11c151",
+		"b9868bf8-9ce2-412e-b49e-214193228491": {
+			"id": "b9868bf8-9ce2-412e-b49e-214193228491",
 			"visible": true,
-			"name": "earnings_statements",
+			"name": "earnings",
 			"desc": "",
 			"estimatedSize": "",
 			"cols": [
 				{
-					"id": "ba4d9eca-ee71-4885-bf98-bb6934034d03",
+					"id": "f7615953-7c69-467d-a0cc-f5fdcd9b39ab",
 					"name": "_id",
 					"datatype": "objectId",
 					"param": "",
@@ -1191,7 +546,7 @@
 					"data": ""
 				},
 				{
-					"id": "3b60dc92-bbf2-4af2-ac4b-08919bdcd322",
+					"id": "2eb8ca42-0be5-4e36-a821-c8ddfd3eb2dc",
 					"name": "ticker",
 					"datatype": "string",
 					"param": "",
@@ -1205,8 +560,8 @@
 					"validate": ""
 				},
 				{
-					"id": "9704800a-1f95-4a4e-9ed4-0363ac1a7cea",
-					"name": "period_type",
+					"id": "5d84df1a-fa46-402f-86b5-e3d37f62fe8a",
+					"name": "name",
 					"datatype": "string",
 					"param": "",
 					"pk": false,
@@ -1219,9 +574,9 @@
 					"validate": ""
 				},
 				{
-					"id": "d1248eae-f01d-4d9b-a940-e946ed6a36fe",
-					"name": "period_ends",
-					"datatype": "b3d09849-9387-4392-80e7-dfaa854951ac",
+					"id": "16f23bdd-e14d-431d-8264-d941e52002d0",
+					"name": "report_date",
+					"datatype": "date",
 					"param": "",
 					"pk": false,
 					"nn": true,
@@ -1233,23 +588,51 @@
 					"validate": ""
 				},
 				{
-					"id": "494624d5-079e-43bc-9d61-7ad449025271",
-					"name": "items",
-					"datatype": "82d1502c-e98b-43ce-8381-81882b323363",
+					"id": "dffa0c04-e8c8-4f4d-b7af-7f2e2fca8ab2",
+					"name": "fiscal_year",
+					"datatype": "date",
 					"param": "",
 					"pk": false,
 					"nn": true,
 					"comment": "",
 					"defaultvalue": "",
 					"data": "",
-					"list": true,
+					"list": false,
 					"enum": "",
 					"validate": ""
 				},
 				{
-					"id": "ccccc484-f57b-4790-af18-d51b541c2e2c",
+					"id": "16a2fa46-cabb-4331-9aef-1ce6e98b9a08",
+					"name": "estimate",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "c615b325-10a5-42f3-94eb-90ec125fef41",
+					"name": "currency",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "f629804d-4628-407e-9a22-bd04fc5e852b",
 					"name": "metadata",
-					"datatype": "563f8d73-be6c-4f9c-ba83-5ec131f51913",
+					"datatype": "2818d593-9428-48ab-9df9-360bc6faeb59",
 					"param": "",
 					"pk": false,
 					"nn": true,
@@ -1265,52 +648,150 @@
 			"lines": [],
 			"keys": [
 				{
-					"id": "e3fa5930-6b68-483a-99d0-e334a85890f9",
+					"id": "ad63d11f-cf66-4f6e-b590-aa0ce521bf12",
 					"name": "Primary key",
 					"isPk": true,
 					"using": "na",
 					"cols": [
 						{
-							"id": "eba7f261-1348-4eac-be78-489317ab1823",
-							"colid": "ba4d9eca-ee71-4885-bf98-bb6934034d03"
+							"id": "e51880bf-5c0a-4a43-a43c-930707d64aa4",
+							"colid": "f7615953-7c69-467d-a0cc-f5fdcd9b39ab"
 						}
 					]
 				}
 			],
-			"indexes": [
-				{
-					"id": "f85f1dc9-6416-4329-aebd-b75d4b7971cd",
-					"name": "earnings_statements_ix_unique_statement",
-					"unique": false,
-					"fulltext": false,
-					"using": "na",
-					"algorithm": "na",
-					"lockoption": "na",
-					"mongodb": {
-						"options": "{\nname: \"income_statements_ix_1\",\nunique: true\n}",
-						"fields": "{\n\"ticker\": 1,\n\"period_type\": 1\n}"
-					},
-					"cols": []
-				}
-			],
+			"indexes": [],
 			"embeddable": false,
 			"generate": true,
 			"generateCustomCode": true,
 			"internalColumnIdRef": "",
-			"validationLevel": "strict",
-			"validationAction": "error",
+			"validationLevel": "na",
+			"validationAction": "na",
 			"collation": "",
 			"others": ""
 		},
-		"c257ec5b-eb03-4b14-bdac-b19aafc91b5b": {
-			"id": "c257ec5b-eb03-4b14-bdac-b19aafc91b5b",
+		"99413136-4d68-4588-98ba-a8f06b541081": {
+			"id": "99413136-4d68-4588-98ba-a8f06b541081",
 			"visible": true,
-			"name": "task_control",
+			"name": "accounting_entry",
 			"desc": "",
 			"estimatedSize": "",
 			"cols": [
 				{
-					"id": "a5544908-32bb-42ca-a03c-28e9367378c3",
+					"id": "06e9be99-a1fb-4862-be3e-b06cb25074a1",
+					"name": "tag",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "c44c2b4f-ea31-4b7c-aeab-ac2589d7bffc",
+					"name": "value_1",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "871be1c3-a13e-467f-b0e4-41a7626c3eae",
+					"name": "value_2",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "19eca286-0d77-4705-91d4-400dfeb08f7e",
+					"name": "value_3",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "9becde60-74e6-4506-95ce-9db42ec77151",
+					"name": "value_4",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "187ce218-0d1d-4973-89c2-6a315ad83c10",
+					"name": "value_5",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "733b33be-04c4-48f1-a7a8-4d51e4e80dcd",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": []
+				}
+			],
+			"indexes": [],
+			"embeddable": true,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"bbe12e1f-bc11-4657-ae85-2c02fb380982": {
+			"id": "bbe12e1f-bc11-4657-ae85-2c02fb380982",
+			"visible": true,
+			"name": "income_statement",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "2f81b09f-7ba1-42de-b4a7-08ad582236e0",
 					"name": "_id",
 					"datatype": "objectId",
 					"param": "",
@@ -1321,7 +802,786 @@
 					"data": ""
 				},
 				{
-					"id": "12897082-4db0-4d22-aa21-d4661cc89814",
+					"id": "2d70ef07-dcf6-4487-942a-b4c952184ddc",
+					"name": "ticker",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "b7d8882a-3f33-4f25-b8c7-0886343ce921",
+					"name": "items",
+					"datatype": "99413136-4d68-4588-98ba-a8f06b541081",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": true,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "c29497c1-f31e-4130-809f-20159ae30f55",
+					"name": "metadata",
+					"datatype": "2818d593-9428-48ab-9df9-360bc6faeb59",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "df3d9db0-e8c0-4207-b4ab-dc15d5dbadb9",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "83bfe8cc-6eeb-4e53-83b8-30ab2d8e329a",
+							"colid": "2f81b09f-7ba1-42de-b4a7-08ad582236e0"
+						}
+					]
+				}
+			],
+			"indexes": [
+				{
+					"id": "c22baea0-409b-4d45-9649-d81c5cb2d2b3",
+					"name": "income_statement_ix_ticker",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"income_statement_ix_ticker\",\nunique: true\n}",
+						"fields": "{\n\"ticker\": 1\n}"
+					},
+					"cols": []
+				}
+			],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"7110f7d5-e074-4df0-a9c5-89083979f68c": {
+			"id": "7110f7d5-e074-4df0-a9c5-89083979f68c",
+			"visible": true,
+			"name": "cash_flow_statement",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "2f81b09f-7ba1-42de-b4a7-08ad582236e0",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": ""
+				},
+				{
+					"id": "2d70ef07-dcf6-4487-942a-b4c952184ddc",
+					"name": "ticker",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "b7d8882a-3f33-4f25-b8c7-0886343ce921",
+					"name": "items",
+					"datatype": "99413136-4d68-4588-98ba-a8f06b541081",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": true,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "c29497c1-f31e-4130-809f-20159ae30f55",
+					"name": "metadata",
+					"datatype": "2818d593-9428-48ab-9df9-360bc6faeb59",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "71842c84-6c7b-4a36-ade1-4437fa38a34f",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "83bfe8cc-6eeb-4e53-83b8-30ab2d8e329a",
+							"colid": "2f81b09f-7ba1-42de-b4a7-08ad582236e0"
+						}
+					]
+				}
+			],
+			"indexes": [
+				{
+					"id": "c22baea0-409b-4d45-9649-d81c5cb2d2b3",
+					"name": "cash_flow_statement_ix_ticker",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"income_statement_ix_ticker\",\nunique: true\n}",
+						"fields": "{\n\"ticker\": 1\n}"
+					},
+					"cols": []
+				}
+			],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"0f517424-b55e-4ef6-b0b3-70dbffc8c431": {
+			"id": "0f517424-b55e-4ef6-b0b3-70dbffc8c431",
+			"visible": true,
+			"name": "balance_sheet_statement",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "2f81b09f-7ba1-42de-b4a7-08ad582236e0",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": ""
+				},
+				{
+					"id": "2d70ef07-dcf6-4487-942a-b4c952184ddc",
+					"name": "ticker",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "b7d8882a-3f33-4f25-b8c7-0886343ce921",
+					"name": "items",
+					"datatype": "99413136-4d68-4588-98ba-a8f06b541081",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": true,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "c29497c1-f31e-4130-809f-20159ae30f55",
+					"name": "metadata",
+					"datatype": "2818d593-9428-48ab-9df9-360bc6faeb59",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "a07faa78-826b-43b8-84da-16b3e4aefe28",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "83bfe8cc-6eeb-4e53-83b8-30ab2d8e329a",
+							"colid": "2f81b09f-7ba1-42de-b4a7-08ad582236e0"
+						}
+					]
+				}
+			],
+			"indexes": [
+				{
+					"id": "c22baea0-409b-4d45-9649-d81c5cb2d2b3",
+					"name": "income_statement_ix_ticker",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"income_statement_ix_ticker\",\nunique: true\n}",
+						"fields": "{\n\"ticker\": 1\n}"
+					},
+					"cols": []
+				}
+			],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"1508133c-8d22-4c9f-a918-b6fc398b1a56": {
+			"id": "1508133c-8d22-4c9f-a918-b6fc398b1a56",
+			"visible": true,
+			"name": "earnings_statement",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "2f81b09f-7ba1-42de-b4a7-08ad582236e0",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": ""
+				},
+				{
+					"id": "2d70ef07-dcf6-4487-942a-b4c952184ddc",
+					"name": "ticker",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "b7d8882a-3f33-4f25-b8c7-0886343ce921",
+					"name": "items",
+					"datatype": "99413136-4d68-4588-98ba-a8f06b541081",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": true,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "c29497c1-f31e-4130-809f-20159ae30f55",
+					"name": "metadata",
+					"datatype": "2818d593-9428-48ab-9df9-360bc6faeb59",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "fbbfc495-6a71-422b-a9a5-5b31e8b18547",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "83bfe8cc-6eeb-4e53-83b8-30ab2d8e329a",
+							"colid": "2f81b09f-7ba1-42de-b4a7-08ad582236e0"
+						}
+					]
+				}
+			],
+			"indexes": [
+				{
+					"id": "c22baea0-409b-4d45-9649-d81c5cb2d2b3",
+					"name": "income_statement_ix_ticker",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"income_statement_ix_ticker\",\nunique: true\n}",
+						"fields": "{\n\"ticker\": 1\n}"
+					},
+					"cols": []
+				}
+			],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"6d8a2481-d127-499b-a4d7-274a71115069": {
+			"id": "6d8a2481-d127-499b-a4d7-274a71115069",
+			"visible": true,
+			"name": "gics_item",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "1d402405-54af-4ad3-a22e-c8cf39156a14",
+					"name": "id",
+					"datatype": "int",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "a25f9a5a-243e-4c7c-a82b-ea74deb1f090",
+					"name": "name",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "574d74cb-2a10-4694-8687-1ffe9594899f",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": []
+				}
+			],
+			"indexes": [],
+			"embeddable": true,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"b99353dd-1206-4dc8-8451-76e84c02d265": {
+			"id": "b99353dd-1206-4dc8-8451-76e84c02d265",
+			"visible": true,
+			"name": "gcis_industry",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "47fdb22f-fe9d-4333-8ca2-5d51b1da6670",
+					"name": "id",
+					"datatype": "int",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "e6f45635-9d44-4b70-8bdd-b807b84bbf13",
+					"name": "name",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "cd2ee6ec-d467-48ba-ace9-3c988f01bf3a",
+					"name": "sub_industries",
+					"datatype": "6d8a2481-d127-499b-a4d7-274a71115069",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": true,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "62115b02-afbf-4613-bc39-7d95ba62919b",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": []
+				}
+			],
+			"indexes": [],
+			"embeddable": true,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"0d064b1d-c64c-4b2a-9b6b-ad5bc1421ee1": {
+			"id": "0d064b1d-c64c-4b2a-9b6b-ad5bc1421ee1",
+			"visible": true,
+			"name": "group_industry",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "b0314535-9fb2-48e7-81db-1e8c4f55a1a7",
+					"name": "id",
+					"datatype": "int",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "dcf5be57-6f88-4f71-a0f3-c31b5b2df7fe",
+					"name": "name",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "948c3b54-67c9-4209-917b-88c109dc4a20",
+					"name": "industries",
+					"datatype": "b99353dd-1206-4dc8-8451-76e84c02d265",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": true,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "325baf00-d7d3-475f-9fc8-d5e2cbe128e1",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": []
+				}
+			],
+			"indexes": [],
+			"embeddable": true,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"d64e9508-56ba-48b9-9852-4d64c2aba574": {
+			"id": "d64e9508-56ba-48b9-9852-4d64c2aba574",
+			"visible": true,
+			"name": "gics_sector",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "00c3afff-1cd9-4eac-8d04-8a4538095743",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": ""
+				},
+				{
+					"id": "0f51f222-ece4-493a-a2ae-7ad66b2b6f7a",
+					"name": "id",
+					"datatype": "int",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "0d80515a-9ba6-49f3-b6e1-d263a5208177",
+					"name": "name",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "4b5d490f-cac1-4587-b56e-6120efc98559",
+					"name": "group_industries",
+					"datatype": "0d064b1d-c64c-4b2a-9b6b-ad5bc1421ee1",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": true,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "eea5875e-2ab2-406f-ab01-cb1872cc37c6",
+					"name": "metadata",
+					"datatype": "2818d593-9428-48ab-9df9-360bc6faeb59",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": true,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "ecca22b6-24ad-4a27-96a7-0684f1bdc5f1",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "53821675-fff7-49e2-8712-251403063515",
+							"colid": "00c3afff-1cd9-4eac-8d04-8a4538095743"
+						}
+					]
+				}
+			],
+			"indexes": [
+				{
+					"id": "8409bbc2-ae6f-4c0d-aaf4-574883930482",
+					"name": "gics_sector_ix_sector_name",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"gics_sector_ix_name\",\nunique: true\n}",
+						"fields": "{\n\"name\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "faef5a54-f9ff-4dfd-826c-0abb0a16b609",
+					"name": "gics_sector_ix_group_industry_name",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"gics_sector_ix_group_industry_name\"\n}",
+						"fields": "{\n\"group_industries.name\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "0bda8913-c2ab-4b7a-9194-20f890cfd17d",
+					"name": "gics_sector_ix_industry_name",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"gics_sector_ix_industry_name\"\n}",
+						"fields": "{\n\"group_industries.industries.name\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "3e6b7a9a-1768-484b-bff2-33c8bcd5845e",
+					"name": "gics_sector_ix_sub_industry_name",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"gics_sector_ix_sub_industry_name\"\n}",
+						"fields": "{\n\"group_industries.industries.sub_industries.name\": 1\n}"
+					},
+					"cols": []
+				}
+			],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"fbf8d9c2-f626-4f0f-af13-9938f5c81954": {
+			"id": "fbf8d9c2-f626-4f0f-af13-9938f5c81954",
+			"visible": true,
+			"name": "task_tracking",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "af3105fc-3a3a-4d54-84e6-41b2d20ecaef",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": ""
+				},
+				{
+					"id": "266391f3-b410-4840-8167-664dc8200321",
+					"name": "master_loaded",
+					"datatype": "bool",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "b48b7853-9cb2-40c2-982d-a28dc5f178a0",
 					"name": "cik_loaded",
 					"datatype": "bool",
 					"param": "",
@@ -1335,7 +1595,7 @@
 					"validate": ""
 				},
 				{
-					"id": "6ccdaff5-d1a3-4df8-86f8-3e567a3be9cf",
+					"id": "44b74135-2b71-4919-8c57-62877dc1f85a",
 					"name": "figi_loaded",
 					"datatype": "bool",
 					"param": "",
@@ -1347,306 +1607,48 @@
 					"list": false,
 					"enum": "",
 					"validate": ""
+				},
+				{
+					"id": "356dc742-0946-406e-b8b3-54a0c20dd975",
+					"name": "earnings_file_loaded",
+					"datatype": "bool",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "a6530069-2e9b-40e7-b7e7-05f9db771c89",
+					"name": "metadata",
+					"datatype": "2818d593-9428-48ab-9df9-360bc6faeb59",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
 				}
 			],
 			"relations": [],
 			"lines": [],
 			"keys": [
 				{
-					"id": "faae89b1-850b-4ed9-9e3a-c2cea4d8fb7f",
+					"id": "47605d66-095b-4648-af35-ad12bb468542",
 					"name": "Primary key",
 					"isPk": true,
 					"using": "na",
 					"cols": [
 						{
-							"id": "053879f5-a728-4000-8904-fd7edf9b697b",
-							"colid": "a5544908-32bb-42ca-a03c-28e9367378c3"
-						}
-					]
-				}
-			],
-			"indexes": [],
-			"embeddable": false,
-			"generate": true,
-			"generateCustomCode": true,
-			"internalColumnIdRef": "",
-			"validationLevel": "na",
-			"validationAction": "na",
-			"collation": "",
-			"others": ""
-		},
-		"ce565ed6-951b-4813-8d6f-4d0f7a59f3c1": {
-			"id": "ce565ed6-951b-4813-8d6f-4d0f7a59f3c1",
-			"visible": true,
-			"name": "gcis_item",
-			"desc": "",
-			"estimatedSize": "",
-			"cols": [
-				{
-					"id": "7acf7e9f-e155-408d-82c2-efde61c343da",
-					"name": "id",
-					"datatype": "int",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "8fbc081c-c513-47d0-9ce6-6a4000861ada",
-					"name": "name",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				}
-			],
-			"relations": [],
-			"lines": [],
-			"keys": [
-				{
-					"id": "defd42f9-a8f8-45ab-b737-cc0a0a800314",
-					"name": "Primary key",
-					"isPk": true,
-					"using": "na",
-					"cols": []
-				}
-			],
-			"indexes": [],
-			"embeddable": true,
-			"generate": true,
-			"generateCustomCode": true,
-			"internalColumnIdRef": "",
-			"validationLevel": "na",
-			"validationAction": "na",
-			"collation": "",
-			"others": ""
-		},
-		"17589556-34aa-4db1-ac46-3916e98c25c9": {
-			"id": "17589556-34aa-4db1-ac46-3916e98c25c9",
-			"visible": true,
-			"name": "Industry",
-			"desc": "",
-			"estimatedSize": "",
-			"cols": [
-				{
-					"id": "5a337475-f426-44bc-896d-bb2b9bdb4d39",
-					"name": "id",
-					"datatype": "int",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "f203ace1-9ff4-4810-b3a8-e2a9ce09a7ae",
-					"name": "name",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "8d677b4f-1ec0-4eca-8751-276fbf78997f",
-					"name": "sub_industries",
-					"datatype": "ce565ed6-951b-4813-8d6f-4d0f7a59f3c1",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": true,
-					"enum": "",
-					"validate": ""
-				}
-			],
-			"relations": [],
-			"lines": [],
-			"keys": [
-				{
-					"id": "f47b1e61-8ba1-452c-ba4c-67c381465ba8",
-					"name": "Primary key",
-					"isPk": true,
-					"using": "na",
-					"cols": []
-				}
-			],
-			"indexes": [],
-			"embeddable": true,
-			"generate": true,
-			"generateCustomCode": true,
-			"internalColumnIdRef": "",
-			"validationLevel": "na",
-			"validationAction": "na",
-			"collation": "",
-			"others": ""
-		},
-		"6ba4f448-bae8-4d62-941d-a781e25aac49": {
-			"id": "6ba4f448-bae8-4d62-941d-a781e25aac49",
-			"visible": true,
-			"name": "industry_group",
-			"desc": "",
-			"estimatedSize": "",
-			"cols": [
-				{
-					"id": "af5ecc75-b1f5-4cd2-ac32-2412154afa2c",
-					"name": "id",
-					"datatype": "int",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "11534b22-5ecf-42f6-9137-e881d6a09e11",
-					"name": "name",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "4310decf-e52e-41f6-acda-e54eed292742",
-					"name": "industries",
-					"datatype": "17589556-34aa-4db1-ac46-3916e98c25c9",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": true,
-					"enum": "",
-					"validate": ""
-				}
-			],
-			"relations": [],
-			"lines": [],
-			"keys": [
-				{
-					"id": "d47b0868-8929-4f70-b3c2-f34488533766",
-					"name": "Primary key",
-					"isPk": true,
-					"using": "na",
-					"cols": []
-				}
-			],
-			"indexes": [],
-			"embeddable": true,
-			"generate": true,
-			"generateCustomCode": true,
-			"internalColumnIdRef": "",
-			"validationLevel": "na",
-			"validationAction": "na",
-			"collation": "",
-			"others": ""
-		},
-		"f9cd22ea-4a13-4dbd-8902-0ba368dcc865": {
-			"id": "f9cd22ea-4a13-4dbd-8902-0ba368dcc865",
-			"visible": true,
-			"name": "gcis",
-			"desc": "",
-			"estimatedSize": "",
-			"cols": [
-				{
-					"id": "aa290dab-f850-4b2c-ac68-043c263e07a1",
-					"name": "_id",
-					"datatype": "objectId",
-					"param": "",
-					"pk": true,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": ""
-				},
-				{
-					"id": "7d081fc7-0abd-4b21-b26c-c6846b73c43f",
-					"name": "id",
-					"datatype": "int",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "f32fd758-ff98-4e5c-b9fc-81bcba6226fa",
-					"name": "name",
-					"datatype": "string",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "15d12552-eae5-40e3-a7c5-584d09571eac",
-					"name": "industry_groups",
-					"datatype": "6ba4f448-bae8-4d62-941d-a781e25aac49",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": true,
-					"enum": "",
-					"validate": ""
-				}
-			],
-			"relations": [],
-			"lines": [],
-			"keys": [
-				{
-					"id": "5bdcd49e-1aac-4c90-9ee8-b4bdae20e936",
-					"name": "Primary key",
-					"isPk": true,
-					"using": "na",
-					"cols": [
-						{
-							"id": "390f2037-bcfe-43a4-b92f-d384caed3fb4",
-							"colid": "aa290dab-f850-4b2c-ac68-043c263e07a1"
+							"id": "1a53cfc1-53ff-42cc-9698-84c333b60de0",
+							"colid": "af3105fc-3a3a-4d54-84e6-41b2d20ecaef"
 						}
 					]
 				}
@@ -1694,7 +1696,7 @@
 		"def_validationAction": "na",
 		"def_collation": "",
 		"def_others": "",
-		"lastSaved": "Mon Jun 06 2022 18:40:27 GMT+0200 (Central European Summer Time)",
+		"lastSaved": "Sun Jun 12 2022 17:52:06 GMT+0200 (Central European Summer Time)",
 		"writeFileParam": false
 	},
 	"otherObjects": {},
@@ -1711,65 +1713,10 @@
 			"isOpen": true,
 			"main": true,
 			"diagramItems": {
-				"9518f827-f23c-4266-be1e-f1075dac35e3": {
-					"referencedItemId": "9518f827-f23c-4266-be1e-f1075dac35e3",
-					"x": 45,
-					"y": 449,
-					"gHeight": 225,
-					"gWidth": 276,
-					"color": "#ffffff",
-					"background": "#3f51b5",
-					"resized": false,
-					"autoExpand": true
-				},
-				"b0f8a8aa-7ce3-4e80-bb69-8e4435a8ebd3": {
-					"referencedItemId": "b0f8a8aa-7ce3-4e80-bb69-8e4435a8ebd3",
-					"x": 636,
-					"y": 460,
-					"gHeight": 387,
-					"gWidth": 276,
-					"color": "#ffffff",
-					"background": "#3f51b5",
-					"resized": false,
-					"autoExpand": true
-				},
-				"b8617490-af74-4676-bb6e-cc5b1c8c2cd1": {
-					"referencedItemId": "b8617490-af74-4676-bb6e-cc5b1c8c2cd1",
+				"2818d593-9428-48ab-9df9-360bc6faeb59": {
+					"referencedItemId": "2818d593-9428-48ab-9df9-360bc6faeb59",
 					"x": 45,
 					"y": 30,
-					"gHeight": 388,
-					"gWidth": 325,
-					"color": "#ffffff",
-					"background": "#3f51b5",
-					"resized": true,
-					"autoExpand": true
-				},
-				"b3d09849-9387-4392-80e7-dfaa854951ac": {
-					"referencedItemId": "b3d09849-9387-4392-80e7-dfaa854951ac",
-					"x": 45,
-					"y": 742,
-					"gHeight": 117,
-					"gWidth": 176,
-					"color": "#ffffff",
-					"background": "#8bc34a",
-					"resized": false,
-					"autoExpand": true
-				},
-				"82d1502c-e98b-43ce-8381-81882b323363": {
-					"referencedItemId": "82d1502c-e98b-43ce-8381-81882b323363",
-					"x": 253,
-					"y": 747,
-					"gHeight": 135,
-					"gWidth": 167,
-					"color": "#ffffff",
-					"background": "#8bc34a",
-					"resized": false,
-					"autoExpand": true
-				},
-				"563f8d73-be6c-4f9c-ba83-5ec131f51913": {
-					"referencedItemId": "563f8d73-be6c-4f9c-ba83-5ec131f51913",
-					"x": 371,
-					"y": 605,
 					"gHeight": 81,
 					"gWidth": 191,
 					"color": "#ffffff",
@@ -1777,54 +1724,98 @@
 					"resized": false,
 					"autoExpand": true
 				},
-				"a62b5474-ae69-49ab-8fca-cca1d8ab3a88": {
-					"referencedItemId": "a62b5474-ae69-49ab-8fca-cca1d8ab3a88",
-					"x": 421,
-					"y": 31,
-					"gHeight": 388,
-					"gWidth": 325,
+				"bd1b5270-309f-43a3-9860-a36d6b4cfdde": {
+					"referencedItemId": "bd1b5270-309f-43a3-9860-a36d6b4cfdde",
+					"x": 51,
+					"y": 146,
+					"gHeight": 315,
+					"gWidth": 219,
 					"color": "#ffffff",
-					"background": "#3f51b5",
-					"resized": true,
-					"autoExpand": true
-				},
-				"50563f24-507a-49f8-b426-1bc61f25d041": {
-					"referencedItemId": "50563f24-507a-49f8-b426-1bc61f25d041",
-					"x": 815,
-					"y": 30,
-					"gHeight": 388,
-					"gWidth": 325,
-					"color": "#ffffff",
-					"background": "#3f51b5",
-					"resized": true,
-					"autoExpand": true
-				},
-				"f2bec59d-6a32-4cc4-8af0-52258e11c151": {
-					"referencedItemId": "f2bec59d-6a32-4cc4-8af0-52258e11c151",
-					"x": 1206,
-					"y": 31,
-					"gHeight": 388,
-					"gWidth": 325,
-					"color": "#ffffff",
-					"background": "#3f51b5",
-					"resized": true,
-					"autoExpand": true
-				},
-				"c257ec5b-eb03-4b14-bdac-b19aafc91b5b": {
-					"referencedItemId": "c257ec5b-eb03-4b14-bdac-b19aafc91b5b",
-					"x": 392,
-					"y": 457,
-					"gHeight": 81,
-					"gWidth": 188,
-					"color": "#ffffff",
-					"background": "#3f51b5",
+					"background": "#03a9f4",
 					"resized": false,
 					"autoExpand": true
 				},
-				"ce565ed6-951b-4813-8d6f-4d0f7a59f3c1": {
-					"referencedItemId": "ce565ed6-951b-4813-8d6f-4d0f7a59f3c1",
-					"x": 1382,
-					"y": 783,
+				"efc9c44c-53d1-4a91-9bb7-c35aeb81d528": {
+					"referencedItemId": "efc9c44c-53d1-4a91-9bb7-c35aeb81d528",
+					"x": 58,
+					"y": 507,
+					"gHeight": 207,
+					"gWidth": 219,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				},
+				"b9868bf8-9ce2-412e-b49e-214193228491": {
+					"referencedItemId": "b9868bf8-9ce2-412e-b49e-214193228491",
+					"x": 61,
+					"y": 766,
+					"gHeight": 225,
+					"gWidth": 219,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				},
+				"99413136-4d68-4588-98ba-a8f06b541081": {
+					"referencedItemId": "99413136-4d68-4588-98ba-a8f06b541081",
+					"x": 364,
+					"y": 30,
+					"gHeight": 135,
+					"gWidth": 176,
+					"color": "#ffffff",
+					"background": "#8bc34a",
+					"resized": false,
+					"autoExpand": true
+				},
+				"bbe12e1f-bc11-4657-ae85-2c02fb380982": {
+					"referencedItemId": "bbe12e1f-bc11-4657-ae85-2c02fb380982",
+					"x": 365,
+					"y": 200,
+					"gHeight": 261,
+					"gWidth": 240,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				},
+				"7110f7d5-e074-4df0-a9c5-89083979f68c": {
+					"referencedItemId": "7110f7d5-e074-4df0-a9c5-89083979f68c",
+					"x": 670,
+					"y": 198,
+					"gHeight": 261,
+					"gWidth": 240,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				},
+				"0f517424-b55e-4ef6-b0b3-70dbffc8c431": {
+					"referencedItemId": "0f517424-b55e-4ef6-b0b3-70dbffc8c431",
+					"x": 368,
+					"y": 514,
+					"gHeight": 261,
+					"gWidth": 240,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				},
+				"1508133c-8d22-4c9f-a918-b6fc398b1a56": {
+					"referencedItemId": "1508133c-8d22-4c9f-a918-b6fc398b1a56",
+					"x": 671,
+					"y": 511,
+					"gHeight": 261,
+					"gWidth": 240,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				},
+				"6d8a2481-d127-499b-a4d7-274a71115069": {
+					"referencedItemId": "6d8a2481-d127-499b-a4d7-274a71115069",
+					"x": 684,
+					"y": 39,
 					"gHeight": 63,
 					"gWidth": 166,
 					"color": "#ffffff",
@@ -1832,10 +1823,10 @@
 					"resized": false,
 					"autoExpand": true
 				},
-				"17589556-34aa-4db1-ac46-3916e98c25c9": {
-					"referencedItemId": "17589556-34aa-4db1-ac46-3916e98c25c9",
-					"x": 1354,
-					"y": 640,
+				"b99353dd-1206-4dc8-8451-76e84c02d265": {
+					"referencedItemId": "b99353dd-1206-4dc8-8451-76e84c02d265",
+					"x": 1003,
+					"y": 34,
 					"gHeight": 117,
 					"gWidth": 250,
 					"color": "#ffffff",
@@ -1843,26 +1834,37 @@
 					"resized": false,
 					"autoExpand": true
 				},
-				"6ba4f448-bae8-4d62-941d-a781e25aac49": {
-					"referencedItemId": "6ba4f448-bae8-4d62-941d-a781e25aac49",
-					"x": 1344,
-					"y": 440,
-					"gHeight": 181,
-					"gWidth": 257,
+				"0d064b1d-c64c-4b2a-9b6b-ad5bc1421ee1": {
+					"referencedItemId": "0d064b1d-c64c-4b2a-9b6b-ad5bc1421ee1",
+					"x": 1568,
+					"y": 34,
+					"gHeight": 171,
+					"gWidth": 272,
 					"color": "#ffffff",
 					"background": "#8bc34a",
-					"resized": true,
+					"resized": false,
 					"autoExpand": true
 				},
-				"f9cd22ea-4a13-4dbd-8902-0ba368dcc865": {
-					"referencedItemId": "f9cd22ea-4a13-4dbd-8902-0ba368dcc865",
-					"x": 923,
-					"y": 470,
-					"gHeight": 289,
-					"gWidth": 370,
+				"d64e9508-56ba-48b9-9852-4d64c2aba574": {
+					"referencedItemId": "d64e9508-56ba-48b9-9852-4d64c2aba574",
+					"x": 990,
+					"y": 201,
+					"gHeight": 315,
+					"gWidth": 294,
 					"color": "#ffffff",
 					"background": "#03a9f4",
-					"resized": true,
+					"resized": false,
+					"autoExpand": true
+				},
+				"fbf8d9c2-f626-4f0f-af13-9938f5c81954": {
+					"referencedItemId": "fbf8d9c2-f626-4f0f-af13-9938f5c81954",
+					"x": 372,
+					"y": 805,
+					"gHeight": 189,
+					"gWidth": 242,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
 					"autoExpand": true
 				}
 			},

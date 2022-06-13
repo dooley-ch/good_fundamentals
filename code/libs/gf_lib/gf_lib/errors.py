@@ -16,7 +16,7 @@ __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
 __all__ = ['ApplicationError', 'DuplicateRecordError', 'RequestFailedError', 'RequestMaxFailedError',
-           'RequestResponseError']
+           'RequestResponseError', 'ApiFailedError']
 
 
 class ApplicationError(Exception):
@@ -47,4 +47,8 @@ class RequestMaxFailedError(HttpError):
 
 
 class RequestResponseError(HttpError):
+    pass
+
+
+class ApiFailedError(HttpError):
     pass

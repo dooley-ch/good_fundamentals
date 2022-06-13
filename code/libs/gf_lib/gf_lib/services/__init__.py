@@ -16,7 +16,7 @@ __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
 __all__ = ['SpEntry', 'get_sp600', 'get_sp400', 'get_sp500', 'get_sp100_tickers', 'get_sec_map', 'get_openfigi_codes',
-           'FigiCode', 'parse_financial_statements', 'parse_company']
+           'FigiCode', 'parse_financial_statements', 'parse_company', 'parse_earnings_file', 'get_earnings_estimates']
 
 from ._wikipedia import *
 from ._sec import *

@@ -15,18 +15,25 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['get_company_data', 'parse_financial_statements', 'parse_company']
+__all__ = ['get_company_data', 'parse_financial_statements', 'parse_company',
+           'parse_earnings_file', 'get_earnings_estimates']
 
+from io import StringIO
+import csv
 import requests
 import orjson
 import gf_lib.model as model
-from gf_lib.errors import RequestFailedError
+from gf_lib.errors import RequestFailedError, ApiFailedError
 
 
 def parse_company(value: str) -> model.CompanyAlphavantage:
     data = orjson.loads(value)
 
-    ticker = data['Symbol']
+    try:
+        ticker = data['Symbol']
+    except KeyError:
+        raise ApiFailedError('API calls exceeded')
+
     name = data['Name']
     description = data['Description']
     exchange = data['Exchange']
@@ -47,7 +54,11 @@ def parse_financial_statements(value: str,
                                                                                       model.FinancialItemAlphavantage):
     data = orjson.loads(value)
 
-    ticker = data['symbol']
+    try:
+        ticker = data['symbol']
+    except KeyError:
+        raise ApiFailedError('API calls exceeded')
+
     annual_statements = model.FinancialStatementsAlphavantage(ticker)
     quarter_statements = model.FinancialStatementsAlphavantage(ticker)
 
@@ -109,7 +120,7 @@ def get_company_data(ticker: str, key: str) -> model.AlphavantageData:
     cpy = parse_company(data)
 
     data = _get_alphavantage_data('INCOME_STATEMENT', ticker, key)
-    inc_stmts_a, inc_stmts_q  = parse_financial_statements(data)
+    inc_stmts_a, inc_stmts_q = parse_financial_statements(data)
 
     data = _get_alphavantage_data('BALANCE_SHEET', ticker, key)
     bs_stmts_a, bs_stmts_b = parse_financial_statements(data)
@@ -118,8 +129,34 @@ def get_company_data(ticker: str, key: str) -> model.AlphavantageData:
     cf_stmts_a, cf_stmts_q = parse_financial_statements(data)
 
     data = _get_alphavantage_data('EARNINGS', ticker, key)
-    earnings_a, earnings_b = parse_financial_statements(data, annual_tag = 'annualEarnings',
-                                                        quarter_tag = 'quarterlyEarnings')
+    earnings_a, earnings_b = parse_financial_statements(data, annual_tag='annualEarnings',
+                                                        quarter_tag='quarterlyEarnings')
 
     return model.AlphavantageData(cpy, inc_stmts_a, inc_stmts_q, bs_stmts_a, bs_stmts_b, cf_stmts_a,
                                   cf_stmts_q, earnings_a, earnings_b)
+
+
+def parse_earnings_file(data: str) -> list[model.EarningsAlphavantage]:
+    source = StringIO(data)
+    reader = csv.reader(source, delimiter=',')
+    next(reader)
+
+    earnings: list[model.EarningsAlphavantage] = list()
+
+    for row in reader:
+        earnings.append(model.EarningsAlphavantage(row[0], row[1], row[2], row[3], row[4], row[5]))
+
+    if not earnings:
+        ApiFailedError('API calls exceeded')
+
+    return earnings
+
+
+def get_earnings_estimates(key: str) -> list[model.EarningsAlphavantage]:
+    url = f"https://www.alphavantage.co/query?function=EARNINGS_CALENDAR&horizon=3month&apikey={key}"
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        raise RequestFailedError(url, response.status_code)
+
+    return parse_earnings_file(response.text)

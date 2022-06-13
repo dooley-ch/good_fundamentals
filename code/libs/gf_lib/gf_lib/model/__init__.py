@@ -17,7 +17,7 @@ __maintainer__ = "James Dooley"
 __status__ = "Production"
 __all__ = ['PeriodType', 'Months', 'DocumentMetaData', 'Master', 'Company', 'PeriodEnds', 'AccountingItem',
            'AccountingStatement', 'GicsClassification', 'TaskControl', 'FinancialItemAlphavantage',
-           'FinancialStatementsAlphavantage', 'CompanyAlphavantage', 'AlphavantageData']
+           'FinancialStatementsAlphavantage', 'CompanyAlphavantage', 'AlphavantageData', 'EarningsAlphavantage']
 
 from ._database import *
 from ._alphavantage import *

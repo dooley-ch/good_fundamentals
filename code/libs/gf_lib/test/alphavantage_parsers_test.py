@@ -16,7 +16,8 @@ __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
 
-from gf_lib.services import parse_financial_statements, parse_company, get_company_data
+from gf_lib.services import parse_financial_statements, parse_company, get_company_data, \
+    get_earnings_estimates, parse_earnings_file
 
 
 _company = """
@@ -3533,6 +3534,39 @@ _earnings = """
 }
 """
 
+_earnings_file = """symbol,name,reportDate,fiscalDateEnding,estimate,currency
+A,Agilent Technologies Inc,2022-08-15,2022-07-31,1.2,USD
+AA,Alcoa Corp,2022-07-13,2022-06-30,2.98,USD
+AACG,ATA Creativity Global,2022-08-10,2022-06-30,,CNY
+AADI,Aadi Bioscience Inc,2022-08-09,2022-06-30,-0.75,USD
+AAIC,Arlington Asset Investment Corp - Class A,2022-08-01,2022-06-30,0.06,USD
+AAL,American Airlines Group Inc,2022-07-20,2022-06-30,0.63,USD
+AAMC,Altisource Asset Management Corp,2022-08-15,2022-06-30,,USD
+AAME,Atlantic American Corp,2022-08-08,2022-06-30,,USD
+AAN,Aarons Company Inc (The),2022-07-25,2022-06-30,0.65,USD
+AAOI,Applied Optoelectronics Inc,2022-08-03,2022-06-30,-0.3,USD
+AAON,AAON Inc,2022-08-03,2022-06-30,0.41,USD
+AAP,Advance Auto Parts Inc,2022-08-22,2022-06-30,3.8,USD
+AAPL,Apple Inc,2022-07-25,2022-06-30,1.16,USD
+AAT,American Assets Trust Inc,2022-07-25,2022-06-30,0.14,USD
+AAVVF,AAVVF,2022-07-27,2022-06-30,0.33,CAD
+AAWW,Atlas Air Worldwide Holdings Inc,2022-08-03,2022-06-30,3.35,USD
+AB,AllianceBernstein Holding Lp,2022-07-27,2022-06-30,0.77,USD
+ABBV,Abbvie Inc,2022-07-28,2022-06-30,3.43,USD
+ABC,Amerisource Bergen Corp,2022-08-02,2022-06-30,2.57,USD
+ABCB,Ameris Bancorp,2022-07-20,2022-06-30,1.18,USD
+ABCL,AbCellera Biologics Inc,2022-08-10,2022-06-30,0.05,USD
+ABEO,Abeona Therapeutics Inc,2022-07-27,2022-06-30,-0.07,USD
+ABG,Asbury Automotive Group Inc,2022-07-25,2022-06-30,8.83,USD
+ABIO,ARCA biopharma Inc,2022-08-02,2022-06-30,,USD
+ABM,ABM Industries Inc,2022-09-06,2022-07-31,0.9,USD
+ABMD,Abiomed Inc,2022-08-03,2022-06-30,1.06,USD
+ABNB,Airbnb Inc - Class A,2022-08-10,2022-06-30,0.46,USD
+ABR,Arbor Realty Trust Inc,2022-07-28,2022-06-30,0.37,USD
+ABSSF,ABSSF,2022-08-08,2022-06-30,,USD
+ABST,Absolute Software Corporation,2022-08-08,2022-06-30,-0.09,USD
+"""
+
 
 def test_parse_income_statement() -> None:
     annual, quarter = parse_financial_statements(_income_statements)
@@ -3606,4 +3640,14 @@ def test_parse_company() -> None:
 
 def test_get_company_data() -> None:
     data = get_company_data('IBM', 'TK7LTJYNCWD69QRH')
+    assert data
+
+
+def test_parse_earnings_file() -> None:
+    data = parse_earnings_file(_earnings_file)
+    assert len(data) == 30
+
+
+def test_get_earnings_file() -> None:
+    data = get_earnings_estimates('TK7LTJYNCWD69QRH')
     assert data
