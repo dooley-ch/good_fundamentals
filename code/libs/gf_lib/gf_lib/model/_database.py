@@ -57,6 +57,7 @@ class Months(str, Enum):
 
 
 class IndexType(str, Enum):
+    SP100 = 'sp100'
     SP600 = 'sp600'
     SP400 = 'sp400'
     SP500 = 'sp500'
@@ -139,8 +140,8 @@ class Master:
 
 @attrs.frozen
 class IncomeStatement:
-    tick: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z.-]{1,5}$')],
-                            converter=lambda value: value.upper())
+    ticker: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z.-]{1,5}$')],
+                              converter=lambda value: value.upper())
     period_type: PeriodType = attrs.field(default=PeriodType.Annual, converter=PeriodType.parse)
     items: list[AccountingEntry] = attrs.field(factory=list)
     metadata: DocumentMetadata = attrs.field(eq=False, factory=DocumentMetadata,
@@ -150,8 +151,8 @@ class IncomeStatement:
 
 @attrs.frozen
 class CashFlowStatement:
-    tick: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z.-]{1,5}$')],
-                            converter=lambda value: value.upper())
+    ticker: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z.-]{1,5}$')],
+                              converter=lambda value: value.upper())
     period_type: PeriodType = attrs.field(default=PeriodType.Annual, converter=PeriodType.parse)
     items: list[AccountingEntry] = attrs.field(factory=list)
     metadata: DocumentMetadata = attrs.field(eq=False, factory=DocumentMetadata,
@@ -161,8 +162,8 @@ class CashFlowStatement:
 
 @attrs.frozen
 class BalanceSheetStatement:
-    tick: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z.-]{1,5}$')],
-                            converter=lambda value: value.upper())
+    ticker: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z.-]{1,5}$')],
+                              converter=lambda value: value.upper())
     period_type: PeriodType = attrs.field(default=PeriodType.Annual, converter=PeriodType.parse)
     items: list[AccountingEntry] = attrs.field(factory=list)
     metadata: DocumentMetadata = attrs.field(eq=False, factory=DocumentMetadata,
@@ -172,8 +173,8 @@ class BalanceSheetStatement:
 
 @attrs.frozen
 class EarningsStatement:
-    tick: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z.-]{1,5}$')],
-                            converter=lambda value: value.upper())
+    ticker: str = attrs.field(validator=[validators.instance_of(str), validators.matches_re('^[A-Z.-]{1,5}$')],
+                              converter=lambda value: value.upper())
     period_type: PeriodType = attrs.field(default=PeriodType.Annual, converter=PeriodType.parse)
     items: list[AccountingEntry] = attrs.field(factory=list)
     metadata: DocumentMetadata = attrs.field(eq=False, factory=DocumentMetadata,
@@ -228,11 +229,11 @@ class GICSSector:
 
 @attrs.define
 class Earnings:
-    tick: str = attrs.field(eq=True, validator=[validators.instance_of(str), validators.matches_re('^[A-Z.-]{1,5}$')],
-                            converter=lambda value: value.upper())
+    ticker: str = attrs.field(eq=True, validator=[validators.instance_of(str), validators.matches_re('^[A-Z.-]{1,5}$')],
+                              converter=lambda value: value.upper())
     name: str = attrs.field(default='', eq=False, validator=[attrs.validators.instance_of(str)])
-    report_date: date = attrs.field(eq=False, default=datetime.now)
-    fiscal_year: date = attrs.field(eq=False, default=datetime.now)
+    report_date: date = attrs.field(eq=False, factory=datetime.now)
+    fiscal_year: date = attrs.field(eq=False, factory=datetime.now)
     estimate: str = attrs.field(default='', eq=False)
     currency: str = attrs.field(default='USD')
     metadata: DocumentMetadata = attrs.field(eq=False, factory=DocumentMetadata,

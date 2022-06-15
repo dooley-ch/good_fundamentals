@@ -1,5 +1,5 @@
 # *******************************************************************************************
-#  File:  _masterlist.py
+#  File:  _master.py
 #
 #  Created: 30-05-2022
 #
@@ -15,7 +15,7 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['MasterListDatastore']
+__all__ = ['MasterDatastore']
 
 from attrs import asdict
 from pymongo.collection import Collection
@@ -27,11 +27,11 @@ from gf_lib.model import Master
 from gf_lib.errors import DuplicateRecordError
 
 
-class MasterListDatastore:
+class MasterDatastore:
     _collection: Collection
 
     def __init__(self, database: Database) -> None:
-        self._collection = database['master_list']
+        self._collection = database['master']
 
     def insert(self, value: Master) -> bool:
         try:

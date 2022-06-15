@@ -27,16 +27,16 @@ class TestAccounting:
         assert acc_entry.tag == 'Revenue'
 
         data = model.IncomeStatement('IBM')
-        assert data.tick == 'IBM'
+        assert data.ticker == 'IBM'
 
         data = model.CashFlowStatement('IBM')
-        assert data.tick == 'IBM'
+        assert data.ticker == 'IBM'
 
         data = model.BalanceSheetStatement('IBM')
-        assert data.tick == 'IBM'
+        assert data.ticker == 'IBM'
 
         data = model.EarningsStatement('IBM')
-        assert data.tick == 'IBM'
+        assert data.ticker == 'IBM'
 
     def test_assignment(self) -> None:
         acc_entry = model.AccountingEntry('Revenue')
@@ -44,22 +44,22 @@ class TestAccounting:
 
         data = model.IncomeStatement('IBM')
         data.items.append(acc_entry)
-        assert data.tick == 'IBM'
+        assert data.ticker == 'IBM'
         assert len(data.items) == 1
 
         data = model.CashFlowStatement('IBM')
         data.items.append(acc_entry)
-        assert data.tick == 'IBM'
+        assert data.ticker == 'IBM'
         assert len(data.items) == 1
 
         data = model.BalanceSheetStatement('IBM')
         data.items.append(acc_entry)
-        assert data.tick == 'IBM'
+        assert data.ticker == 'IBM'
         assert len(data.items) == 1
 
         data = model.EarningsStatement('IBM')
         data.items.append(acc_entry)
-        assert data.tick == 'IBM'
+        assert data.ticker == 'IBM'
         assert len(data.items) == 1
 
 
@@ -79,7 +79,7 @@ class TestGicsSector:
         assert sub_ind.id == 10_100_100
         assert sub_ind.name == 'Sub Industry 1'
 
-        ind  = model.GICSIndustry(100_100, 'Industry 1')
+        ind = model.GICSIndustry(100_100, 'Industry 1')
         ind.sub_industries.append(sub_ind)
         assert ind.id == 100_100
         assert ind.name == 'Industry 1'
@@ -108,7 +108,7 @@ class TestTaskTracking:
         assert data
 
         data.cik_loaded = True
-        assert data.cik_loaded == True
+        assert data.cik_loaded
 
 
 class TestEarnings:
@@ -175,7 +175,7 @@ class TestMaster:
 
     def test_ticker_convert_to_upper_case(self) -> None:
         record = model.Master(ticker='xxxxx', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                         sub_industry='Industry')
+                              sub_industry='Industry')
         assert record.ticker == 'XXXXX'
 
     def test_ticker_with_valid_value(self) -> None:
@@ -198,12 +198,12 @@ class TestMaster:
 
     def test_cik_with_valid_value(self) -> None:
         record = model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                     sub_industry='Industry')
+                              sub_industry='Industry')
         assert record.cik == '0123456789'
 
     def test_figi_wrong_length(self) -> None:
         record = model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='0123456789',
-                     sub_industry='Industry')
+                              sub_industry='Industry')
         assert record.figi == '000123456789'
 
     def test_figi_invalid_chars(self) -> None:
@@ -216,21 +216,21 @@ class TestMaster:
 
     def test_figi_with_valid_value(self) -> None:
         record = model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                     sub_industry='Industry')
+                              sub_industry='Industry')
         assert record.figi == '012345678912'
 
     def test_equal(self) -> None:
         record_1 = model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                              sub_industry='Industry')
+                                sub_industry='Industry')
         record_2 = model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='012345678943',
-                              sub_industry='Industry')
+                                sub_industry='Industry')
         assert record_1 == record_2
 
     def test_not_equal(self) -> None:
         record_1 = model.Master(ticker='IBM', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                              sub_industry='Industry')
+                                sub_industry='Industry')
         record_2 = model.Master(ticker='AAPL', name='IBM Corporation', cik='0123456789', figi='012345678912',
-                              sub_industry='Industry')
+                                sub_industry='Industry')
         assert record_1 != record_2
 
 
@@ -246,7 +246,8 @@ class TestCompany:
 
     def test_ticker_wrong_length(self) -> None:
         with pytest.raises(ValueError) as e:
-            model.Company('XXXXXX', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE', 'USD', 'USA',
+            model.Company('XXXXXX', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE', 'USD',
+                          'USA',
                           'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
 
         msg: str = e.value.args[0]
@@ -261,18 +262,21 @@ class TestCompany:
         assert msg.startswith("'ticker' must match regex")
 
     def test_ticker_convert_to_upper_case(self) -> None:
-        record = model.Company('XXXXX', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE', 'USD', 'USA',
-                          'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
+        record = model.Company('XXXXX', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE',
+                               'USD', 'USA',
+                               'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
         assert record.ticker == 'XXXXX'
 
     def test_ticker_with_valid_value(self) -> None:
-        record = model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE', 'USD', 'USA',
-                          'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
+        record = model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE',
+                               'USD', 'USA',
+                               'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
         assert record.ticker == 'IBM'
 
     def test_cik_wrong_length(self) -> None:
         with pytest.raises(ValueError) as e:
-            model.Company('IBM', 'IBM Corporation', 'Test Description', '01234567', '012345678912', 'NYSE', 'USD', 'USA',
+            model.Company('IBM', 'IBM Corporation', 'Test Description', '01234567', '012345678912', 'NYSE', 'USD',
+                          'USA',
                           'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
 
         msg: str = e.value.args[0]
@@ -280,20 +284,23 @@ class TestCompany:
 
     def test_cik_invalid_chars(self) -> None:
         with pytest.raises(ValueError) as e:
-            model.Company('IBM', 'IBM Corporation', 'Test Description', '01234567AB', '012345678912', 'NYSE', 'USD', 'USA',
+            model.Company('IBM', 'IBM Corporation', 'Test Description', '01234567AB', '012345678912', 'NYSE', 'USD',
+                          'USA',
                           'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
 
         msg: str = e.value.args[0]
         assert msg.startswith("'cik' must match regex")
 
     def test_cik_with_valid_value(self) -> None:
-        record = model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE', 'USD', 'USA',
-                          'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
+        record = model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE',
+                               'USD', 'USA',
+                               'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
         assert record.cik == '0123456789'
 
     def test_figi_wrong_length(self) -> None:
         with pytest.raises(ValueError) as e:
-            model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '0123456789', 'NYSE', 'USD', 'USA',
+            model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '0123456789', 'NYSE', 'USD',
+                          'USA',
                           'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
 
         msg: str = e.value.args[0]
@@ -301,28 +308,34 @@ class TestCompany:
 
     def test_figi_invalid_chars(self) -> None:
         with pytest.raises(ValueError) as e:
-            model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '0123456789AB', 'NYSE', 'USD', 'USA',
+            model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '0123456789AB', 'NYSE', 'USD',
+                          'USA',
                           'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
         msg: str = e.value.args[0]
         assert msg.startswith("'figi' must match regex")
 
     def test_figi_with_valid_value(self) -> None:
-        record = model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE', 'USD', 'USA',
-                          'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
+        record = model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE',
+                               'USD', 'USA',
+                               'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
         assert record.figi == '012345678912'
 
     def test_equal(self) -> None:
-        record_1 = model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE', 'USD', 'USA',
-                          'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
-        record_2 = model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE', 'USD', 'USA',
-                          'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
+        record_1 = model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE',
+                                 'USD', 'USA',
+                                 'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
+        record_2 = model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE',
+                                 'USD', 'USA',
+                                 'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
 
         assert record_1 == record_2
 
     def test_not_equal(self) -> None:
-        record_1 = model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE', 'USD', 'USA',
-                          'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
-        record_2 = model.Company('AAPL', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE', 'USD', 'USA',
-                          'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
+        record_1 = model.Company('IBM', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE',
+                                 'USD', 'USA',
+                                 'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
+        record_2 = model.Company('AAPL', 'IBM Corporation', 'Test Description', '0123456789', '012345678912', 'NYSE',
+                                 'USD', 'USA',
+                                 'Test-Sub-Industry', 'Main Street', model.Months.December, '2022-03-31')
 
         assert record_1 != record_2

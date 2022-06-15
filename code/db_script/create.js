@@ -35,7 +35,10 @@ function create_master(db) {
               bsonType: 'string'
             },
             indexes: {
-              enum: ['sp600', 'sp400', 'sp500']
+              bsonType: 'array',
+              items: {
+                bsonType: 'string'
+              }
             },
             metadata: {
               bsonType: 'object',
@@ -101,108 +104,106 @@ function create_master(db) {
 
 function create_gics_sector(db) {
     db.createCollection('gics_sector', {
-        validator: {
-            $jsonSchema: {
-                bsonType: 'object',
-                title: 'gics_sector',
-                required: ['id', 'name', 'group_industries', 'metadata'],
+      validator: {
+        $jsonSchema: {
+          bsonType: 'object',
+          title: 'gics_sector',
+          required: ['id', 'name', 'group_industries', 'metadata'],
+          properties: {
+            id: {
+              bsonType: 'int'
+            },
+            name: {
+              bsonType: 'string'
+            },
+            group_industries: {
+              bsonType: 'array',
+              items: {
+                title: 'group_industry',
+                required: ['id', 'name', 'industries'],
                 properties: {
-                    id: {
-                        bsonType: 'int'
-                    },
-                    name: {
-                        bsonType: 'string'
-                    },
-                    group_industries: {
-                        bsonType: 'array',
-                        items: {
-                            title: 'group_industry',
-                            required: ['id', 'name', 'industries'],
+                  id: {
+                    bsonType: 'int'
+                  },
+                  name: {
+                    bsonType: 'string'
+                  },
+                  industries: {
+                    bsonType: 'array',
+                    items: {
+                      title: 'gcis_industry',
+                      required: ['id', 'name', 'sub_industries'],
+                      properties: {
+                        id: {
+                          bsonType: 'int'
+                        },
+                        name: {
+                          bsonType: 'string'
+                        },
+                        sub_industries: {
+                          bsonType: 'array',
+                          items: {
+                            title: 'gics_item',
+                            required: ['id', 'name'],
                             properties: {
-                                id: {
-                                    bsonType: 'int'
-                                },
-                                name: {
-                                    bsonType: 'string'
-                                },
-                                industries: {
-                                    bsonType: 'array',
-                                    items: {
-                                        title: 'gcis_industry',
-                                        required: ['id', 'name', 'sub_industries'],
-                                        properties: {
-                                            id: {
-                                                bsonType: 'int'
-                                            },
-                                            name: {
-                                                bsonType: 'string'
-                                            },
-                                            sub_industries: {
-                                                bsonType: 'array',
-                                                items: {
-                                                    title: 'gics_item',
-                                                    required: ['id', 'name'],
-                                                    properties: {
-                                                        id: {
-                                                            bsonType: 'int'
-                                                        },
-                                                        name: {
-                                                            bsonType: 'string'
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                              id: {
+                                bsonType: 'int'
+                              },
+                              name: {
+                                bsonType: 'string'
+                              }
                             }
+                          }
                         }
-                    },
-                    metadata: {
-                        bsonType: 'array',
-                        items: {
-                            title: 'metadata',
-                            required: ['lock_version', 'created_at', 'updated_at'],
-                            properties: {
-                                lock_version: {
-                                    bsonType: 'int'
-                                },
-                                created_at: {
-                                    bsonType: 'date'
-                                },
-                                updated_at: {
-                                    bsonType: 'date'
-                                }
-                            }
-                        }
+                      }
                     }
+                  }
                 }
+              }
+            },
+            metadata: {
+              bsonType: 'object',
+              title: 'metadata',
+              required: ['lock_version', 'created_at', 'updated_at'],
+              properties: {
+                lock_version: {
+                  bsonType: 'int'
+                },
+                created_at: {
+                  bsonType: 'date'
+                },
+                updated_at: {
+                  bsonType: 'date'
+                }
+              }
             }
+          }
         }
+      }
     });
     db.gics_sector.createIndex({
-        "name": 1
+      "name": 1
     }, {
-        name: "gics_sector_ix_name",
-        unique: true
+      name: "gics_sector_ix_name",
+      unique: true
     })
 
     db.gics_sector.createIndex({
-        "group_industries.name": 1
+      "group_industries.name": 1
     }, {
-        name: "gics_sector_ix_group_industry_name"
+      name: "gics_sector_ix_group_industry_name"
     })
 
     db.gics_sector.createIndex({
-        "group_industries.industries.name": 1
+      "group_industries.industries.name": 1
     }, {
-        name: "gics_sector_ix_industry_name"
+      name: "gics_sector_ix_industry_name"
     })
 
     db.gics_sector.createIndex({
-        "group_industries.industries.sub_industries.name": 1
+      "group_industries.industries.sub_industries.name": 1
     }, {
-        name: "gics_sector_ix_sub_industry_name"
+      name: "gics_sector_ix_sub_industry_name"
     });
 }
 

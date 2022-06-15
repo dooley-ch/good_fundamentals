@@ -15,36 +15,42 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['AccountingStatemetDatastore']
+__all__ = ['StatemetDatastore']
 
+from typing import TypeVar
 from attrs import asdict
 from pymongo.collection import Collection
 from pymongo.database import Database
 from pymongo.results import InsertManyResult
 from pymongo.errors import DuplicateKeyError
-from gf_lib.model import AccountingStatement, PeriodType
+from gf_lib.model import PeriodType
 from gf_lib.errors import DuplicateRecordError
 
 
-class AccountingStatemetDatastore:
+T = TypeVar("T")
+
+class StatemetDatastore:
     _collection: Collection
+    _statement_class: T
 
-    def __init__(self, database: Database, collection: str) -> None:
+    def __init__(self, database: Database, collection: str, statement_class: T) -> None:
         self._collection = database[collection]
+        self._statement_class = statement_class
 
-    def insert(self, value: AccountingStatement) -> bool:
+    def insert(self, value: T) -> bool:
         try:
-            results: InsertManyResult = self._collection.insert_one(asdict(value))
+            data = asdict(value)
+            results: InsertManyResult = self._collection.insert_one(data)
         except DuplicateKeyError:
             raise DuplicateRecordError(value.ticker)
         else:
             return results.acknowledged
 
-    def get(self, ticker: str, period: PeriodType) -> AccountingStatement | None:
+    def get(self, ticker: str, period: PeriodType) -> T | None:
         raw_data = self._collection.find_one({'ticker': ticker, 'period_type': period.value}, {'_id': 0})
 
         if raw_data:
-            return AccountingStatement(**raw_data)
+            return self._statement_class(**raw_data)
 
     def clear(self) -> None:
         self._collection.delete_many({})
