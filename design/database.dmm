@@ -416,6 +416,20 @@
 					"validate": ""
 				},
 				{
+					"id": "6ee0f2e2-69ae-405e-b6be-8e362a9a165b",
+					"name": "indexes",
+					"datatype": "enum",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": true,
+					"enum": "['sp600', 'sp400', 'sp500']",
+					"validate": ""
+				},
+				{
 					"id": "4ad997db-8dc6-45ca-8283-b4d6ab5c5e9f",
 					"name": "metadata",
 					"datatype": "2818d593-9428-48ab-9df9-360bc6faeb59",
@@ -660,7 +674,22 @@
 					]
 				}
 			],
-			"indexes": [],
+			"indexes": [
+				{
+					"id": "897d24cc-6789-4b0b-bd86-bba3fc57010d",
+					"name": "earnings_ix_ticker",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"earnings_ix_ticker\",\nunique: true\n}",
+						"fields": "{\n\"ticker\": 1\n}"
+					},
+					"cols": []
+				}
+			],
 			"embeddable": false,
 			"generate": true,
 			"generateCustomCode": true,
@@ -802,6 +831,20 @@
 					"data": ""
 				},
 				{
+					"id": "ef22599b-54cf-4ac4-bf34-feb149a8b613",
+					"name": "period_type",
+					"datatype": "enum",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "['annual', 'quarter']",
+					"validate": ""
+				},
+				{
 					"id": "2d70ef07-dcf6-4487-942a-b4c952184ddc",
 					"name": "ticker",
 					"datatype": "string",
@@ -871,7 +914,7 @@
 					"lockoption": "na",
 					"mongodb": {
 						"options": "{\nname: \"income_statement_ix_ticker\",\nunique: true\n}",
-						"fields": "{\n\"ticker\": 1\n}"
+						"fields": "{\n\"ticker\": 1,\n\"period_type\": 1\n}"
 					},
 					"cols": []
 				}
@@ -902,6 +945,20 @@
 					"comment": "",
 					"defaultvalue": "",
 					"data": ""
+				},
+				{
+					"id": "1a1bdcf9-2d5a-46ad-ba8d-4d2e245f8553",
+					"name": "period_type",
+					"datatype": "enum",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "['annual', 'quarter']",
+					"validate": ""
 				},
 				{
 					"id": "2d70ef07-dcf6-4487-942a-b4c952184ddc",
@@ -972,8 +1029,8 @@
 					"algorithm": "na",
 					"lockoption": "na",
 					"mongodb": {
-						"options": "{\nname: \"income_statement_ix_ticker\",\nunique: true\n}",
-						"fields": "{\n\"ticker\": 1\n}"
+						"options": "{\nname: \"cash_flow_statement_ix_ticker\",\nunique: true\n}",
+						"fields": "{\n\"ticker\": 1,\n\"period_type\": 1\n}"
 					},
 					"cols": []
 				}
@@ -1004,6 +1061,20 @@
 					"comment": "",
 					"defaultvalue": "",
 					"data": ""
+				},
+				{
+					"id": "a7ad032c-df14-4d20-b3d6-fc5e8f0963a0",
+					"name": "period_type",
+					"datatype": "enum",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "['annual', 'quarter']",
+					"validate": ""
 				},
 				{
 					"id": "2d70ef07-dcf6-4487-942a-b4c952184ddc",
@@ -1075,7 +1146,7 @@
 					"lockoption": "na",
 					"mongodb": {
 						"options": "{\nname: \"income_statement_ix_ticker\",\nunique: true\n}",
-						"fields": "{\n\"ticker\": 1\n}"
+						"fields": "{\n\"ticker\": 1,\n\"period_type\": 1\n}"
 					},
 					"cols": []
 				}
@@ -1106,6 +1177,20 @@
 					"comment": "",
 					"defaultvalue": "",
 					"data": ""
+				},
+				{
+					"id": "40c7cd05-7b10-4088-8cac-1a3728873f9f",
+					"name": "period_type",
+					"datatype": "enum",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "['annual', 'quarter']",
+					"validate": ""
 				},
 				{
 					"id": "2d70ef07-dcf6-4487-942a-b4c952184ddc",
@@ -1177,7 +1262,7 @@
 					"lockoption": "na",
 					"mongodb": {
 						"options": "{\nname: \"income_statement_ix_ticker\",\nunique: true\n}",
-						"fields": "{\n\"ticker\": 1\n}"
+						"fields": "{\n\"ticker\": 1,\n\"period_type\": 1\n}"
 					},
 					"cols": []
 				}
@@ -1696,7 +1781,7 @@
 		"def_validationAction": "na",
 		"def_collation": "",
 		"def_others": "",
-		"lastSaved": "Sun Jun 12 2022 17:52:06 GMT+0200 (Central European Summer Time)",
+		"lastSaved": "Wed Jun 15 2022 15:44:58 GMT+0200 (Central European Summer Time)",
 		"writeFileParam": false
 	},
 	"otherObjects": {},
@@ -1715,7 +1800,7 @@
 			"diagramItems": {
 				"2818d593-9428-48ab-9df9-360bc6faeb59": {
 					"referencedItemId": "2818d593-9428-48ab-9df9-360bc6faeb59",
-					"x": 45,
+					"x": 46,
 					"y": 30,
 					"gHeight": 81,
 					"gWidth": 191,
@@ -1737,9 +1822,9 @@
 				},
 				"efc9c44c-53d1-4a91-9bb7-c35aeb81d528": {
 					"referencedItemId": "efc9c44c-53d1-4a91-9bb7-c35aeb81d528",
-					"x": 58,
+					"x": 57,
 					"y": 507,
-					"gHeight": 207,
+					"gHeight": 225,
 					"gWidth": 219,
 					"color": "#ffffff",
 					"background": "#03a9f4",
@@ -1748,7 +1833,7 @@
 				},
 				"b9868bf8-9ce2-412e-b49e-214193228491": {
 					"referencedItemId": "b9868bf8-9ce2-412e-b49e-214193228491",
-					"x": 61,
+					"x": 60,
 					"y": 766,
 					"gHeight": 225,
 					"gWidth": 219,
@@ -1770,9 +1855,9 @@
 				},
 				"bbe12e1f-bc11-4657-ae85-2c02fb380982": {
 					"referencedItemId": "bbe12e1f-bc11-4657-ae85-2c02fb380982",
-					"x": 365,
-					"y": 200,
-					"gHeight": 261,
+					"x": 363,
+					"y": 199,
+					"gHeight": 279,
 					"gWidth": 240,
 					"color": "#ffffff",
 					"background": "#03a9f4",
@@ -1781,9 +1866,9 @@
 				},
 				"7110f7d5-e074-4df0-a9c5-89083979f68c": {
 					"referencedItemId": "7110f7d5-e074-4df0-a9c5-89083979f68c",
-					"x": 670,
+					"x": 669,
 					"y": 198,
-					"gHeight": 261,
+					"gHeight": 279,
 					"gWidth": 240,
 					"color": "#ffffff",
 					"background": "#03a9f4",
@@ -1794,7 +1879,7 @@
 					"referencedItemId": "0f517424-b55e-4ef6-b0b3-70dbffc8c431",
 					"x": 368,
 					"y": 514,
-					"gHeight": 261,
+					"gHeight": 279,
 					"gWidth": 240,
 					"color": "#ffffff",
 					"background": "#03a9f4",
@@ -1805,7 +1890,7 @@
 					"referencedItemId": "1508133c-8d22-4c9f-a918-b6fc398b1a56",
 					"x": 671,
 					"y": 511,
-					"gHeight": 261,
+					"gHeight": 279,
 					"gWidth": 240,
 					"color": "#ffffff",
 					"background": "#03a9f4",
@@ -1814,7 +1899,7 @@
 				},
 				"6d8a2481-d127-499b-a4d7-274a71115069": {
 					"referencedItemId": "6d8a2481-d127-499b-a4d7-274a71115069",
-					"x": 684,
+					"x": 683,
 					"y": 39,
 					"gHeight": 63,
 					"gWidth": 166,
@@ -1836,7 +1921,7 @@
 				},
 				"0d064b1d-c64c-4b2a-9b6b-ad5bc1421ee1": {
 					"referencedItemId": "0d064b1d-c64c-4b2a-9b6b-ad5bc1421ee1",
-					"x": 1568,
+					"x": 1337,
 					"y": 34,
 					"gHeight": 171,
 					"gWidth": 272,
@@ -1858,8 +1943,8 @@
 				},
 				"fbf8d9c2-f626-4f0f-af13-9938f5c81954": {
 					"referencedItemId": "fbf8d9c2-f626-4f0f-af13-9938f5c81954",
-					"x": 372,
-					"y": 805,
+					"x": 369,
+					"y": 849,
 					"gHeight": 189,
 					"gWidth": 242,
 					"color": "#ffffff",

@@ -28,11 +28,11 @@ from pymongo.database import Database
 _gcis = {'$jsonSchema':
              {'bsonType': 'object',
               'title': 'gics',
-              'required': ['id', 'name', 'industry_groups'],
+              'required': ['id', 'name', 'group_industries'],
               'properties': {
                   'id': {'bsonType': 'int'},
                   'name': {'bsonType': 'string'},
-                  'industry_groups': {
+                  'group_industries': {
                       'bsonType': 'array',
                       'items': {
                           'title': 'industry_group',

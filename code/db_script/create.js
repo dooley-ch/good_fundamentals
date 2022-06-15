@@ -13,86 +13,89 @@
 
 function create_master(db) {
     db.createCollection('master', {
-        validator: {
-            $jsonSchema: {
-                bsonType: 'object',
-                title: 'master',
-                required: ['ticker', 'name', 'cik', 'figi', 'sub_industry', 'metadata'],
-                properties: {
-                    ticker: {
-                        bsonType: 'string'
-                    },
-                    name: {
-                        bsonType: 'string'
-                    },
-                    cik: {
-                        bsonType: 'string'
-                    },
-                    figi: {
-                        bsonType: 'string'
-                    },
-                    sub_industry: {
-                        bsonType: 'string'
-                    },
-                    metadata: {
-                        bsonType: 'object',
-                        title: 'metadata',
-                        required: ['lock_version', 'created_at', 'updated_at'],
-                        properties: {
-                            lock_version: {
-                                bsonType: 'int'
-                            },
-                            created_at: {
-                                bsonType: 'date'
-                            },
-                            updated_at: {
-                                bsonType: 'date'
-                            }
-                        }
-                    }
+      validator: {
+        $jsonSchema: {
+          bsonType: 'object',
+          title: 'master',
+          required: ['ticker', 'name', 'cik', 'figi', 'sub_industry', 'indexes', 'metadata'],
+          properties: {
+            ticker: {
+              bsonType: 'string'
+            },
+            name: {
+              bsonType: 'string'
+            },
+            cik: {
+              bsonType: 'string'
+            },
+            figi: {
+              bsonType: 'string'
+            },
+            sub_industry: {
+              bsonType: 'string'
+            },
+            indexes: {
+              enum: ['sp600', 'sp400', 'sp500']
+            },
+            metadata: {
+              bsonType: 'object',
+              title: 'metadata',
+              required: ['lock_version', 'created_at', 'updated_at'],
+              properties: {
+                lock_version: {
+                  bsonType: 'int'
+                },
+                created_at: {
+                  bsonType: 'date'
+                },
+                updated_at: {
+                  bsonType: 'date'
                 }
+              }
             }
+          }
         }
+      }
     });
     db.master.createIndex({
-        "ticker": 1
+      "ticker": 1
     }, {
-        name: "company_ix_ticker",
-        unique: true
+      name: "company_ix_ticker",
+      unique: true
     })
 
     db.master.createIndex({
-        "cik": 1
+      "cik": 1
     }, {
-        name: "company_ix_cik",
-        unique: true
+      name: "company_ix_cik",
+      unique: true
     })
 
     db.master.createIndex({
-        "figi": 1
+      "figi": 1
     }, {
-        name: "company_ix_figi",
-        unique: true
+      name: "company_ix_figi",
+      unique: true
     })
 
     db.master.createIndex({
-        "ticker": 1,
-        "name": 1,
-        "cik": 1,
-        "figi": 1,
-        "sub_industry": 1
+      "ticker": 1,
+      "name": 1,
+      "cik": 1,
+      "figi": 1,
+      "sub_industry": 1
     }, {
-        name: "master_ix_ticker_search"
+      name: "master_ix_ticker_search"
     })
 
     db.master.createIndex({
-        "name": 1,
-        "ticker": 1,
-        "cik": 1,
-        "figi": 1,
-        "sub_industry": 1
+      "name": 1,
+      "ticker": 1,
+      "cik": 1,
+      "figi": 1,
+      "sub_industry": 1
     }, {
-        name: "master_ix_name_search"
+      name: "master_ix_name_search"
     });
 }
 
@@ -288,313 +291,335 @@ function create_company(db) {
 
 function create_income_statement(db) {
     db.createCollection('income_statement', {
-        validator: {
-            $jsonSchema: {
-                bsonType: 'object',
-                title: 'income_statement',
-                required: ['ticker', 'items', 'metadata'],
+      validator: {
+        $jsonSchema: {
+          bsonType: 'object',
+          title: 'income_statement',
+          required: ['period_type', 'ticker', 'items', 'metadata'],
+          properties: {
+            period_type: {
+              enum: ['annual', 'quarter']
+            },
+            ticker: {
+              bsonType: 'string'
+            },
+            items: {
+              bsonType: 'array',
+              items: {
+                title: 'accounting_entry',
+                required: ['tag', 'value_1', 'value_2', 'value_3', 'value_4', 'value_5'],
                 properties: {
-                    ticker: {
-                        bsonType: 'string'
-                    },
-                    items: {
-                        bsonType: 'array',
-                        items: {
-                            title: 'accounting_entry',
-                            required: ['tag', 'value_1', 'value_2', 'value_3', 'value_4', 'value_5'],
-                            properties: {
-                                tag: {
-                                    bsonType: 'string'
-                                },
-                                value_1: {
-                                    bsonType: 'string'
-                                },
-                                value_2: {
-                                    bsonType: 'string'
-                                },
-                                value_3: {
-                                    bsonType: 'string'
-                                },
-                                value_4: {
-                                    bsonType: 'string'
-                                },
-                                value_5: {
-                                    bsonType: 'string'
-                                }
-                            }
-                        }
-                    },
-                    metadata: {
-                        bsonType: 'object',
-                        title: 'metadata',
-                        required: ['lock_version', 'created_at', 'updated_at'],
-                        properties: {
-                            lock_version: {
-                                bsonType: 'int'
-                            },
-                            created_at: {
-                                bsonType: 'date'
-                            },
-                            updated_at: {
-                                bsonType: 'date'
-                            }
-                        }
-                    }
+                  tag: {
+                    bsonType: 'string'
+                  },
+                  value_1: {
+                    bsonType: 'string'
+                  },
+                  value_2: {
+                    bsonType: 'string'
+                  },
+                  value_3: {
+                    bsonType: 'string'
+                  },
+                  value_4: {
+                    bsonType: 'string'
+                  },
+                  value_5: {
+                    bsonType: 'string'
+                  }
                 }
+              }
+            },
+            metadata: {
+              bsonType: 'object',
+              title: 'metadata',
+              required: ['lock_version', 'created_at', 'updated_at'],
+              properties: {
+                lock_version: {
+                  bsonType: 'int'
+                },
+                created_at: {
+                  bsonType: 'date'
+                },
+                updated_at: {
+                  bsonType: 'date'
+                }
+              }
             }
+          }
         }
+      }
     });
     db.income_statement.createIndex({
-        "ticker": 1
+      "ticker": 1,
+      "period_type": 1
     }, {
-        name: "income_statement_ix_ticker",
-        unique: true
+      name: "income_statement_ix_ticker",
+      unique: true
     });
 }
 
 function create_cash_flow_statement(db) {
     db.createCollection('cash_flow_statement', {
-        validator: {
-            $jsonSchema: {
-                bsonType: 'object',
-                title: 'cash_flow_statement',
-                required: ['ticker', 'items', 'metadata'],
+      validator: {
+        $jsonSchema: {
+          bsonType: 'object',
+          title: 'cash_flow_statement',
+          required: ['period_type', 'ticker', 'items', 'metadata'],
+          properties: {
+            period_type: {
+              enum: ['annual', 'quarter']
+            },
+            ticker: {
+              bsonType: 'string'
+            },
+            items: {
+              bsonType: 'array',
+              items: {
+                title: 'accounting_entry',
+                required: ['tag', 'value_1', 'value_2', 'value_3', 'value_4', 'value_5'],
                 properties: {
-                    ticker: {
-                        bsonType: 'string'
-                    },
-                    items: {
-                        bsonType: 'array',
-                        items: {
-                            title: 'accounting_entry',
-                            required: ['tag', 'value_1', 'value_2', 'value_3', 'value_4', 'value_5'],
-                            properties: {
-                                tag: {
-                                    bsonType: 'string'
-                                },
-                                value_1: {
-                                    bsonType: 'string'
-                                },
-                                value_2: {
-                                    bsonType: 'string'
-                                },
-                                value_3: {
-                                    bsonType: 'string'
-                                },
-                                value_4: {
-                                    bsonType: 'string'
-                                },
-                                value_5: {
-                                    bsonType: 'string'
-                                }
-                            }
-                        }
-                    },
-                    metadata: {
-                        bsonType: 'object',
-                        title: 'metadata',
-                        required: ['lock_version', 'created_at', 'updated_at'],
-                        properties: {
-                            lock_version: {
-                                bsonType: 'int'
-                            },
-                            created_at: {
-                                bsonType: 'date'
-                            },
-                            updated_at: {
-                                bsonType: 'date'
-                            }
-                        }
-                    }
+                  tag: {
+                    bsonType: 'string'
+                  },
+                  value_1: {
+                    bsonType: 'string'
+                  },
+                  value_2: {
+                    bsonType: 'string'
+                  },
+                  value_3: {
+                    bsonType: 'string'
+                  },
+                  value_4: {
+                    bsonType: 'string'
+                  },
+                  value_5: {
+                    bsonType: 'string'
+                  }
                 }
+              }
+            },
+            metadata: {
+              bsonType: 'object',
+              title: 'metadata',
+              required: ['lock_version', 'created_at', 'updated_at'],
+              properties: {
+                lock_version: {
+                  bsonType: 'int'
+                },
+                created_at: {
+                  bsonType: 'date'
+                },
+                updated_at: {
+                  bsonType: 'date'
+                }
+              }
             }
+          }
         }
+      }
     });
     db.cash_flow_statement.createIndex({
-        "ticker": 1
+      "ticker": 1,
+      "period_type": 1
     }, {
-        name: "income_statement_ix_ticker",
-        unique: true
+      name: "cash_flow_statement_ix_ticker",
+      unique: true
     });
 }
 
 function create_balance_sheet_statement(db) {
     db.createCollection('balance_sheet_statement', {
-        validator: {
-            $jsonSchema: {
-                bsonType: 'object',
-                title: 'balance_sheet_statement',
-                required: ['ticker', 'items', 'metadata'],
+      validator: {
+        $jsonSchema: {
+          bsonType: 'object',
+          title: 'balance_sheet_statement',
+          required: ['period_type', 'ticker', 'items', 'metadata'],
+          properties: {
+            period_type: {
+              enum: ['annual', 'quarter']
+            },
+            ticker: {
+              bsonType: 'string'
+            },
+            items: {
+              bsonType: 'array',
+              items: {
+                title: 'accounting_entry',
+                required: ['tag', 'value_1', 'value_2', 'value_3', 'value_4', 'value_5'],
                 properties: {
-                    ticker: {
-                        bsonType: 'string'
-                    },
-                    items: {
-                        bsonType: 'array',
-                        items: {
-                            title: 'accounting_entry',
-                            required: ['tag', 'value_1', 'value_2', 'value_3', 'value_4', 'value_5'],
-                            properties: {
-                                tag: {
-                                    bsonType: 'string'
-                                },
-                                value_1: {
-                                    bsonType: 'string'
-                                },
-                                value_2: {
-                                    bsonType: 'string'
-                                },
-                                value_3: {
-                                    bsonType: 'string'
-                                },
-                                value_4: {
-                                    bsonType: 'string'
-                                },
-                                value_5: {
-                                    bsonType: 'string'
-                                }
-                            }
-                        }
-                    },
-                    metadata: {
-                        bsonType: 'object',
-                        title: 'metadata',
-                        required: ['lock_version', 'created_at', 'updated_at'],
-                        properties: {
-                            lock_version: {
-                                bsonType: 'int'
-                            },
-                            created_at: {
-                                bsonType: 'date'
-                            },
-                            updated_at: {
-                                bsonType: 'date'
-                            }
-                        }
-                    }
+                  tag: {
+                    bsonType: 'string'
+                  },
+                  value_1: {
+                    bsonType: 'string'
+                  },
+                  value_2: {
+                    bsonType: 'string'
+                  },
+                  value_3: {
+                    bsonType: 'string'
+                  },
+                  value_4: {
+                    bsonType: 'string'
+                  },
+                  value_5: {
+                    bsonType: 'string'
+                  }
                 }
+              }
+            },
+            metadata: {
+              bsonType: 'object',
+              title: 'metadata',
+              required: ['lock_version', 'created_at', 'updated_at'],
+              properties: {
+                lock_version: {
+                  bsonType: 'int'
+                },
+                created_at: {
+                  bsonType: 'date'
+                },
+                updated_at: {
+                  bsonType: 'date'
+                }
+              }
             }
+          }
         }
+      }
     });
     db.balance_sheet_statement.createIndex({
-        "ticker": 1
+      "ticker": 1,
+      "period_type": 1
     }, {
-        name: "income_statement_ix_ticker",
-        unique: true
+      name: "income_statement_ix_ticker",
+      unique: true
     });
 }
 
 function create_earnings_statement(db) {
     db.createCollection('earnings_statement', {
-        validator: {
-            $jsonSchema: {
-                bsonType: 'object',
-                title: 'earnings_statement',
-                required: ['ticker', 'items', 'metadata'],
+      validator: {
+        $jsonSchema: {
+          bsonType: 'object',
+          title: 'earnings_statement',
+          required: ['period_type', 'ticker', 'items', 'metadata'],
+          properties: {
+            period_type: {
+              enum: ['annual', 'quarter']
+            },
+            ticker: {
+              bsonType: 'string'
+            },
+            items: {
+              bsonType: 'array',
+              items: {
+                title: 'accounting_entry',
+                required: ['tag', 'value_1', 'value_2', 'value_3', 'value_4', 'value_5'],
                 properties: {
-                    ticker: {
-                        bsonType: 'string'
-                    },
-                    items: {
-                        bsonType: 'array',
-                        items: {
-                            title: 'accounting_entry',
-                            required: ['tag', 'value_1', 'value_2', 'value_3', 'value_4', 'value_5'],
-                            properties: {
-                                tag: {
-                                    bsonType: 'string'
-                                },
-                                value_1: {
-                                    bsonType: 'string'
-                                },
-                                value_2: {
-                                    bsonType: 'string'
-                                },
-                                value_3: {
-                                    bsonType: 'string'
-                                },
-                                value_4: {
-                                    bsonType: 'string'
-                                },
-                                value_5: {
-                                    bsonType: 'string'
-                                }
-                            }
-                        }
-                    },
-                    metadata: {
-                        bsonType: 'object',
-                        title: 'metadata',
-                        required: ['lock_version', 'created_at', 'updated_at'],
-                        properties: {
-                            lock_version: {
-                                bsonType: 'int'
-                            },
-                            created_at: {
-                                bsonType: 'date'
-                            },
-                            updated_at: {
-                                bsonType: 'date'
-                            }
-                        }
-                    }
+                  tag: {
+                    bsonType: 'string'
+                  },
+                  value_1: {
+                    bsonType: 'string'
+                  },
+                  value_2: {
+                    bsonType: 'string'
+                  },
+                  value_3: {
+                    bsonType: 'string'
+                  },
+                  value_4: {
+                    bsonType: 'string'
+                  },
+                  value_5: {
+                    bsonType: 'string'
+                  }
                 }
+              }
+            },
+            metadata: {
+              bsonType: 'object',
+              title: 'metadata',
+              required: ['lock_version', 'created_at', 'updated_at'],
+              properties: {
+                lock_version: {
+                  bsonType: 'int'
+                },
+                created_at: {
+                  bsonType: 'date'
+                },
+                updated_at: {
+                  bsonType: 'date'
+                }
+              }
             }
+          }
         }
+      }
     });
     db.earnings_statement.createIndex({
-        "ticker": 1
+      "ticker": 1,
+      "period_type": 1
     }, {
-        name: "income_statement_ix_ticker",
-        unique: true
+      name: "income_statement_ix_ticker",
+      unique: true
     });
 }
 
 function create_earnings_file(db) {
     db.createCollection('earnings', {
-        validator: {
-            $jsonSchema: {
-                bsonType: 'object',
-                title: 'earnings',
-                required: ['ticker', 'name', 'report_date', 'fiscal_year', 'estimate', 'currency', 'metadata'],
-                properties: {
-                    ticker: {
-                        bsonType: 'string'
-                    },
-                    name: {
-                        bsonType: 'string'
-                    },
-                    report_date: {
-                        bsonType: 'date'
-                    },
-                    fiscal_year: {
-                        bsonType: 'date'
-                    },
-                    estimate: {
-                        bsonType: 'string'
-                    },
-                    currency: {
-                        bsonType: 'string'
-                    },
-                    metadata: {
-                        bsonType: 'object',
-                        title: 'metadata',
-                        required: ['lock_version', 'created_at', 'updated_at'],
-                        properties: {
-                            lock_version: {
-                                bsonType: 'int'
-                            },
-                            created_at: {
-                                bsonType: 'date'
-                            },
-                            updated_at: {
-                                bsonType: 'date'
-                            }
-                        }
-                    }
+      validator: {
+        $jsonSchema: {
+          bsonType: 'object',
+          title: 'earnings',
+          required: ['ticker', 'name', 'report_date', 'fiscal_year', 'estimate', 'currency', 'metadata'],
+          properties: {
+            ticker: {
+              bsonType: 'string'
+            },
+            name: {
+              bsonType: 'string'
+            },
+            report_date: {
+              bsonType: 'date'
+            },
+            fiscal_year: {
+              bsonType: 'date'
+            },
+            estimate: {
+              bsonType: 'string'
+            },
+            currency: {
+              bsonType: 'string'
+            },
+            metadata: {
+              bsonType: 'object',
+              title: 'metadata',
+              required: ['lock_version', 'created_at', 'updated_at'],
+              properties: {
+                lock_version: {
+                  bsonType: 'int'
+                },
+                created_at: {
+                  bsonType: 'date'
+                },
+                updated_at: {
+                  bsonType: 'date'
                 }
+              }
             }
+          }
         }
+      }
+    });
+    db.earnings.createIndex({
+      "ticker": 1
+    }, {
+      name: "earnings_ix_ticker",
+      unique: true
     });
 }
 
