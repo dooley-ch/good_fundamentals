@@ -15,7 +15,8 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['ResetTask', 'CollectionPopulatedTarget', 'PopulateMasterListTask', 'BuildMasterListTask']
+__all__ = ['MasterLoadedTarget', 'CikLoadedTarget', 'FigiLoadedTarget', 'EarningsFileLoadedTarget',
+           'CollectionHasDataTarget', 'ResetTask', 'PopulateMasterTask', 'PopulateDatabaseTask']
 
 from ._targets import *
 from ._tasks import *

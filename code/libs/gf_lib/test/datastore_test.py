@@ -21,7 +21,7 @@ from pymongo import MongoClient
 from pymongo.collection import Collection
 from pymongo.database import Database
 from gf_lib.datastore import MasterDatastore, GicsSectorDatastore, CompanyDatastore, \
-    StatemetDatastore, TaskTrackingDatastore, EarningsDatastore
+    CashFlowDatastore, BalanceSheetDatastore, IncomeDatastore, EarningsDatastore, TaskTrackingDatastore, EarningsFileDatastore
 from gf_lib.errors import DuplicateRecordError
 import gf_lib.model as model
 
@@ -98,17 +98,15 @@ class TestTaskTracking:
 
 
 class TestEarningsStatement:
-    COLLECTION_NAME = 'earnings_statement'
-
     @pytest.fixture
     def clear_collection(self, mongodb_connection) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestEarningsStatement.COLLECTION_NAME, model.EarningsStatement)
+        store = EarningsDatastore(db)
         store.clear()
 
     def test_insert(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestEarningsStatement.COLLECTION_NAME, model.EarningsStatement)
+        store = EarningsDatastore(db)
 
         entry = model.AccountingEntry('Revenue', value_1='10000')
         record = model.EarningsStatement('IBM', model.PeriodType.Annual)
@@ -118,7 +116,7 @@ class TestEarningsStatement:
 
     def test_insert_dublicate(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestEarningsStatement.COLLECTION_NAME, model.EarningsStatement)
+        store = EarningsDatastore(db)
 
         entry = model.AccountingEntry('Revenue', value_1='10000')
         record = model.EarningsStatement('IBM', model.PeriodType.Annual)
@@ -130,7 +128,7 @@ class TestEarningsStatement:
 
     def test_get(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestEarningsStatement.COLLECTION_NAME, model.EarningsStatement)
+        store = EarningsDatastore(db)
 
         entry = model.AccountingEntry('Revenue', value_1='10000')
         record = model.EarningsStatement('IBM', model.PeriodType.Annual)
@@ -145,7 +143,7 @@ class TestEarningsStatement:
 
     def test_get_none(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestEarningsStatement.COLLECTION_NAME, model.EarningsStatement)
+        store = EarningsDatastore(db)
 
         entry = model.AccountingEntry('Revenue', value_1='10000')
         record = model.EarningsStatement('IBM', model.PeriodType.Annual)
@@ -155,18 +153,17 @@ class TestEarningsStatement:
         record = store.get('IBM', model.PeriodType.Quarter)
         assert record is None
 
-class TestIncomeStatement:
-    COLLECTION_NAME = 'income_statement'
 
+class TestIncomeStatement:
     @pytest.fixture
     def clear_collection(self, mongodb_connection) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestIncomeStatement.COLLECTION_NAME, model.IncomeStatement)
+        store = IncomeDatastore(db)
         store.clear()
 
     def test_insert(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestIncomeStatement.COLLECTION_NAME, model.IncomeStatement)
+        store = IncomeDatastore(db)
 
         entry = model.AccountingEntry('Revenue', value_1='10000')
         record = model.IncomeStatement('IBM', model.PeriodType.Annual)
@@ -176,7 +173,7 @@ class TestIncomeStatement:
 
     def test_insert_dublicate(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestIncomeStatement.COLLECTION_NAME, model.IncomeStatement)
+        store = IncomeDatastore(db)
 
         record = model.IncomeStatement('IBM', model.PeriodType.Annual)
         assert store.insert(record)
@@ -186,7 +183,7 @@ class TestIncomeStatement:
 
     def test_get(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestIncomeStatement.COLLECTION_NAME, model.IncomeStatement)
+        store = IncomeDatastore(db)
 
         entry = model.AccountingEntry('Revenue', value_1='10000')
         record = model.IncomeStatement('IBM', model.PeriodType.Annual)
@@ -201,7 +198,7 @@ class TestIncomeStatement:
 
     def test_get_none(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestIncomeStatement.COLLECTION_NAME, model.IncomeStatement)
+        store = IncomeDatastore(db)
 
         record = model.IncomeStatement('IBM', model.PeriodType.Annual)
         assert store.insert(record)
@@ -211,17 +208,15 @@ class TestIncomeStatement:
 
 
 class TestBalanceSheetStatement:
-    COLLECTION_NAME = 'balance_sheet_statement'
-
     @pytest.fixture
     def clear_collection(self, mongodb_connection) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestBalanceSheetStatement.COLLECTION_NAME, model.BalanceSheetStatement)
+        store = BalanceSheetDatastore(db)
         store.clear()
 
     def test_insert(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestBalanceSheetStatement.COLLECTION_NAME, model.BalanceSheetStatement)
+        store = BalanceSheetDatastore(db)
 
         entry = model.AccountingEntry('Revenue', value_1='10000')
         record = model.BalanceSheetStatement('IBM', model.PeriodType.Annual)
@@ -231,7 +226,7 @@ class TestBalanceSheetStatement:
 
     def test_insert_dublicate(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestBalanceSheetStatement.COLLECTION_NAME, model.BalanceSheetStatement)
+        store = BalanceSheetDatastore(db)
 
         record = model.BalanceSheetStatement('IBM', model.PeriodType.Annual)
         assert store.insert(record)
@@ -241,7 +236,7 @@ class TestBalanceSheetStatement:
 
     def test_get(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestBalanceSheetStatement.COLLECTION_NAME, model.BalanceSheetStatement)
+        store = BalanceSheetDatastore(db)
 
         entry = model.AccountingEntry('Revenue', value_1='10000')
         record = model.BalanceSheetStatement('IBM', model.PeriodType.Annual)
@@ -256,7 +251,7 @@ class TestBalanceSheetStatement:
 
     def test_get_none(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestBalanceSheetStatement.COLLECTION_NAME, model.BalanceSheetStatement)
+        store = BalanceSheetDatastore(db)
 
         record = model.BalanceSheetStatement('IBM', model.PeriodType.Annual)
         assert store.insert(record)
@@ -266,17 +261,15 @@ class TestBalanceSheetStatement:
 
 
 class TestCashFlowStatement:
-    COLLECTION_NAME = 'cash_flow_statement'
-
     @pytest.fixture
     def clear_collection(self, mongodb_connection) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestCashFlowStatement.COLLECTION_NAME, model.CashFlowStatement)
+        store = CashFlowDatastore(db)
         store.clear()
 
     def test_insert(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestCashFlowStatement.COLLECTION_NAME, model.CashFlowStatement)
+        store = CashFlowDatastore(db)
 
         entry = model.AccountingEntry('Revenue', value_1='10000')
         record = model.CashFlowStatement('IBM', model.PeriodType.Annual)
@@ -286,7 +279,7 @@ class TestCashFlowStatement:
 
     def test_insert_dublicate(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestCashFlowStatement.COLLECTION_NAME, model.CashFlowStatement)
+        store = CashFlowDatastore(db)
 
         record = model.CashFlowStatement('IBM', model.PeriodType.Annual)
         assert store.insert(record)
@@ -296,7 +289,7 @@ class TestCashFlowStatement:
 
     def test_get(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestCashFlowStatement.COLLECTION_NAME, model.CashFlowStatement)
+        store = CashFlowDatastore(db)
 
         entry = model.AccountingEntry('Revenue', value_1='10000')
         record = model.CashFlowStatement('IBM', model.PeriodType.Annual)
@@ -311,7 +304,7 @@ class TestCashFlowStatement:
 
     def test_get_none(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = StatemetDatastore(db, TestCashFlowStatement.COLLECTION_NAME, model.CashFlowStatement)
+        store = CashFlowDatastore(db)
 
         record = model.CashFlowStatement('IBM', model.PeriodType.Annual)
         assert store.insert(record)
@@ -535,7 +528,6 @@ class TestMasterListDatastore:
 
         assert result is None
 
-
     def test_get_tickers(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
         store = MasterDatastore(db)
@@ -547,19 +539,19 @@ class TestMasterListDatastore:
         assert store.insert(record)
 
         record = model.Master(ticker='AAPL', name='Apple Inc.', cik='0123456780', figi='012345678910',
-                                            sub_industry='Industry')
+                              sub_industry='Industry')
         record.indexes.append(model.IndexType.SP600)
         record.indexes.append(model.IndexType.SP100)
         assert store.insert(record)
 
         record = model.Master(ticker='DOW', name='Dow Chenicals Inc.', cik='0123456700', figi='012345678900',
-                                            sub_industry='Industry')
+                              sub_industry='Industry')
         record.indexes.append(model.IndexType.SP600)
         record.indexes.append(model.IndexType.SP100)
         assert store.insert(record)
 
         record = model.Master(ticker='DD', name='DuPont de Nemours Inc.', cik='0123456000', figi='012345678000',
-                                            sub_industry='Industry')
+                              sub_industry='Industry')
         record.indexes.append(model.IndexType.SP600)
         record.indexes.append(model.IndexType.SP100)
         assert store.insert(record)
@@ -572,7 +564,7 @@ class TestMasterListDatastore:
         store = MasterDatastore(db)
 
         record = model.Master(ticker='DD', name='DuPont de Nemours Inc.', cik='0123456789', figi='012345678912',
-                                            sub_industry='Industry')
+                              sub_industry='Industry')
         assert store.insert(record)
 
         record = store.get('DD')
@@ -589,7 +581,7 @@ class TestMasterListDatastore:
         store = MasterDatastore(db)
 
         record = model.Master(ticker='DD', name='DuPont de Nemours Inc.', cik='0123456789', figi='012345678912',
-                                            sub_industry='Industry')
+                              sub_industry='Industry')
         assert store.insert(record)
 
         record = store.get('DD')
@@ -606,12 +598,12 @@ class TestEarnings:
     @pytest.fixture
     def clear_collection(self, mongodb_connection) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = EarningsDatastore(db)
+        store = EarningsFileDatastore(db)
         store.clear()
 
     def test_insert(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = EarningsDatastore(db)
+        store = EarningsFileDatastore(db)
 
         record = model.Earnings('IBM', name='IBM Corporation', estimate='3.45')
 
@@ -619,7 +611,7 @@ class TestEarnings:
 
     def test_insert_duplicate(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = EarningsDatastore(db)
+        store = EarningsFileDatastore(db)
 
         record = model.Earnings('IBM', name='IBM Corporation', estimate='3.45')
 
@@ -629,7 +621,7 @@ class TestEarnings:
 
     def test_get(self, clear_collection, mongodb_connection: MongoClient) -> None:
         db: Database = mongodb_connection['good_fundamentals_test']
-        store = EarningsDatastore(db)
+        store = EarningsFileDatastore(db)
 
         record = model.Earnings('IBM', name='IBM Corporation', estimate='3.45')
         assert store.insert(record)

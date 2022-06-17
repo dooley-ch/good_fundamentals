@@ -15,7 +15,7 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['find_folder', 'configure_logging', 'log_start', 'log_end', 'log_activity']
+__all__ = ['find_folder', 'configure_logging', 'log_start', 'log_end', 'log_activity', 'find_data_folder']
 
 from ._os import *
 from ._logging import *

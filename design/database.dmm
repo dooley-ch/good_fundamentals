@@ -484,7 +484,7 @@
 					"algorithm": "na",
 					"lockoption": "na",
 					"mongodb": {
-						"options": "{\nname: \"company_ix_cik\",\nunique: true\n}",
+						"options": "{\nname: \"master_ix_cik\"\n}",
 						"fields": "{\n\"cik\": 1\n}"
 					},
 					"cols": []
@@ -498,7 +498,7 @@
 					"algorithm": "na",
 					"lockoption": "na",
 					"mongodb": {
-						"options": "{\nname: \"company_ix_figi\",\nunique: true\n}",
+						"options": "{\nname: \"master_ix_figi\"\n}",
 						"fields": "{\n\"figi\": 1\n}"
 					},
 					"cols": []
@@ -1781,7 +1781,7 @@
 		"def_validationAction": "na",
 		"def_collation": "",
 		"def_others": "",
-		"lastSaved": "Wed Jun 15 2022 19:51:05 GMT+0200 (Central European Summer Time)",
+		"lastSaved": "Wed Jun 15 2022 19:57:00 GMT+0200 (Central European Summer Time)",
 		"writeFileParam": false
 	},
 	"otherObjects": {},

@@ -196,14 +196,14 @@ class TaskTracking:
 @attrs.frozen
 class GICSSubIndustry:
     id: int = attrs.field(default=10_000_001, validator=[attrs.validators.instance_of(int), attrs.validators.gt(10_000_000),
-                                                attrs.validators.lt(61_000_000)])
+                                                attrs.validators.lt(61_000_000)], converter=int)
     name: str = attrs.field(default='Unknown', validator=[attrs.validators.instance_of(str)])
 
 
 @attrs.frozen
 class GICSIndustry:
     id: int = attrs.field(default=100_001, validator=[attrs.validators.instance_of(int), attrs.validators.gt(100_000),
-                                                attrs.validators.lt(610_000)])
+                                                attrs.validators.lt(610_000)], converter=int)
     name: str = attrs.field(default='Unknown', validator=[attrs.validators.instance_of(str)])
     sub_industries: list[GICSSubIndustry] = attrs.Factory(list)
 
@@ -211,15 +211,15 @@ class GICSIndustry:
 @attrs.frozen
 class GICSGroupIndustry:
     id: int = attrs.field(default=1_001, validator=[attrs.validators.instance_of(int), attrs.validators.gt(1_000),
-                                                attrs.validators.lt(6_100)])
+                                                attrs.validators.lt(6_100)], converter=int)
     name: str = attrs.field(default='Unknown', validator=[attrs.validators.instance_of(str)])
     industries: list[GICSIndustry] = attrs.Factory(list)
 
 
 @attrs.frozen
 class GICSSector:
-    id: int = attrs.field(default=11, validator=[attrs.validators.instance_of(int), attrs.validators.gt(10),
-                                                attrs.validators.lt(61)])
+    id: int = attrs.field(default=11, validator=[attrs.validators.instance_of(int), attrs.validators.gt(9),
+                                                attrs.validators.lt(61)], converter=int)
     name: str = attrs.field(default='Unknown', validator=[attrs.validators.instance_of(str)])
     group_industries: list[GICSGroupIndustry] = attrs.Factory(list)
     metadata: DocumentMetadata = attrs.field(eq=False, factory=DocumentMetadata,

@@ -15,7 +15,7 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['find_folder', 'find_logs_folder']
+__all__ = ['find_folder', 'find_logs_folder', 'find_data_folder']
 
 from pathlib import Path
 
@@ -34,6 +34,14 @@ def find_logs_folder(root: Path | str | None = None) -> Path | None:
     :param root: The folder where to begin the search
     """
     return find_folder('logs', root)
+
+
+def find_data_folder(root: Path | str | None = None) -> Path | None:
+    """
+    This function finds and returns the location of the logs folder
+    :param root: The folder where to begin the search
+    """
+    return find_folder('data', root)
 
 
 def find_folder(name: str, root: Path | str | None = None) -> Path | None:

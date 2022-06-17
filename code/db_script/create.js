@@ -70,15 +70,13 @@ function create_master(db) {
     db.master.createIndex({
       "cik": 1
     }, {
-      name: "company_ix_cik",
-      unique: true
+      name: "master_ix_cik"
     })
 
     db.master.createIndex({
       "figi": 1
     }, {
-      name: "company_ix_figi",
-      unique: true
+      name: "master_ix_figi"
     })
 
     db.master.createIndex({

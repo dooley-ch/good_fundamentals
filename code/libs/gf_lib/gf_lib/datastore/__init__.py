@@ -15,10 +15,11 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['MasterDatastore', 'GicsSectorDatastore', 'CompanyDatastore', 'StatemetDatastore',
-           'TaskTrackingDatastore', 'database_exists', 'create_database', 'drop_database', 'collection_exists',
-           'drop_collection', 'get_master_list_validator', 'get_task_control_validator', 'create_master_list',
-           'create_task_control', 'create_gics', 'EarningsDatastore']
+__all__ = ['MasterDatastore', 'GicsSectorDatastore', 'CompanyDatastore', 'CashFlowDatastore', 'BalanceSheetDatastore',
+           'IncomeDatastore', 'EarningsDatastore', 'TaskTrackingDatastore', 'database_exists', 'create_database',
+           'drop_database', 'collection_exists', 'drop_collection', 'get_master_list_validator',
+           'get_task_control_validator', 'create_master_list', 'create_task_control', 'create_gics',
+           'EarningsFileDatastore']
 
 from ._master import *
 from ._gics_sector import *

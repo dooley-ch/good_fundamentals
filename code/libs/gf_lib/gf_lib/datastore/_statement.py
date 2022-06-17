@@ -15,7 +15,7 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['StatemetDatastore']
+__all__ = ['CashFlowDatastore', 'BalanceSheetDatastore', 'IncomeDatastore', 'EarningsDatastore']
 
 from typing import TypeVar
 from attrs import asdict
@@ -23,13 +23,13 @@ from pymongo.collection import Collection
 from pymongo.database import Database
 from pymongo.results import InsertManyResult
 from pymongo.errors import DuplicateKeyError
-from gf_lib.model import PeriodType
+from gf_lib.model import PeriodType, CashFlowStatement, BalanceSheetStatement, IncomeStatement, EarningsStatement
 from gf_lib.errors import DuplicateRecordError
 
 
 T = TypeVar("T")
 
-class StatemetDatastore:
+class _StatemetDatastore:
     _collection: Collection
     _statement_class: T
 
@@ -54,3 +54,23 @@ class StatemetDatastore:
 
     def clear(self) -> None:
         self._collection.delete_many({})
+
+
+class CashFlowDatastore(_StatemetDatastore):
+    def __init__(self, database: Database):
+        super().__init__(database, 'cash_flow_statement', CashFlowStatement)
+
+
+class BalanceSheetDatastore(_StatemetDatastore):
+    def __init__(self, database: Database):
+        super().__init__(database, 'balance_sheet_statement', BalanceSheetStatement)
+
+
+class IncomeDatastore(_StatemetDatastore):
+    def __init__(self, database: Database):
+        super().__init__(database, 'income_statement', IncomeStatement)
+
+
+class EarningsDatastore(_StatemetDatastore):
+    def __init__(self, database: Database):
+        super().__init__(database, 'earnings_statement', EarningsStatement)

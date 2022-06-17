@@ -54,3 +54,10 @@ class GicsSectorDatastore:
 
     def clear(self) -> None:
         self._collection.delete_many({})
+
+    def count(self) -> int:
+        row_count = self._collection.count_documents({})
+        if row_count is None:
+            return 0
+
+        return row_count

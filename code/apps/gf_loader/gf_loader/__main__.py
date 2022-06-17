@@ -21,35 +21,22 @@ import atexit
 import os
 import luigi
 import typer
-from dotenv import load_dotenv
 from gf_lib.utils import configure_logging, log_start, log_end, log_activity
 import src.tasks as tasks
 
 app = typer.Typer(help='This application handles the ETL process needed to build the gf database')
 
 
-@app.command('build', help='Builds the MangoDb database')
-def build_database():
-    log_activity('Building database...')
-
-    if luigi.build([tasks.BuildDatabase()], local_scheduler=False):
-        typer.echo('Database built.', color=True)
-        log_activity('Database built successfully.')
-    else:
-        typer.echo('Failed to build database, see log files for details.', err=True, color=True)
-        log_activity('Failed to build database.')
-
-
 @app.command('populate', help='Populate the database with a new master list')
 def populate():
     log_activity('Populating master list...')
 
-    if luigi.build([tasks.BuildMasterListTask()], local_scheduler=False):
-        typer.echo('Master list built.', color=True)
-        log_activity('Master list built successfully.')
+    if luigi.build([tasks.PopulateDatabaseTask()], local_scheduler=True):
+        typer.echo('Database populated.', color=True)
+        log_activity('Database populated successfully.')
     else:
-        typer.echo('Failed to build master list, see log files for details.', err=True, color=True)
-        log_activity('Failed to build master list.')
+        typer.echo('Failed to populate database, see log files for details.', err=True, color=True)
+        log_activity('Failed to populate database.')
 
 
 @app.command('reset', help='Deletes expired company records')
@@ -75,9 +62,6 @@ def main() -> None:
 
     # Set up the exit routine
     atexit.register(exit_routine)
-
-    # load environment variables
-    load_dotenv()
 
     # Configure logging
     configure_logging('gf_loader', __file__)

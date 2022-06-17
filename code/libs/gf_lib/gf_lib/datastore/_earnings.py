@@ -15,7 +15,7 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['EarningsDatastore']
+__all__ = ['EarningsFileDatastore']
 
 from attrs import asdict
 from pymongo.collection import Collection
@@ -26,7 +26,7 @@ from gf_lib.model import Earnings
 from gf_lib.errors import DuplicateRecordError
 
 
-class EarningsDatastore:
+class EarningsFileDatastore:
     _collection: Collection
 
     def __init__(self, database: Database) -> None:

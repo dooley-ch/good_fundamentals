@@ -15,54 +15,23 @@ __license__ = "MIT"
 __version__ = "1.0.0"
 __maintainer__ = "James Dooley"
 __status__ = "Production"
-__all__ = ['PopulateMasterListTask', 'ResetTask', 'LoadCikCodesTask', 'LoadFigiCodesTask', 'BuildMasterListTask',
-           'BuildDatabase']
+__all__ = ['PopulateMasterTask', 'ResetTask', 'LoadCikCodesTask', 'LoadFigiCodesTask', 'PopulateDatabaseTask']
 
 import math
 
 import gf_lib.datastore as ds
 import gf_lib.model as model
 import gf_lib.services as svc
+import gf_lib.utils as utils
 import luigi
+import orjson
 from attrs import asdict
 from gf_lib.utils import log_activity
 from loguru import logger
 import pymongo
-from pymongo.collection import Collection
 from pymongo.database import Database
 
-from ._targets import CollectionPopulatedTarget, FigiLoadTaskCompletedTarget, CikLoadTaskCompletedTarget
-
-
-class BuildDatabase(luigi.Task):
-    """
-    This task builds the application database
-    """
-    url = luigi.Parameter()
-    database = luigi.Parameter()
-
-    def requires(self):
-        pass
-
-    @logger.catch(reraise=True)
-    def run(self):
-        client = pymongo.MongoClient(self.url)
-        if self.database in client.list_database_names():
-            client.drop_database(self.database)
-
-        db: Database = client[self.database]
-        ds.create_master_list(db)
-        ds.create_task_control(db)
-        ds.create_gics(db)
-
-        record = model.TaskControl()
-        coll = db.get_collection('task_control')
-        coll.insert_one(asdict(record))
-
-        self.set_status_message(f"Database built, successfully.")
-
-    def output(self):
-        pass
+from ._targets import *
 
 
 class ResetTask(luigi.Task):
@@ -74,17 +43,42 @@ class ResetTask(luigi.Task):
 
     def run(self):
         client: pymongo.MongoClient = pymongo.MongoClient(self.url)
-        database: Database = client[self.database]
+        db: Database = client[self.database]
 
-        # Task Control
-        coll: Collection = database['task_control']
-        coll.delete_many({})
-        record = model.TaskControl()
-        coll.insert_one(asdict(record))
+        # Task Tracking
+        store = ds.TaskTrackingDatastore(db)
+        store.clear()
+        record = model.TaskTracking()
+        store.insert(record)
 
         # Master List
-        coll: Collection = database['master_list']
-        coll.delete_many({})
+        store = ds.MasterDatastore(db)
+        store.clear()
+
+        # Company
+        store = ds.CompanyDatastore(db)
+        store.clear()
+
+        # Accounts
+        store = ds.IncomeDatastore(db)
+        store.clear()
+
+        store = ds.CashFlowDatastore(db)
+        store.clear()
+
+        store = ds.BalanceSheetDatastore(db)
+        store.clear()
+
+        store = ds.EarningsDatastore(db)
+        store.clear()
+
+        # Earnings (File)
+        store = ds.EarningsFileDatastore(db)
+        store.clear()
+
+        # GICS
+        store = ds.GicsSectorDatastore(db)
+        store.clear()
 
         self.set_status_message(f"Database reset, successfully.")
 
@@ -92,14 +86,13 @@ class ResetTask(luigi.Task):
         pass
 
 
-class PopulateMasterListTask(luigi.Task):
+class PopulateMasterTask(luigi.Task):
     """
     This task populates the master list collection from
     the external sources
     """
     url = luigi.Parameter()
     database = luigi.Parameter()
-    collection = luigi.Parameter()
 
     sp_600_url = luigi.Parameter()
     sp_400_url = luigi.Parameter()
@@ -112,7 +105,7 @@ class PopulateMasterListTask(luigi.Task):
     def run(self):
         client: pymongo.MongoClient = pymongo.MongoClient(self.url)
         database: Database = client[self.database]
-        store = ds.MasterListDatastore(database)
+        store = ds.MasterDatastore(database)
 
         records: dict[str, model.Master] = dict()
 
@@ -123,10 +116,11 @@ class PopulateMasterListTask(luigi.Task):
         for row in data:
             try:
                 contents = asdict(row)
+                contents['cik'] = '0000000000'
                 contents['figi'] = '000000000000'
 
                 record = model.Master(**contents)
-                record.indexes.append('SP600')
+                record.indexes.append(model.IndexType.SP600)
                 records[record.ticker] = record
                 rec_count += 1
             except Exception as e:
@@ -142,10 +136,11 @@ class PopulateMasterListTask(luigi.Task):
         for row in data:
             try:
                 contents = asdict(row)
+                contents['cik'] = '0000000000'
                 contents['figi'] = '000000000000'
 
                 record = model.Master(**contents)
-                record.indexes.append('SP400')
+                record.indexes.append(model.IndexType.SP400)
                 records[record.ticker] = record
                 rec_count += 1
             except Exception as e:
@@ -161,10 +156,11 @@ class PopulateMasterListTask(luigi.Task):
         for row in data:
             try:
                 contents = asdict(row)
+                contents['cik'] = '0000000000'
                 contents['figi'] = '000000000000'
 
                 record = model.Master(**contents)
-                record.indexes.append('SP500')
+                record.indexes.append(model.IndexType.SP500)
                 records[record.ticker] = record
                 rec_count += 1
             except Exception as e:
@@ -179,7 +175,7 @@ class PopulateMasterListTask(luigi.Task):
         err_count = 0
         for ticker in data:
             try:
-                records[ticker].indexes.append('SP100')
+                records[ticker].indexes.append(model.IndexType.SP100)
                 rec_count += 1
             except Exception as e:
                 logger.error(f"Failed to update record with S&P 100 flag for {ticker} - {e}")
@@ -202,8 +198,12 @@ class PopulateMasterListTask(luigi.Task):
         log_activity(f"Master records written: {rec_count}, errors: {err_count}")
         self.set_status_message(f"Master records written: {rec_count}, errors: {err_count}")
 
+        # Update Flag
+        store = ds.TaskTrackingDatastore(database)
+        store.update_master_flag(True)
+
     def output(self):
-        return CollectionPopulatedTarget(self.url, self.database, self.collection)
+        return MasterLoadedTarget(self.url, self.database)
 
 
 class LoadFigiCodesTask(luigi.Task):
@@ -213,12 +213,11 @@ class LoadFigiCodesTask(luigi.Task):
     """
     url = luigi.Parameter()
     database = luigi.Parameter()
-    collection = luigi.Parameter()
     open_figi_url = luigi.Parameter()
     open_figi_key = luigi.Parameter()
 
     def requires(self):
-        return [PopulateMasterListTask()]
+        return [PopulateMasterTask()]
 
     @logger.catch(reraise=True)
     def run(self):
@@ -228,8 +227,8 @@ class LoadFigiCodesTask(luigi.Task):
 
         client: pymongo.MongoClient = pymongo.MongoClient(self.url)
         database: Database = client[self.database]
-        store = ds.MasterListDatastore(database)
-        ctrl_store = ds.TaskControlDatastore(database)
+        store = ds.MasterDatastore(database)
+        ctrl_store = ds.TaskTrackingDatastore(database)
 
         tickers = store.get_tickers()
 
@@ -267,7 +266,7 @@ class LoadFigiCodesTask(luigi.Task):
         self.set_progress_percentage(100)
 
     def output(self):
-        return FigiLoadTaskCompletedTarget(self.url, self.database)
+        return FigiLoadedTarget(self.url, self.database)
 
 
 class LoadCikCodesTask(luigi.Task):
@@ -277,18 +276,17 @@ class LoadCikCodesTask(luigi.Task):
     """
     url = luigi.Parameter()
     database = luigi.Parameter()
-    collection = luigi.Parameter()
     sec_url = luigi.Parameter()
 
     def requires(self):
-        return [PopulateMasterListTask()]
+        return [PopulateMasterTask()]
 
     @logger.catch(reraise=True)
     def run(self):
         client: pymongo.MongoClient = pymongo.MongoClient(self.url)
         database: Database = client[self.database]
-        store = ds.MasterListDatastore(database)
-        ctrl_store = ds.TaskControlDatastore(database)
+        store = ds.MasterDatastore(database)
+        ctrl_store = ds.TaskTrackingDatastore(database)
 
         tickers = store.get_tickers()
         sec_map = svc.get_sec_map(self.sec_url)
@@ -323,9 +321,79 @@ class LoadCikCodesTask(luigi.Task):
         self.set_progress_percentage(100)
 
     def output(self):
-        return CikLoadTaskCompletedTarget(self.url, self.database)
+        return CikLoadedTarget(self.url, self.database)
 
 
-class BuildMasterListTask(luigi.WrapperTask):
+class LoadGICSSectorTask(luigi.Task):
+    url = luigi.Parameter()
+    database = luigi.Parameter()
+
     def requires(self):
-        return [LoadCikCodesTask(), LoadFigiCodesTask()]
+        pass
+
+    def parse_sector(self, data: dict) -> model.GICSSector:
+        id = data['id']
+        name = data['name']
+
+        sector = model.GICSSector(id, name)
+
+        group_industries = data['items']
+        for grp in group_industries:
+            id = grp['id']
+            name = grp['name']
+            group = model.GICSGroupIndustry(id, name)
+
+            industries = grp['items']
+            for ind in industries:
+                id = ind['id']
+                name = ind['name']
+
+                industry = model.GICSIndustry(id, name)
+                sub_industries = ind['items']
+                for sub in sub_industries:
+                    id = sub['id']
+                    name = sub['name']
+                    sub_industry = model.GICSSubIndustry(id, name)
+                    industry.sub_industries.append(sub_industry)
+
+                group.industries.append(industry)
+
+            sector.group_industries.append(group)
+
+        return sector
+
+    def run(self):
+        client: pymongo.MongoClient = pymongo.MongoClient(self.url)
+        database: Database = client[self.database]
+        store = ds.GicsSectorDatastore(database)
+
+        data_folder = utils.find_data_folder(__file__)
+        data_file = data_folder.joinpath('gics.json')
+        if not data_file.exists():
+            raise ValueError(f"GICS data file not found ({data_file})")
+
+        file_content = data_file.read_text()
+        data = orjson.loads(file_content)
+
+        rec_count = 0
+        err_count = 0
+        for entry in data:
+            sector = self.parse_sector(entry)
+            try:
+                store.insert(sector)
+                rec_count += 1
+            except Exception as e:
+                logger.error(f"Failed to insert GICS sector: {sector.name} - {e}")
+                err_count += 1
+                continue
+
+        log_activity(f"Loaded GICS records: records {rec_count}, errors {err_count}")
+        self.set_status_message(f"Loaded GICS records: records {rec_count}, errors {err_count}")
+
+    def output(self):
+        return CollectionHasDataTarget(self.url, self.database)
+
+
+class PopulateDatabaseTask(luigi.WrapperTask):
+    def requires(self):
+        return [LoadGICSSectorTask(), LoadCikCodesTask(), LoadFigiCodesTask()]
